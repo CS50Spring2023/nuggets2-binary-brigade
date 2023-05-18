@@ -2,6 +2,8 @@
 ## Design Spec
 ### Binary Brigade, Spring, 2023
 
+According to the [Requirements Spec](REQUIREMENTS.md), the Nuggets game requires two standalone programs: a client and a server. Our design also includes grid, game, and player modules. We describe each program and module separately. We do not describe the `support` library nor the modules that enable features that go beyond the spec. We avoid repeating information that is provided in the requirements spec.
+
 ## Client
 
 The *client* acts in one of two modes:
@@ -45,24 +47,18 @@ See the requirements spec for the command-line interface.
 There is no interaction with the user.
 
 #### Inputs 
-The sever will take messages from the client(s), communicating whatever action the client is performing.
+The server will take messages from the client(s), communicating whatever action the client is performing.
 
 #### Outputs 
-The sever sends various messages to the clients currently in the game. These includes grid information (for new players), grid displays, and quit messages.  
+The server sends various messages to the clients currently in the game. These includes grid information (for new players), grid displays, and quit, update, and game over messages.  
 
 ### Functional decomposition into modules
-
-> List and briefly describe any modules that comprise your server, other than the main module.
 
 - `initializeGame` sets up the data structures for the game 
 - `runGame` calls message_loop and uses the messages received to call relevant functions to run the game
 - `gameOver` informs the clients that game is over; clean up; exit 
  
 ### Pseudo code for logic/algorithmic flow
-
-> For each function write pseudocode indented by a tab, which in Markdown will cause it to be rendered in literal form (like a code block).
-> Much easier than writing as a bulleted list!
-> For example:
 
 The server will run as follows:
 
@@ -80,27 +76,17 @@ The server will run as follows:
 
 ### Major data structures
 
-Major data structures described in sections below:
+Major data structures are the following, which are described in their own module sections:
 
 - grid
 - game
 - player
 
-#### Game
-The game data structure will hold the information pertaining to the current game. This entails the amount of gold remaining in the game (whether or not the game is still going on), an overview of the players in the game (pointers to player structs), and a pointer to the grid. The game data structure will be used as a global variable, which will allow us to refer to its contents at various points throughout the program. In addition, this will save us the trouble of passing along the struct across functions, as well as checking for NULL-pointers at every stage.
-
-#### Player
-The player data structure will hold the information pertaining to a player. This will include the player's port, letter, location, and amount of gold. 
-
-#### Grid
-The grid struct will be initialized with a map txt file. It holds types of spaces with an internal struct gridpoint. Spaces can be gold, empty in a room, ocuppied by a player, in a tunnel, empty outside of a room, or a wall. Our gridpoint struct will hold these and be updated as players move around the grid. These gridpoints will be held in a 2-dimensional array that we can iterate through and call methods on. 
-
-#### Gridpoint
-The gridpoint struct represents each square in the map. It tracks what type of terrain each spot is, what player (if any) is standing there, how much gold (if any) it has, if it's known, and if it's currently visible.
-
 ---
 
 ## Grid
+
+The grid struct will be initialized with a map txt file. It holds types of spaces with an internal struct gridpoint. Spaces can be gold, empty in a room, ocuppied by a player, in a tunnel, empty outside of a room, or a wall. Our gridpoint struct will hold these and be updated as players move around the grid. These gridpoints will be held in a 2-dimensional array that we can iterate through and call methods on. 
 
 ### Functional decomposition
 
@@ -112,16 +98,16 @@ The gridpoint struct represents each square in the map. It tracks what type of t
 
 ### Pseudo code for logic/algorithmic flow
 
-load in map file and generate grid data structure
-randomly load in gold into locations within rooms based on a random seed
-run a while loop while game is still going
-    - update map based on player movement and gold allocation
-    - update gold location and availability based on player movement
-    - update visibilty 
-    - send player maps to each player to display current status
-End game for all players
-Send game summary
-Free all memory associated with players and grids
+    load in map file and generate grid data structure
+    randomly load in gold into locations within rooms based on a random seed
+    run a while loop while game is still going
+        update map based on player movement and gold allocation
+        update gold location and availability based on player movement
+        update visibilty 
+        send player maps to each player to display current status
+    End game for all players
+    Send game summary
+    Free all memory associated with players and grids
 
 ### Major data structures
 
@@ -130,18 +116,27 @@ Free all memory associated with players and grids
 
 ## Game
 
+The game data structure will hold the information pertaining to the current game. This entails the amount of gold remaining in the game (whether or not the game is still going on), an overview of the players in the game (pointers to player structs), and a pointer to the grid. The game data structure will be used as a global variable, which will allow us to refer to its contents at various points throughout the program. In addition, this will save us the trouble of passing along the struct across functions, as well as checking for NULL-pointers at every stage.
+
 ### Functional decomposition
 
 - `newGame` given a grid, creates a new game; initializes the game variables, such as gold, players, and stores the grid. Returns a pointer to the game strucutre 
+- `deleteGame` frees the memory allocated for the game struct and the information within it.
 
 
 ### Pseudo code for logic/algorithmic flow
 
-newGame
--  Takes in the grid as the input, 
--  Creates a Game structure to create a Game object
--  Uses creates the variables that will store the information of the game - gold pile, reference to players, and the grid
--  Returns a pointer to Game 
+`newGame`
+
+    Takes in the grid as the input, 
+    Creates a Game structure to create a Game object
+    Uses creates the variables that will store the information of the game - gold pile, reference to players, and the grid
+    Returns a pointer to Game 
+    
+`deleteGame`
+
+    Takes in an initialized game struct
+    Frees the memory allocated for the struct itself and for the information it holds
 
 ### Major data structures
 
@@ -150,20 +145,25 @@ newGame
 
 ## Player
 
+The player data structure will hold the information pertaining to a player. This will include the player's port, letter, location, and amount of gold. 
+
 ### Functional decomposition
 
 - `updateVisibility` Uses current coordinates and layout of the grid to determine which points should be visible or not.
 - `newPlayer` taken in name, coordinate, and gold level as input creates a new player struct to be used by other moduals and server. Returns a pointer to a new player
+- `deletePlayer` Frees the memory associated with the player and removes it from the game.
 
 ### Pseudo code for logic/algorithmic flow
 
-newPlayer
-- Take in inputs and validates them
-- Create a new player using and returns a pointer to new player
+`newPlayer`
 
-updateVisibility
-- Take in a pointer to a player and their current coordinate
-- Updates the visibility of the player
+    Take in inputs and validates them
+    Create a new player using and returns a pointer to new player
+
+`updateVisibility`
+
+    Take in a pointer to a player and their current coordinate
+    Updates the visibility of the player
 
 ### Major data structures
 
