@@ -15,6 +15,7 @@
 #include "../grid/grid.h"
 #include "../player/player.h"
 
+/**************** local global types ****************/
 static const int goldTotal = 250;
 static const int maxPlayers = 26;
 
@@ -32,7 +33,7 @@ typedef struct game{
 /**************** FUNCTION ****************/
 /* see player.h for description */
 game_t* 
-initialize_game(grid_t* grid, )
+initialize_game(grid_t* grid)
 {
   game_t* game = mem_malloc(sizeof(game_t));
 
