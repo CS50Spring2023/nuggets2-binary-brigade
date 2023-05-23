@@ -70,7 +70,7 @@ void gridDelete(grid_t* grid);
 gridpoint_t* gridpointNew(int row, int column, char terrain);
 void gridDisplay(grid_t* grid);
 void generateGold(int randomSeed); 
-void movePlayer(player_t* player, char letter);
+void movePlayer(game_t* game, player_t* player, char letter);
 void foundGold(player_t* player);
 void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t new);
 bool movePossible(player_t* player, int changeRow, int changeColumn);
@@ -320,7 +320,7 @@ void generateGold(int randomSeed)
 
 /**************** movePlayer ****************/
 /* See detailed description in grid.h. */
-void movePlayer(player_t* player, char letter) 
+void movePlayer(game_t* game, player_t* player, char letter) 
 {
     // Changes to location if successful movement
     int changeRow;
@@ -371,7 +371,7 @@ void movePlayer(player_t* player, char letter)
     // Checking if the move can be made
     if (movePossible(player, changeRow, changeColumn)) {
         // Checking if the move causes the player to step into another player
-
+        foundPlayer(player, game, current, new);
 
         // Updating the location of the player
         player->x_coord += changeColumn;
@@ -379,7 +379,6 @@ void movePlayer(player_t* player, char letter)
 
         // Updating the contents of the gridpoints
         new.player = player->letter;
-        current.player = NULL;
 
         // If the player did not come from a passage
         if (current.terrain != '#') {
@@ -417,14 +416,22 @@ void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_
 {
     // If there is a player in the new location
     if (new.player != NULL) {
-        // Switching the player letters
+        // Looping through the players in the game to find the player
+        for (int i = 0; game->players[i] != NULL; i++) {
+            // If the coordinates of the new position match the player
+            if ((new.column == game->players[i]->x_coord) && 
+                (new.row == game->players[i]->y_coord)) {
+                // Setting these coordinates to be those of current
+                game->players[i]->x_coord = current.column;
+                game->players[i]->y_coord = current.row;
+            }
+        }
     }
 
-    // If there is a player in the new location
-        // Loop through the players in the game struct
-            // If the coordinates match
-                // Set the coordinates to be those of current
-
+    // If there is not a player in the new location
+    else {
+        current.player = NULL;
+    }
 }
 
 /**************** movePossible ****************/
