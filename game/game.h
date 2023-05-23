@@ -4,12 +4,14 @@
  * Binary Brigade, Spring, 2023
  */
 
+#include "../player/player.h"
+
 /**************** local global types ****************/
 static const int goldTotal;    //amount of gold in each game
 static const int maxPlayers;   //max amount of players a game can hold
 
 /**************** global types ****************/
-typedef struct player player_t;  // opaque to users of the module
+typedef struct game game_t;  // opaque to users of the module
 
 /**************** FUNCTION ****************/
 /* Create a new game structure w/ given grid parameter

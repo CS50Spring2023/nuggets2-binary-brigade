@@ -21,13 +21,11 @@ static const int maxPlayers = 26;
 
 /**************** global types ****************/
 typedef struct game{
-
   grid_t* grid;
   int totalGold;
   int goldAvailable;
   int playerCount;
   player_t** players;
-
 } game_t;
 
 /**************** FUNCTION ****************/
