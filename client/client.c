@@ -11,21 +11,28 @@
 #include <unistd.h>
 #include "../support/message.h"
 
+#define NR 20
+#define NC 20
+
+// GLOBAL VAR
+char* playername;
 
 // can i have nr and nc as globals??????
 
 int parseArgs(const int argc, char* argv[], char** hostname, char** port, char** playername);
 bool handleInput(void* arg);
 addr_t* server_setup(char* hostname, char* port, char* playername);
-void display_grid(const char* message);
+void handle_display(const char* message);
 void handle_quit(const char* message);
 void handle_error(const char* message);
+void update_status_line(int collected, int purse, int remaining);
+WINDOW* initDisplay();
 
 int main(int argc, char *argv[])
 {
     char* hostname;
     char* port;
-    char* playername = (argc == 4) ? argv[3] : NULL;
+    playername = (argc == 4) ? argv[3] : NULL;
 
     if (parseArgs(argc, argv, &hostname, &port, &playername) != 0) {
         printf("Usage: ./client hostname port [playername]\n");
@@ -33,6 +40,7 @@ int main(int argc, char *argv[])
     }
 
     // TODO/ PROBLEM initialize display
+    WINDOW* win = initDisplay();
 
     // initalize network + join the game
     addr_t* server = server_setup(hostname, port, playername);
@@ -42,6 +50,7 @@ int main(int argc, char *argv[])
 
     // clean up message modual
     message_done();
+    endwin();
     return ok? 0 : 10;
 }
 
@@ -59,37 +68,81 @@ handleMessage(void* arg, const addr_t from, const char* message)
     } else if (strcmp(messageType, "GRID") == 0){
 
         // still need to implement this
-        display_grid(message);
+        int nrows, ncols;
+        sscanf(message, "%*s %d %d", &nrows, &ncols);
 
+        if (nrows != NR + 1 || ncols != NC){
+            
+            handle_display("Please resize the window to fit the grid.");
+            while (getch() == ERR){
+                
+            }
+            clear();
+        }
+        
     } else if (strcmp(messageType, "GOLD") == 0){
 
-        // handle gold stuff here
+        int collected;
+        int purse;
+        int remaining;
+
+        sscanf(message, "%*s %d %d %d", &collected, &purse, &remaining);
+        update_status_line(collected, purse, remaining);
+
     } else if (strcmp(messageType, "DISPLAY") == 0){
-        // handle display here???
+    
+        handle_display(message);
 
     } else if (strcmp(messageType, "QUIT") == 0){
+        
+        endwin(); 
+        printf("%s\n", message);
+        exit(0);
+    
+    } else if (strcmp(messageType, "ERROR") == 0) {
 
-        handle_quit(message);
-        return false;
+        endwin(); 
+        fprintf(stderr, "Server error: %s\n", message);
+        exit(1);
+    
     } else{
 
-        // error
-        handle_error(message);
+        // malformed message
+        fprintf(stderr, "Malformed message from the server: %s\n", message);
+        refresh();
         
     }
-    return true;
 
+    return false;
 }
 
+void 
+handle_display(const char* message)
+{
+    move(1, 0);
+    clrtoeol();
+    printw("%s", message);
+    refresh();
+}
+void 
+update_status_line(int collected, int purse, int remaining) 
+{
+    // Construct the status line string
+    char statusLine[256];
+    
+    if (playername != NULL) {
+        snprintf(statusLine, sizeof(statusLine), "Player %s has %d nuggets (%d nuggets unclaimed).",
+                 playername, purse, remaining);
+    } else {
+        snprintf(statusLine, sizeof(statusLine), "Spectator: %d nuggets unclaimed.", remaining);
+    }
 
-// When the player's keystroke causes them to collect gold, the server shall 
-// inform all clients using a GOLD message as described below.
-
-// When the player's keystroke causes them to move to a new spot, the server 
-// shall inform all clients of a change in the game grid using a DISPLAY message as described below.
-
-// When the player's keystroke is not a valid character, according to the Client 
-// interface above, the server shall ignore that keystroke and may send back an ERROR message as described below.
+    // Print the status line at the top of the screen
+    move(0, 0);
+    clrtoeol();
+    printw("%s", statusLine);
+    refresh();
+}
 
 bool 
 handleInput(void* arg) {
@@ -187,4 +240,18 @@ int parseArgs(const int argc, char* argv[], char** hostname, char** port, char**
     *playername = (argc == 4) ? argv[3] : NULL;
 
     return 0;
+}
+
+WINDOW* 
+initDisplay()
+{
+    // Initialize curses
+    initscr();
+    cbreak();
+    noecho();
+    curs_set(0);
+    refresh();
+
+    // Create a new window for the game display
+    WINDOW* win = newwin(NR + 1, NC, 0, 0);
 }
