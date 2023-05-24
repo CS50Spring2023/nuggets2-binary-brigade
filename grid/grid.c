@@ -72,7 +72,7 @@ void gridDisplay(grid_t* grid);
 void generateGold(int randomSeed); 
 void movePlayer(game_t* game, player_t* player, char letter);
 void foundGold(player_t* player);
-void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t new);
+void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t newPoint);
 bool movePossible(player_t* player, int changeRow, int changeColumn);
 void placePlayer(player_t* player);
 
@@ -216,7 +216,7 @@ gridpoint_t* gridpointNew(int row, int column, char terrain)
     gridpoint->column = column;
     gridpoint->terrain = terrain;
     gridpoint->nGold = 0;
-    gridpoint->player = NULL;
+    gridpoint->player = 0;
 
     // Returning the created gridpoint
     return gridpoint;
@@ -233,7 +233,7 @@ void gridDisplay(grid_t* grid)
             for (int column = 0; column < grid->nColumns; column++) {
                 // If the point contains a player, printing the player letter
                 char player = grid->points[row][column].player;
-                if (player != NULL) {
+                if (player != 0) {
                     fprintf(stdout, "%c", player);
                 }
 
@@ -366,24 +366,24 @@ void movePlayer(game_t* game, player_t* player, char letter)
     gridpoint_t current = grid->points[player->x_coord][player->y_coord];
 
     // Potential new location of the player
-    gridpoint_t new = grid->points[current.row + changeRow][current.column + changeColumn];
+    gridpoint_t newPoint = grid->points[current.row + changeRow][current.column + changeColumn];
 
     // Checking if the move can be made
     if (movePossible(player, changeRow, changeColumn)) {
         // Checking if the move causes the player to step into another player
-        foundPlayer(player, game, current, new);
+        foundPlayer(player, game, current, newPoint);
 
         // Updating the location of the player
         player->x_coord += changeColumn;
         player->y_coord += changeRow;
 
         // Updating the contents of the gridpoints
-        new.player = player->letter;
+        newPoint.player = player->letter;
 
         // If the player did not come from a passage
         if (current.terrain != '#') {
             // Resetting the terrain to be an empty room spot
-            new.terrain = '.';
+            newPoint.terrain = '.';
         }
 
         // Checking if the move causes the player to find gold
@@ -412,15 +412,15 @@ void foundGold(player_t* player)
 
 /**************** foundPlayer ****************/
 /* See detailed description in grid.h. */
-void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t new)
+void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t newPoint)
 {
     // If there is a player in the new location
-    if (new.player != NULL) {
+    if (newPoint.player != 0) {
         // Looping through the players in the game to find the player
         for (int i = 0; game->players[i] != NULL; i++) {
             // If the coordinates of the new position match the player
-            if ((new.column == game->players[i]->x_coord) && 
-                (new.row == game->players[i]->y_coord)) {
+            if ((newPoint.column == game->players[i]->x_coord) && 
+                (newPoint.row == game->players[i]->y_coord)) {
                 // Setting these coordinates to be those of current
                 game->players[i]->x_coord = current.column;
                 game->players[i]->y_coord = current.row;
@@ -430,7 +430,7 @@ void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_
 
     // If there is not a player in the new location
     else {
-        current.player = NULL;
+        current.player = 0;
     }
 }
 
@@ -442,12 +442,12 @@ bool movePossible(player_t* player, int changeRow, int changeColumn)
     gridpoint_t current = grid->points[player->x_coord][player->y_coord];
 
     // New (potential) location of the player 
-    gridpoint_t new = grid->points[current.row + changeRow][current.column + changeColumn];
+    gridpoint_t newPoint = grid->points[current.row + changeRow][current.column + changeColumn];
 
     /* If the new position is either a spot in a room, passage, 
     contains gold or another player */
-    if ((new.terrain == '.') || (new.terrain == '#') || (new.terrain == '*') 
-        || (isalpha(new.terrain))) {
+    if ((newPoint.terrain == '.') || (newPoint.terrain == '#') || (newPoint.terrain == '*') 
+        || (isalpha(newPoint.terrain))) {
         return true;
     }
 
@@ -469,7 +469,7 @@ void placePlayer(player_t* player)
         /* If the random location is in a room or passage, and if there is not
         already a player in the spot */
         if (((randomPoint.terrain == '.') || (randomPoint.terrain == '#')) &&
-            randomPoint.player == NULL) {
+            randomPoint.player == 0) {
             // Inserting the player into random point
             randomPoint.player = player->letter;
 

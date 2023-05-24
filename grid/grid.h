@@ -88,3 +88,55 @@ void gridDisplay(grid_t* grid);
 *  (if the spot is in a room). 
 */
 void generateGold(int randomSeed);
+
+/**************** movePlayer ****************/
+/* The function handles the overall
+*  functionality related to moving a player
+*  across the grid. It takes in a game and
+*  player struct, as well as the letter
+*  pressed by the client indicating the desired
+*  movement. Depending on the letter, the
+*  x- and y-coordinates of the player are
+*  changed accordingly. The function calls 
+*  other functions to handle various cases
+*  arising from the player movement.
+*/
+void movePlayer(game_t* game, player_t* player, char letter);
+
+/**************** movePossible ****************/
+/* Function checks if a move is possible. It 
+*  takes in a player struct, as well as the
+*  requested changes the in x- and y-coordinates
+*  of the player. If the new coordinates land
+*  the player in a room spot, gold spot, passage,
+*  or on another player, the function returns
+*  true (indicating that the move is possible).
+*  Otherwise, it returns false.  
+*/
+bool movePossible(player_t* player, int changeRow, int changeColumn);
+
+/**************** foundGold ****************/
+/* Function checks if the new position of the
+*  player, following their movement, causes
+*  them to find gold. If it does, the gold
+*  of held in that point transfers to the 
+*  gold purse of the player. The terrain of
+*  the gridpoint is updated to reflect the
+*  changes.  
+*/
+void foundGold(player_t* player);
+
+/**************** foundPlayer ****************/
+/* Function handles situations where a movement
+*  causes the player to collide with another
+*  player. If that is the case, the players
+*  switch places.
+*/
+void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t newPoint);
+
+/**************** placePlayer ****************/
+/* Function takes in a player struct, placing
+*  it into the map (either in an empty room
+*  spot or passage).
+*/
+void placePlayer(player_t* player);
