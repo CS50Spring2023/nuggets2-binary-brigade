@@ -73,6 +73,14 @@ update_gold(game_t* game, int updateGoldCount)
   return 0;
 }
 
+/**************** FUNCTION ****************/
+/* see player.h for description */
+player_t**
+get_players(game_t* game)
+{
+  return game->players;
+}
+
 /* see player.h for description */
 void 
 delete_game(game_t* game)

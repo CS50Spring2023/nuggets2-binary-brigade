@@ -37,6 +37,14 @@ int add_player(game_t* game, player_t* player);
  */
 int update_gold(game_t* game, int updateGoldCount);
 
+/**************** FUNCTION ****************/
+/* Returns the list of players
+ *
+ * We return:
+ *   the list of players associated with the given game.
+ */
+player_t** get_players(game_t* game);
+
 /* Take in a pointer to a game and frees the space to the players array and the game
  *
  * We return:
