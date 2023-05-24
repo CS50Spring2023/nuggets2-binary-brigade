@@ -10,6 +10,7 @@
 #include <curses.h>
 #include <unistd.h>
 #include "../support/message.h"
+#include "../support/log.h"
 
 #define NR 20
 #define NC 20
@@ -21,12 +22,13 @@ char* playername;
 
 int parseArgs(const int argc, char* argv[], char** hostname, char** port, char** playername);
 bool handleInput(void* arg);
-addr_t* server_setup(char* hostname, char* port, char* playername);
+bool handleMessage(void* arg, const addr_t from, const char* message);
+addr_t server_setup(char* hostname, char* port, char* playername);
 void handle_display(const char* message);
 void handle_quit(const char* message);
 void handle_error(const char* message);
 void update_status_line(int collected, int purse, int remaining);
-WINDOW* initDisplay();
+void initDisplay();
 
 int main(int argc, char *argv[])
 {
@@ -40,10 +42,10 @@ int main(int argc, char *argv[])
     }
 
     // TODO/ PROBLEM initialize display
-    WINDOW* win = initDisplay();
+    initDisplay();
 
     // initalize network + join the game
-    addr_t* server = server_setup(hostname, port, playername);
+    addr_t server = server_setup(hostname, port, playername);
 
     // message stuff
     bool ok = message_loop(&server, 0, NULL, handleInput, handleMessage);
@@ -75,7 +77,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
             
             handle_display("Please resize the window to fit the grid.");
             while (getch() == ERR){
-                
+                // keep going till user resizes the window
             }
             clear();
         }
@@ -172,7 +174,8 @@ handleInput(void* arg) {
         // PROBLEM: What if we have more than one key per line
         if (len > 2){
             // message cannot be more than on character (key is only one char?)
-            return false;
+            return true;
+            // print to stderr and continue TODO
         
         } else if (len > 0) {
             // change newline to null
@@ -180,7 +183,7 @@ handleInput(void* arg) {
         }
 
         // format message
-        snprintf(message, message_MaxBytes, "KEY %c", message);
+        snprintf(message, message_MaxBytes, "KEY %s", message);
 
         // send the line to our correspondent
         message_send(*server, message);
@@ -194,7 +197,7 @@ handleInput(void* arg) {
 }
 
 
-addr_t* 
+addr_t
 server_setup(char* hostname, char* port, char* playername)
 {
     // set up a server port on which to receive messages
@@ -202,13 +205,13 @@ server_setup(char* hostname, char* port, char* playername)
     if (serverPort == 0) {
         
         fprintf(stderr, "Error setting up server port\n");
-        return 1;
+        exit(1);
     }
 
     addr_t server;
     if (!message_setAddr(hostname, port, &server)) {
         fprintf(stderr, "can't form address from %s %s\n", hostname, port);
-        return 2; // bad hostname/port
+        exit(2); // bad hostname/port
     }
 
     if (playername != NULL) {
@@ -221,6 +224,7 @@ server_setup(char* hostname, char* port, char* playername)
         message_send(server, "SPECTATE");
 
     }
+    return server;
 }
 
 
@@ -242,16 +246,16 @@ int parseArgs(const int argc, char* argv[], char** hostname, char** port, char**
     return 0;
 }
 
-WINDOW* 
+void
 initDisplay()
 {
     // Initialize curses
     initscr();
     cbreak();
     noecho();
-    curs_set(0);
+    // curs_set(0);
     refresh();
 
     // Create a new window for the game display
-    WINDOW* win = newwin(NR + 1, NC, 0, 0);
+    // WINDOW* win = newwin(NR + 1, NC, 0, 0);
 }
