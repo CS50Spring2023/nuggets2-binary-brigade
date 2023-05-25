@@ -15,6 +15,7 @@
 #include "../lib/file.h"
 #include "../lib/mem.h"
 #include "../player/player.h"
+#include "../game/game.h"
 
 /**************** types ****************/
 
@@ -38,14 +39,6 @@ typedef struct grid
     gridpoint_t** points;
 } grid_t;
 
-typedef struct game
-{   
-    grid_t* grid;
-    int nGoldTotal;
-    int nGoldRemaining;
-    player_t** players;
-} game_t;
-
 /**************** global variables ****************/
 grid_t* grid;
 
@@ -59,6 +52,8 @@ gridpoint_t* gridpointNew(int row, int column, char terrain);
 void gridDisplay(grid_t* grid);
 void generateGold(int randomSeed); 
 void movePlayer(game_t* game, player_t* player, char letter);
+void executeMovement(game_t* game, player_t* player, 
+                    gridpoint_t current, gridpoint_t newPoint);
 void foundGold(player_t* player);
 void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t newPoint);
 bool movePossible(player_t* player, int changeRow, int changeColumn);
@@ -358,29 +353,39 @@ void movePlayer(game_t* game, player_t* player, char letter)
     // Potential new location of the player
     gridpoint_t newPoint = grid->points[current.row + changeRow][current.column + changeColumn];
 
-    // Checking if the move can be made
-    if (movePossible(player, changeRow, changeColumn)) {
-        // Checking if the move causes the player to step into another player
-        foundPlayer(player, game, current, newPoint);
-
-        // Updating the location of the player
-        int playerNewY = get_Y(player) + changeRow;
-        set_y(player, playerNewY);
-        int playerNewX = get_x(player) + changeColumn;
-        set_x(player, playerNewX);
-
-        // Updating the contents of the gridpoints
-        newPoint.player = get_letter(player);
-
-        // If the player did not come from a passage
-        if (current.terrain != '#') {
-            // Resetting the terrain to be an empty room spot
-            newPoint.terrain = '.';
+    // If the letter is uppercase (continuous movement)
+    if (isupper(letter)) {
+        // As long as the move is possible, executing movement
+        while (movePossible(player, changeRow, changeColumn)) {
+            executeMovement(game, player, current, newPoint);
         }
-
-        // Checking if the move causes the player to find gold
-        foundGold(player);
     }
+
+    // If the letter is lowercase (single movement)
+    else {
+        if (movePossible(player, changeRow, changeColumn)) {
+            executeMovement(game, player, current, newPoint);
+        }
+    }
+}
+
+/**************** executeMovement ****************/
+/* See detailed description in grid.h. */
+void executeMovement(game_t* game, player_t* player, 
+                    gridpoint_t current, gridpoint_t newPoint)
+{
+    // Checking if the move causes the player to step into another player
+    foundPlayer(player, game, current, newPoint);
+
+    // Updating the location of the player
+    set_y(player, newPoint.row);
+    set_x(player, newPoint.column);
+
+    // Updating the contents of the gridpoints
+    newPoint.player = get_letter(player);
+
+    // Checking if the move causes the player to find gold
+    foundGold(player);
 }
 
 
@@ -407,16 +412,19 @@ void foundGold(player_t* player)
 /* See detailed description in grid.h. */
 void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t newPoint)
 {
+    // Saving the players array from the game struct in variable
+    player_t** players = get_players(game);
+
     // If there is a player in the new location
     if (newPoint.player != 0) {
         // Looping through the players in the game to find the player
-        for (int i = 0; game->players[i] != NULL; i++) {
+        for (int i = 0; players[i] != NULL; i++) {
             // If the coordinates of the new position match the player
-            if ((newPoint.column == game->players[i]->x_coord) && 
-                (newPoint.row == game->players[i]->y_coord)) {
+            if ((newPoint.column == get_x(players[i])) && 
+                (newPoint.row == get_y(players[i]))) {
                 // Setting these coordinates to be those of current
-                game->players[i]->x_coord = current.column;
-                game->players[i]->y_coord = current.row;
+                set_x(players[i], current.column);
+                set_y(players[i], current.row);
             }
         }
     }

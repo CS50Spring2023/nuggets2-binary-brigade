@@ -7,6 +7,13 @@
  */
 #include <grid.c>
 
+/**************** global types ****************/
+typedef struct gridpoint gridpoint_t;
+typedef struct grid grid_t;
+
+
+/**************** functions ****************/
+
 /**************** gridInit ****************/
 /* The functions is responsible for 
 *  initializing the grid. Given a map text
@@ -97,11 +104,30 @@ void generateGold(int randomSeed);
 *  pressed by the client indicating the desired
 *  movement. Depending on the letter, the
 *  x- and y-coordinates of the player are
-*  changed accordingly. The function calls 
-*  other functions to handle various cases
-*  arising from the player movement.
+*  determined accordingly. If the letter 
+*  passed in is uppercase (requesting
+*  continuous movement), the movement is
+*  executed so long as possible. If the letter
+*  is lowercase, the movement is executed 
+*  once (if possible). The execution of the
+*  movement itself is handled by a call to
+*  the executeMovement function.
 */
 void movePlayer(game_t* game, player_t* player, char letter);
+
+/**************** executeMovement ****************/
+/* The function does the work of executing
+*  the movement of a player following a letter
+*  press, having been set up by the movePlayer
+*  function. It takes in a game struct, player
+*  struct, as well as the current and new points
+*  of the player (as product of the movement). 
+*  The function calls other functions 
+*  to handle various cases arising from the 
+*  player movement.
+*/
+void executeMovement(game_t* game, player_t* player, 
+                    gridpoint_t current, gridpoint_t newPoint);
 
 /**************** movePossible ****************/
 /* Function checks if a move is possible. It 
