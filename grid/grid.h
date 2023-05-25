@@ -53,13 +53,14 @@ int readnColumns(FILE* map, int nRows);
 void insertGridpoints(char* pathName);
 
 /**************** gridDelete ****************/
-/* The function takes in a grid as parameter.
+/* The function deletes the grid.
 *  Upon checking that the grid is not NULL,
 *  it iterates through the 2D array, freeing
 *  the memory allocated in the gridInit and
-*  insertGridpoints functions.  
+*  insertGridpoints functions and later
+*  frees the array and the grid itself.  
 */
-void gridDelete(grid_t* grid);
+void gridDelete();
 
 /**************** gridpointNew ****************/
 /* The functions takes in the coordinates of
@@ -75,13 +76,13 @@ void gridDelete(grid_t* grid);
 gridpoint_t* gridpointNew(int row, int column, char terrain);
 
 /**************** gridpointNew ****************/
-/* The function takes in a grid. Upon checking
+/* The function displays the grid. Upon checking
 *  that the grid is not NULL, it loops over
 *  each of the rows and columns, printing the
 *  terrain stored in the gridpoint at that
 *  location. 
 */
-void gridDisplay(grid_t* grid);
+void gridDisplay();
 
 /**************** generateGold ****************/
 /* The functions is called in the gridInit
@@ -131,15 +132,15 @@ void executeMovement(game_t* game, player_t* player,
 
 /**************** movePossible ****************/
 /* Function checks if a move is possible. It 
-*  takes in a player struct, as well as the
-*  requested changes the in x- and y-coordinates
-*  of the player. If the new coordinates land
-*  the player in a room spot, gold spot, passage,
-*  or on another player, the function returns
-*  true (indicating that the move is possible).
+*  takes in a player struct, as well the current
+*  and prospective new position of the player. 
+*  If the new coordinates land the player in a 
+*  room spot, gold spot, or passage, the 
+*  function returns true (indicating that the 
+*  move is possible).
 *  Otherwise, it returns false.  
 */
-bool movePossible(player_t* player, int changeRow, int changeColumn);
+bool movePossible(player_t* player, gridpoint_t current, gridpoint_t newPoint);
 
 /**************** foundGold ****************/
 /* Function checks if the new position of the
@@ -166,3 +167,17 @@ void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_
 *  spot or passage).
 */
 void placePlayer(player_t* player);
+
+/**************** getnRows ****************/
+/* Function is a getter for the number of
+*  rows in the grid, making the information
+*  available to other modules. 
+*/
+int getnRows();
+
+/**************** getnColumns ****************/
+/* Function is a getter for the number of
+*  columns in the grid, making the information
+*  available to other modules. 
+*/
+int getnColumns();
