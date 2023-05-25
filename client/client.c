@@ -138,7 +138,6 @@ handleMessage(void* arg, const addr_t from, const char* message)
             const char* explanation = spacePos + 1;
 
             // Display the remaining message on the screen
-            clear();
             mvprintw(0, 0, "Server message: %s", explanation);
             refresh();
         }
@@ -147,7 +146,6 @@ handleMessage(void* arg, const addr_t from, const char* message)
     
     } else if (strcmp(messageType, "ERROR") == 0) {
 
-    
         handle_error(message);
         
     }
@@ -196,7 +194,6 @@ void handle_display(const char* message)
     
 }
 
-
 void 
 handle_error(const char* message) 
 {
@@ -207,14 +204,13 @@ handle_error(const char* message)
         const char* explanation = spacePos + 1;
 
         // Display the remaining message on the screen
-        mvprintw(0, 0, "Server message -> %s", explanation);
+        mvprintw(0, 0, "Server message-> %s", explanation);
         refresh();
     }
     sleep(1);
     handle_display(client_info->last_display);
  
 }
-
 
 
 bool 
@@ -308,12 +304,19 @@ initDisplay()
     curs_set(0);
     refresh();
 
+    // Set the background color
+    start_color();
+    init_pair(1, COLOR_WHITE, COLOR_BLACK);
+    wbkgd(stdscr, COLOR_PAIR(1));
+    refresh();
+
     // starter we will update later
     client_info->NR = 0;
     client_info->NC = 0;
 
     // Create a new window for the game display
     WINDOW* win = newwin(client_info->NR + 1, client_info->NC, 0, 0);
+    wbkgd(win, COLOR_PAIR(1));
     refresh();
     return win;
 }
