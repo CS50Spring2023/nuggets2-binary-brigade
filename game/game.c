@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "game.h"
 #include "../grid/grid.h"
 #include "../player/player.h"
 
@@ -66,7 +65,7 @@ add_player(game_t* game, player_t* player)
 int
 game_inactive_player(game_t* game, player_t* player)
 {
-  for (player_t* currPlayer = players; player != NULL; player++) {
+  for (player_t* currPlayer = game->players; currPlayer != NULL; currPlayer++) {
     if (player == currPlayer){
       player_inactive(currPlayer);
       return 0;
@@ -110,11 +109,10 @@ char*
 game_summary(game_t* game)
 {
   char* summary = mem_malloc(sizeof(char) + 1);
-  for (player_t* currPlayer = players; player != NULL; player++) {
-    if (player == currPlayer){
-      player_inactive(currPlayer);
-      return 0;
-    }
+  char* temp = mem_malloc(sizeof(char) + 1);
+  summary = "GAME OVER:\n"
+  for (player_t* currPlayer = game->players; currPlayer != NULL; currPlayer++) {
+    currPlayer.
   }
 }
 
