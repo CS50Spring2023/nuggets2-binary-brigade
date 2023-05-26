@@ -194,7 +194,7 @@ initializeBooleanArray(const int numRows, const int numCols)
   return array;
 }
 
-static void
+void
 updateVisibility(player_t* player)
 {
   for (int row = 0; row < player->numRows; row++) {
