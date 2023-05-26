@@ -82,7 +82,7 @@ static gridpoint_t* gridpointNew(int row, int column, char terrain);
 *  players/gold/terrain/empty spaces based on
 *  what is known and visible to the player.
 */
-void gridDisplay();
+char* gridDisplay();
 
 /**************** gridDisplaySpectator ****************/
 /* The function creates a string to display the
