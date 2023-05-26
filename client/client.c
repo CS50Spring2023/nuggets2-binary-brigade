@@ -23,7 +23,7 @@ addr_t server_setup(char* hostname, char* port, char* playername);
 void handle_display(const char* message);
 void handle_quit(const char* message);
 void handle_error(const char* message);
-WINDOW* initDisplay();
+void initDisplay();
 char* duplicate_str(const char*);
 
 
@@ -36,7 +36,6 @@ typedef struct client_info{
     int collected;
     int purse;
     int remaining;
-    WINDOW* win;
     char* playername;
     char playerletter;
     char* last_display;
@@ -68,7 +67,7 @@ int main(int argc, char* argv[])
     client_info = calloc(1, sizeof(client_info_t));
 
     // initialize display
-    client_info->win  = initDisplay();
+    initDisplay();
 
     // store playername for later use
     client_info->playername = playername;
@@ -81,8 +80,6 @@ int main(int argc, char* argv[])
 
     // clean up message modual
     message_done();
-    
-    delwin(client_info->win);
     endwin();
     free(client_info);
    
@@ -145,10 +142,6 @@ handleMessage(void* arg, const addr_t from, const char* message)
             refresh();
 
         }
-
-        // update the screen size
-        wresize(client_info->win, client_info->NR, client_info->NC);
-        
         
     } else if (strcmp(messageType, "GOLD") == 0){
 
@@ -415,7 +408,8 @@ server_setup(char* hostname, char* port, char* playername)
     addr_t server;
     if (!message_setAddr(hostname, port, &server)) {
         fprintf(stderr, "can't form address from %s %s\n", hostname, port);
-        exit(2); // bad hostname/port
+        // bad hostname/port
+        exit(2);
     }
 
     if (playername != NULL) {
@@ -476,43 +470,50 @@ parseArgs(const int argc, char* argv[], char** hostname, char** port, char** pla
  * Caller provides:
  *   nothing
  * We return:
- *   pointer to a WINDOW object
+ *   nothing
  */
-WINDOW*
-initDisplay()
+void initDisplay()
 {
-    // initialize curses
+    // Initialize curses
     initscr();
     cbreak();
     noecho();
     curs_set(0);
     refresh();
 
-    // set the background color
+    // Set the background and text colors
     start_color();
-    init_pair(1, COLOR_WHITE, COLOR_BLACK);
-    wbkgd(stdscr, COLOR_PAIR(1));
-    refresh();
+    init_pair(1, COLOR_BLUE, COLOR_BLACK); 
 
-    // initialize the size of window to current screen size
+    wbkgd(stdscr, COLOR_PAIR(1));
+    
+    // Initialize the size of the window to current screen size
     getmaxyx(stdscr, client_info->NR, client_info->NC);
 
-    // Create a new window for the game display
-    WINDOW* win = newwin(client_info->NR + 1, client_info->NC, 0, 0);
-    wbkgd(win, COLOR_PAIR(1));
     refresh();
-   
-    return win;
+
 }
 
+/**************** duplicate_str ****************/
+/* 
+ * duplicates string. We use to to keep track of latest display
+ * 
+ * Caller provides:
+ *   the string to duplicate
+ * We return:
+ *   pointer to a string
+ */
 char* 
 duplicate_str(const char* str) 
 {
-    size_t len = strlen(str) + 1;  // Get the length of the string, including the null terminator
-    char* new_str = malloc(len);   // Allocate memory for the new string
+    // get the length of the string, including the null terminator
+    size_t len = strlen(str) + 1;  
+    // allocate memory for the new string
+    char* new_str = malloc(len);  
 
     if (new_str != NULL) {
-        memcpy(new_str, str, len);  // Copy the string to the newly allocated memory
+        // copy the string to the newly allocated memory
+        memcpy(new_str, str, len);  
     }
 
     return new_str;
