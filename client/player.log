@@ -1,31 +1,30 @@
-==2778051== Memcheck, a memory error detector
-==2778051== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2778051== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2778051== Command: ./client plank 57903 nick
-==2778051== 
 START OF LOG
-message_init: ready at port '50633'
-message_send: TO 127.0.1.1:57903
+message_init: ready at port '54465'
+message_send: TO 127.0.1.1:47216
 message_send: 1 lines:
-PLAY nick
+PLAY Kashan
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 1 lines:
-OK D
+OK N
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 1 lines:
 GRID 21 79
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 1 lines:
-GOLD 0 0 185
+GOLD 0 0 47
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 22 lines:
 DISPLAY
                                                                                
                                                                                
+                                                          +-------+            
+                                                          |.@.....|            
+                                                          #.......|            
+                                                          +---#---+            
                                                                                
                                                                                
                                                                                
@@ -36,44 +35,757 @@ DISPLAY
                                                                                
                                                                                
                                                                                
-     +---------------------------------+                                       
-     |..........................*......|                                       
-     |........@..................*.*...|                                       
-     |......+---------------+*........*|                                       
-     |....                                                                     
-     |..                                                                       
-     |                                                                         
+                                                                               
+                                                                               
+                                                                               
                                                                                
                                                                                
 
 message_loop: input ready on stdin
-message_send: TO 127.0.1.1:57903
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |@......|            
+                                                          #.......|            
+                                                          +---#---+            
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY b
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                         #@.......|            
+                                                          +---#---+            
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                        #@#.......|            
+                                                          +---#---+            
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                       #@##.......|            
+                                                          +---#---+            
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                      #@###.......|            
+                                                          +---#---+            
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                     #@####.......|            
+                                                          +---#---+            
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #@#####.......|            
+                                                    #     +---#---+            
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    @######.......|            
+                                                    #     +---#---+            
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY b
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY b
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY b
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    @     +---#---+            
+                                                   -#+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                                   -@+                         
+                                           |.........|                         
+                                           |.......*.|                         
+                                           #.....*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |........@|                         
+                                           |.......*.|                         
+                                           #.....*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.......*@|                         
+                                           #.....*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 1 lines:
+GOLD 0 8 39
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 1 lines:
+GOLD 8 8 39
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.......@.|                         
+                                           #.....*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |......@..|                         
+                                           #.....*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.....@...|                         
+                                           #.....*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |....@....|                         
+                                           #.....*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.....@...|                         
+                                           #.....*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY b
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #....@*.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 1 lines:
+GOLD 0 14 33
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 1 lines:
+GOLD 6 14 33
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #.....@.*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #......@*.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 1 lines:
+GOLD 0 23 24
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 1 lines:
+GOLD 9 23 24
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #.......@.|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #........@|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
 message_send: 1 lines:
 KEY a
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 1 lines:
 ERROR usage: unknown keystroke
 
 message_loop: input ready on stdin
-message_send: TO 127.0.1.1:57903
+message_send: TO 127.0.1.1:47216
 message_send: 1 lines:
 KEY a
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 1 lines:
 ERROR usage: unknown keystroke
 
 message_loop: input ready on stdin
-message_send: TO 127.0.1.1:57903
+message_send: TO 127.0.1.1:47216
 message_send: 1 lines:
 KEY h
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 22 lines:
 DISPLAY
                                                                                
                                                                                
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #.......@.|                         
+                                           +----#----+                         
                                                                                
                                                                                
                                                                                
@@ -84,26 +796,26 @@ DISPLAY
                                                                                
                                                                                
                                                                                
-     +---------------------------------+                                       
-     |..........................*......|                                       
-     |.......@...................*.*...|                                       
-     |......+---------------+*........*|                                       
-     |.....                                                                    
-     |..*.                                                                     
-     |...                                                                      
-     |..                                                                       
-     +-                                                                        
 
 message_loop: input ready on stdin
-message_send: TO 127.0.1.1:57903
+message_send: TO 127.0.1.1:47216
 message_send: 1 lines:
 KEY h
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 22 lines:
 DISPLAY
                                                                                
                                                                                
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #......@..|                         
+                                           +----#----+                         
                                                                                
                                                                                
                                                                                
@@ -114,26 +826,26 @@ DISPLAY
                                                                                
                                                                                
                                                                                
-     +---------------------------------+                                       
-     |..........................*......|                                       
-     |......@....................*.*...|                                       
-     |......+---------------+*........*|                                       
-     |......                                                                   
-     |..*...                                                                   
-     |......                                                                   
-     |.....*                                                                   
-     +------                                                                   
 
 message_loop: input ready on stdin
-message_send: TO 127.0.1.1:57903
+message_send: TO 127.0.1.1:47216
 message_send: 1 lines:
 KEY h
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 22 lines:
 DISPLAY
                                                                                
                                                                                
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #.....@...|                         
+                                           +----#----+                         
                                                                                
                                                                                
                                                                                
@@ -144,30 +856,26 @@ DISPLAY
                                                                                
                                                                                
                                                                                
-     +---------------------------------+                                       
-     |..........................*......|                                       
-     |.....@.....................*.*...|                                       
-     |......+---------------+*........*|                                       
-     |......|                                                                  
-     |..*...|                                                                  
-     |......|                                                                  
-     |.....*|                                                                  
-     +------+                                                                  
 
 message_loop: input ready on stdin
-message_send: TO 127.0.1.1:57903
-message_send: 1 lines:
-KEY h
-message_loop: input ready on stdin
-message_send: TO 127.0.1.1:57903
+message_send: TO 127.0.1.1:47216
 message_send: 1 lines:
 KEY h
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 22 lines:
 DISPLAY
                                                                                
                                                                                
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #....@....|                         
+                                           +----#----+                         
                                                                                
                                                                                
                                                                                
@@ -178,22 +886,26 @@ DISPLAY
                                                                                
                                                                                
                                                                                
-     +---------------------------------+                                       
-     |..........................*......|                                       
-     |....@......................*.*...|                                       
-     |......+---------------+*........*|                                       
-     |......|                                                                  
-     |..*...|                                                                  
-     |......|                                                                  
-     |.....*|                                                                  
-     +------+                                                                  
 
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
 message_loop: 22 lines:
 DISPLAY
                                                                                
                                                                                
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #...@.....|                         
+                                           +----#----+                         
                                                                                
                                                                                
                                                                                
@@ -204,154 +916,1453 @@ DISPLAY
                                                                                
                                                                                
                                                                                
-     +---------------------------------+                                       
-     |..........................*......|                                       
-     |...@.......................*.*...|                                       
-     |......+---------------+*........*|                                       
-     |......|                                                                  
-     |..*...|                                                                  
-     |......|                                                                  
-     |.....*|                                                                  
-     +------+                                                                  
 
 message_loop: input ready on stdin
-message_send: TO 127.0.1.1:57903
+message_send: TO 127.0.1.1:47216
 message_send: 1 lines:
-KEY Q
+KEY h
 message_loop: message ready on socket
-message_loop: FROM 127.0.0.1:57903
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #..@......|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #.@.......|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                           #@........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                          #@.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                           |.........|                         
+                                         #@#.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                        #  |.........|                         
+                                        #@##.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                           |.........|                         
+                                        #  |.........|                         
+                                        @###.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY u
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY u
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY y
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY u
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                       ##  |.........|                         
+                                        @  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                       #@  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                           +--------#+                         
+                                      #@#  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                     #     +--------#+                         
+                                     #@##  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                     #     +--------#+                         
+                                    #@###  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                     #     +--------#+                         
+                                   #@####  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                                    #     +---#---+            
+                                     #     +--------#+                         
+                                   ##@###  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                                    #######.......|            
+                                     #              #     +---#---+            
+                                     @     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                                          |.......|            
+                                     #              #######.......|            
+                                     @              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                                                                               
+                                                          +-------+            
+                                    -#-                   |.......|            
+                                     @              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                                    -@-                   |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.....@...|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----@---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.....@...|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |....@....|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.....@...|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |....@....|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.....@...|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY k
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----@---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     @              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     @              #     +---#---+            
+                                     #     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     @     +--------#+                         
+                                   ######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY j
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   ##@###  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                   #@####  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                  #@#####  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                 #@######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                                #@#######  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                               #@########  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                              #@#########  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                             #@##########  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                                     #     +--------#+                         
+                            #@###########  |.........|                         
+                                        #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+                           +         #     +--------#+                         
+                           #@############  |.........|                         
+                           |            #  |.........|                         
+                                        ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+               +-----------+         #     +--------#+                         
+               #.....*.....@#############  |.........|                         
+               |...........|            #  |.........|                         
+               +-----------             ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+               +-----------+         #     +--------#+                         
+               #.....*....@##############  |.........|                         
+               |...........|            #  |.........|                         
+               +-----------+            ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+               +-----------+         #     +--------#+                         
+               #.....*...@.##############  |.........|                         
+               |...........|            #  |.........|                         
+               +-----------+            ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+               +-----------+         #     +--------#+                         
+               #.....*..@..##############  |.........|                         
+               |...........|            #  |.........|                         
+               +-----------+            ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+               +-----------+         #     +--------#+                         
+               #.....*.@...##############  |.........|                         
+               |...........|            #  |.........|                         
+               +-----------+            ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+               +-----------+         #     +--------#+                         
+               #.....*@....##############  |.........|                         
+               |...........|            #  |.........|                         
+               +-----------+            ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:47216
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
 message_loop: 1 lines:
-QUIT Thanks for playing!
+GOLD 0 47 0
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 1 lines:
+GOLD 24 47 0
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 22 lines:
+DISPLAY
+                                                                               
+                               +---------+                                     
+                               |.........|                +-------+            
+                               +-----#---+                |.......|            
+                                     #              #######.......|            
+                                     #              #     +---#---+            
+               +-----------+         #     +--------#+                         
+               #.....@.....##############  |.........|                         
+               |...........|            #  |.........|                         
+               +-----------+            ####.........|                         
+                                           +----#----+                         
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:47216
+message_loop: 16 lines:
+QUIT GAME OVER:
+A     59 Kashan
+B     35 Kashan
+C      0 Kashan
+D      0 Kashan
+E     44 Kashan
+F      0 Kashan
+G     65 Kashan
+H      0 Kashan
+I      0 Kashan
+J      0 Kashan
+K      0 Kashan
+L      0 Kashan
+M      0 Kashan
+N     47 Kashan
+
 
 message_done: message module closing down.
-==2778051== 
-==2778051== HEAP SUMMARY:
-==2778051==     in use at exit: 91,726 bytes in 159 blocks
-==2778051==   total heap usage: 245 allocs, 86 frees, 149,762 bytes allocated
-==2778051== 
-==2778051== 9 bytes in 1 blocks are possibly lost in loss record 8 of 80
-==2778051==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x498E60E: strdup (strdup.c:42)
-==2778051==    by 0x48C7D54: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x489B238: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BB4C: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BBDF: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B46A: initDisplay (client.c:301)
-==2778051==    by 0x10A80A: main (client.c:63)
-==2778051== 
-==2778051== 24 bytes in 1 blocks are possibly lost in loss record 27 of 80
-==2778051==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x4A0614E: tsearch (tsearch.c:337)
-==2778051==    by 0x48C7D6E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x489B238: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BB4C: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BBDF: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B46A: initDisplay (client.c:301)
-==2778051==    by 0x10A80A: main (client.c:63)
-==2778051== 
-==2778051== 24 bytes in 1 blocks are possibly lost in loss record 28 of 80
-==2778051==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x4A0614E: tsearch (tsearch.c:337)
-==2778051==    by 0x48C7D6E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x4894628: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x4897E6D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A36D4: vidputs_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A3F41: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A9899: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48AAA84: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BF27: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B4C9: initDisplay (client.c:311)
-==2778051== 
-==2778051== 24 bytes in 1 blocks are possibly lost in loss record 29 of 80
-==2778051==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x4A0614E: tsearch (tsearch.c:337)
-==2778051==    by 0x48C7D6E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48945A8: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A36D4: vidputs_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A3F41: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A9899: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48AAA84: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BF27: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B4C9: initDisplay (client.c:311)
-==2778051==    by 0x10A80A: main (client.c:63)
-==2778051== 
-==2778051== 63 bytes in 1 blocks are possibly lost in loss record 34 of 80
-==2778051==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x498E60E: strdup (strdup.c:42)
-==2778051==    by 0x48C7D54: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x4894628: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x4897E6D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A36D4: vidputs_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A3F41: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A9899: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48AAA84: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BF27: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B4C9: initDisplay (client.c:311)
-==2778051== 
-==2778051== 64 bytes in 1 blocks are possibly lost in loss record 35 of 80
-==2778051==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x498E60E: strdup (strdup.c:42)
-==2778051==    by 0x48C7D54: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48945A8: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A36D4: vidputs_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A3F41: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A9899: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48AAA84: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BF27: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B4C9: initDisplay (client.c:311)
-==2778051==    by 0x10A80A: main (client.c:63)
-==2778051== 
-==2778051== 168 bytes in 1 blocks are possibly lost in loss record 57 of 80
-==2778051==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x48C7CCD: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x489B238: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BB4C: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BBDF: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B46A: initDisplay (client.c:301)
-==2778051==    by 0x10A80A: main (client.c:63)
-==2778051== 
-==2778051== 168 bytes in 1 blocks are possibly lost in loss record 58 of 80
-==2778051==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x48C7CCD: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x4894628: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x4897E6D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A36D4: vidputs_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A3F41: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A9899: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48AAA84: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BF27: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B4C9: initDisplay (client.c:311)
-==2778051==    by 0x10A80A: main (client.c:63)
-==2778051== 
-==2778051== 168 bytes in 1 blocks are possibly lost in loss record 59 of 80
-==2778051==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2778051==    by 0x48C7CCD: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48CB098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
-==2778051==    by 0x48945A8: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A36D4: vidputs_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A3F41: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48A9899: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x48AAA84: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x489BF27: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.3)
-==2778051==    by 0x10B4C9: initDisplay (client.c:311)
-==2778051==    by 0x10A80A: main (client.c:63)
-==2778051== 
-==2778051== LEAK SUMMARY:
-==2778051==    definitely lost: 0 bytes in 0 blocks
-==2778051==    indirectly lost: 0 bytes in 0 blocks
-==2778051==      possibly lost: 712 bytes in 9 blocks
-==2778051==    still reachable: 91,014 bytes in 150 blocks
-==2778051==         suppressed: 0 bytes in 0 blocks
-==2778051== Reachable blocks (those to which a pointer was found) are not shown.
-==2778051== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==2778051== 
-==2778051== For lists of detected and suppressed errors, rerun with: -s
-==2778051== ERROR SUMMARY: 9 errors from 9 contexts (suppressed: 0 from 0)

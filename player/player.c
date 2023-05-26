@@ -96,6 +96,7 @@ get_y(player_t* player)
     
 }
 
+/* see player.h for description */
 char
 get_gold(player_t* player)
 {
@@ -105,6 +106,7 @@ get_gold(player_t* player)
     
 }
 
+/* see player.h for description */
 void
 set_x(player_t* player, int x)
 {
@@ -124,6 +126,7 @@ set_y(player_t* player, int y)
     
 }
 
+/* see player.h for description */
 void
 set_gold(player_t* player, int gold)
 {
@@ -132,7 +135,3 @@ set_gold(player_t* player, int gold)
     }
     
 }
-
-
-
-// gettter and seeter for x and y and gold.
