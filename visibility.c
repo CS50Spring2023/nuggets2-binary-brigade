@@ -52,12 +52,14 @@ lineCheck(grid_t* grid, const int pr, const int pc, const int row, const int col
         currCol = pc + ((currRow - pr)*rowSlope);
         // col is an integer; check the intersect point
         if (floorf(currCol) == currColl) {
-          //check currRow, currCol
+          if (blocksVisibility(currRow, currCol)) {
+            return false;
         }
         // col not an integer; check points left and right
         else {
-          //check currRow, floorf(currCol)
-          //check currRow, ceilf(currCol)
+          if (blocksVisibility(currRow, floorf(currCol)) && blocksVisibility(currRow, floorf(currCol))) {
+            return false;
+          }
         }
       }
     }
@@ -67,12 +69,15 @@ lineCheck(grid_t* grid, const int pr, const int pc, const int row, const int col
         currCol = pc + ((currRow - pr)*rowSlope);
         // col is an integer; check the intersect point
         if (floorf(currCol) == currColl) {
-          //check currRow, currCol
+          if (blocksVisibility(currRow, currCol)) {
+            return false;
+        }
         }
         // col not an integer; check points left and right
         else {
-          //check currRow, floorf(currCol)
-          //check currRow, ceilf(currCol)
+          if (blocksVisibility(currRow, floorf(currCol)) && blocksVisibility(currRow, floorf(currCol))) {
+            return false;
+          }
         }
       }
     }
@@ -86,12 +91,15 @@ lineCheck(grid_t* grid, const int pr, const int pc, const int row, const int col
         currRow = pr + ((currCol - pc)*colSlope);
         // row is an integer; check the intersect point
         if (floorf(currRow) == currRow) {
-          //check currRow, currCol
+          if (blocksVisibility(currRow, currCol)) {
+            return false;
+          }
         }
         // row is not an integer; check points above and below
         else {
-          //check floorf(currRow), currCol
-          //check ceilf(currRow), currCol
+          if (blocksVisibility(floorf(currRow), currCol) && blocksVisibility(floorf(currRow), currCol)) {
+            return false;
+          }
         }
       }
     }
@@ -101,12 +109,15 @@ lineCheck(grid_t* grid, const int pr, const int pc, const int row, const int col
         currRow = pr + ((currCol - pc)*colSlope);
         // row is an integer; check the intersect point
         if (floorf(currRow) == currRow) {
-          //check currRow, currCol
+          if (blocksVisibility(currRow, currCol)) {
+            return false;
+          }
         }
         // row is not an integer; check points above and below
         else {
-          //check floorf(currRow), currCol
-          //check ceilf(currRow), currCol
+          if (blocksVisibility(floorf(currRow), currCol) && blocksVisibility(floorf(currRow), currCol)) {
+            return false;
+          }
         }
       }
     }
