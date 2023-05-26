@@ -17,7 +17,8 @@
 
 /**************** local global types ****************/
 static const int goldTotal = 250;
-static const int maxPlayers = 26;
+static const int maxPlayers = 27;
+static const char* alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 /**************** global types ****************/
 typedef struct game{
@@ -56,6 +57,7 @@ add_player(game_t* game, player_t* player)
   if (game->playerCount == maxPlayers){
     return 1;
   }
+  player_set_letter(player, alphabet[game->playerCount]);
   game->players[game->playerCount] = player;
   game->playerCount++;
   return 0;

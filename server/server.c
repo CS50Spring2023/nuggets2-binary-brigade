@@ -10,9 +10,15 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "../../shared/tse/libcs50.a"
 #include "../support/message.h"
 #include "../grid/grid.h"
 #include "../game/game.h"
+
+/**************** local global types ****************/
+static const int maxPlayers = 27;
+static hashtable_t* playersHash;
+static game_t* game;
 
 /**************** file-local functions ****************/
 
@@ -44,6 +50,7 @@ main(int argc, char *argv[])
 
   grid_t* grid = gridInit(argv[1], randomSeed);
   game_t* game = initialize_game(grid);
+  playersHash = hashtable_new(27); 
 
   // initialize the message module (without logging)
   int myPort = message_init(NULL);
@@ -89,13 +96,23 @@ handleMessage(void* arg, const addr_t from, const char* message)
     if (len > 0 && line[len-1] == '\n') {
       line[len-1] = '\0';
     }
-    /**
-     * this is where I will process input
-     * 
-     * 
-     * 
-     * 
-    */
+
+    if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
+      const char* name = message + strlen("PLAY ");
+      player_t* player = player_new(from, name, 0, 0, "");
+      place_player(player);
+      add_player(game, player);
+      hashtable_insert(playersHash, from, player);
+  
+    } else if (line == 'h' || line == 'l' || line == 'j' || line == 'k' || line == 'y' || line == 'u' || line == 'b' || line == 'n' || line == 'H' || line == 'L' || line == 'J' || line == 'K' || line == 'Y' || line == 'U' || line == 'B' || line == 'N') {
+      player_t* player = hashtable_find(playersHash, from);
+      movePlayer(game, player, line);
+
+    } else if (line == "Q") {
+      player_t* player = hashtable_find(playersHash, from);
+      player_inactive(player);
+    }
+    
 
     // send as message back to client
     message_send(from, line);
