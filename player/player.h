@@ -79,3 +79,26 @@ void set_y(player_t* player, int y);
  */
 void set_gold(player_t* player, int gold);
 
+/* Given a row and col, tell if the player currently sees
+ * that point.
+ *
+ * We return:
+ *   true if point is visible, false if not
+ */
+bool isVisible(player_t* player, const int row, const int col);
+
+/* Given a row and col, tell if the player knows (has ever
+ * seen) that point.
+ *
+ * We return:
+ *   true if point is known, false if not
+ */
+bool isKnown(player_t* player, const int row, const int col);
+
+/* Updates visibility by changing the values of the known
+ * and visible boolean arrays.
+ *
+ * We return:
+ *   nothing
+ */
+void updateVisibility(player_t* player);

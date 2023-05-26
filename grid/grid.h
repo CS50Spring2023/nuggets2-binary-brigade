@@ -41,7 +41,7 @@ grid_t* gridInit(char* pathName, int randomSeed);
 *  becomes the number of columns in the map.
 *  This number is returned.
 */
-int readnColumns(FILE* map, int nRows);
+static int readnColumns(FILE* map, int nRows);
 
 /**************** insertGridpoints ****************/
 /* The function takes the pathname for a map file.
@@ -50,7 +50,7 @@ int readnColumns(FILE* map, int nRows);
 *  columns), creating and inserting a gridpoint 
 *  struct into the 2D array belonging to the grid.
 */
-void insertGridpoints(char* pathName);
+static void insertGridpoints(char* pathName);
 
 /**************** gridDelete ****************/
 /* The function deletes the grid.
@@ -73,16 +73,24 @@ void gridDelete();
 *  returns a pointer to the gridpoint
 *  (otherwise NULL).
 */
-gridpoint_t* gridpointNew(int row, int column, char terrain);
+static gridpoint_t* gridpointNew(int row, int column, char terrain);
 
-/**************** gridpointNew ****************/
-/* The function displays the grid. Upon checking
-*  that the grid is not NULL, it loops over
-*  each of the rows and columns, printing the
-*  terrain stored in the gridpoint at that
-*  location. 
+/**************** gridDisplay ****************/
+/* The function creates a string to display the
+*  grid. Upon checking that the grid is not NULL, 
+*  it loops over each point in the grid, printing
+*  players/gold/terrain/empty spaces based on
+*  what is known and visible to the player.
 */
 void gridDisplay();
+
+/**************** gridDisplaySpectator ****************/
+/* The function creates a string to display the
+*  grid. It is designed for the spectator mode, meaning
+*  that the function has full visibility of the grid
+*  as well as the gold and players in it.  
+*/
+char* gridDisplaySpectator(); 
 
 /**************** generateGold ****************/
 /* The functions is called in the gridInit
@@ -95,7 +103,7 @@ void gridDisplay();
 *  the piles in random locations on the map
 *  (if the spot is in a room). 
 */
-void generateGold(int randomSeed);
+static void generateGold(int randomSeed);
 
 /**************** movePlayer ****************/
 /* The function handles the overall
@@ -127,7 +135,7 @@ void movePlayer(game_t* game, player_t* player, char letter);
 *  to handle various cases arising from the 
 *  player movement.
 */
-void executeMovement(game_t* game, player_t* player, 
+static void executeMovement(game_t* game, player_t* player, 
                     gridpoint_t current, gridpoint_t newPoint);
 
 /**************** movePossible ****************/
@@ -140,7 +148,7 @@ void executeMovement(game_t* game, player_t* player,
 *  move is possible).
 *  Otherwise, it returns false.  
 */
-bool movePossible(player_t* player, gridpoint_t current, gridpoint_t newPoint);
+static bool movePossible(player_t* player, gridpoint_t current, gridpoint_t newPoint);
 
 /**************** foundGold ****************/
 /* Function checks if the new position of the
@@ -151,7 +159,7 @@ bool movePossible(player_t* player, gridpoint_t current, gridpoint_t newPoint);
 *  the gridpoint is updated to reflect the
 *  changes.  
 */
-void foundGold(player_t* player);
+static void foundGold(player_t* player);
 
 /**************** foundPlayer ****************/
 /* Function handles situations where a movement
@@ -159,7 +167,7 @@ void foundGold(player_t* player);
 *  player. If that is the case, the players
 *  switch places.
 */
-void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t newPoint);
+static void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t newPoint);
 
 /**************** placePlayer ****************/
 /* Function takes in a player struct, placing
@@ -167,6 +175,14 @@ void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_
 *  spot or passage).
 */
 void placePlayer(player_t* player);
+
+/**************** blocksVisibility ****************/
+/* Function determines if a point's terrain is open
+*  space that can be seen through (room spot or gold).
+*  Returns false if it's an open space and true if
+*  it's not. 
+*/
+static bool blocksVisibility(const int row, const int col);
 
 /**************** getnRows ****************/
 /* Function is a getter for the number of
