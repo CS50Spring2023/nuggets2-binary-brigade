@@ -17,7 +17,7 @@
 
 /**************** local global types ****************/
 static const int goldTotal = 250;
-static const int maxPlayers = 27;
+static const int maxPlayers = 26;
 static const char* alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 /**************** global types ****************/
@@ -27,6 +27,7 @@ typedef struct game{
   int goldAvailable;
   int playerCount;
   player_t** players;
+  bool spectator;
 } game_t;
 
 /**************** FUNCTION ****************/
@@ -46,6 +47,7 @@ initialize_game(grid_t* grid)
     game->playerCount = 0;
     player_t** players = calloc(maxPlayers, sizeof(player_t*));
     game->players = players;
+    game->spectator = false;
   }
 }
 
@@ -61,6 +63,19 @@ add_player(game_t* game, player_t* player)
   game->players[game->playerCount] = player;
   game->playerCount++;
   return 0;
+}
+
+/**************** FUNCTION ****************/
+/* see player.h for description */
+char* 
+get_grid_dimensions(game_t* game)
+{
+  int rows = getnRows(game->grid);
+  int columns = getnColumns(game->grid);
+  int outputLength = strlen("GRID  ") + strlen(itoa(rows)) + strlen(itoa(columns));
+  char *dimensions = malloc(sizeof(char) * outputLength);
+  sprintf(dimensions, "%s %d %d", "GRID ", rows, columns);
+  return dimensions;
 }
 
 /**************** FUNCTION ****************/
@@ -95,6 +110,14 @@ int
 get_total_gold(game_t* game)
 {
   return game->totalGold;
+}
+
+/**************** FUNCTION ****************/
+/* see player.h for description */
+int 
+get_available_gold(game_t* game)
+{
+  return game->goldAvailable;
 }
 
 /**************** FUNCTION ****************/
