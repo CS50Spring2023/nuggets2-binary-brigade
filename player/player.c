@@ -31,6 +31,9 @@ typedef struct player{
 
 } player_t;
 
+// Global variable defined in specs
+int MaxNameLength = 50;
+
 /**************** FUNCTION ****************/
 /* see player.h for description */
 player_t* 
@@ -47,7 +50,6 @@ player_new(char* port, char* name, int x, int y, char letter)
 
         // initialize contents of player structure
         player->port = port;
-        player->name = name;
         player->x_coord = x;
         player->y_coord = y;
         player->num_gold = 0;
@@ -57,6 +59,20 @@ player_new(char* port, char* name, int x, int y, char letter)
         player->numCols = cols;
         player->known = initializeBooleanArray(rows, cols);
         player->visible = initializeBooleanArray(rows, cols);
+
+        size_t nameLength = strlen(name);
+        if (nameLength > MaxNameLength) {
+            name[MaxNameLength] = '\0';
+        }
+
+        // replace invalid characters with underscores
+        for (size_t i = 0; i < strlen(name); i++) {
+            if (!isgraph(name[i]) && !isblank(name[i])) {
+                name[i] = '_';
+            }
+        }
+        player->name = name;
+
         return player;
     }
 }
@@ -322,6 +338,3 @@ lineCheck(const int pr, const int pc, const int row, const int col)
   }
   return true;
 }
-
-}
-

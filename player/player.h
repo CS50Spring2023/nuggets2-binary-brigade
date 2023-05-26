@@ -102,3 +102,9 @@ bool isKnown(player_t* player, const int row, const int col);
  *   nothing
  */
 void updateVisibility(player_t* player);
+
+static bool** 
+initializeBooleanArray(const int numRows, const int numCols);
+
+static bool 
+lineCheck(const int pr, const int pc, const int row, const int col);
