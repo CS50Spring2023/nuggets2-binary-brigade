@@ -66,6 +66,20 @@ add_player(game_t* game, player_t* player)
 /**************** FUNCTION ****************/
 /* see player.h for description */
 int
+game_inactive_player(game_t* game, player_t* player)
+{
+  for (player_t* currPlayer = game->players; currPlayer != NULL; currPlayer++) {
+    if (player == currPlayer){
+      player_inactive(currPlayer);
+      return 0;
+    }
+  }
+  return 1;
+}
+
+/**************** FUNCTION ****************/
+/* see player.h for description */
+int
 update_gold(game_t* game, int updateGoldCount)
 {
   if (game->goldAvailable < updateGoldCount || updateGoldCount < 0){
@@ -77,10 +91,31 @@ update_gold(game_t* game, int updateGoldCount)
 
 /**************** FUNCTION ****************/
 /* see player.h for description */
+int
+get_total_gold(game_t* game)
+{
+  return game->totalGold;
+}
+
+/**************** FUNCTION ****************/
+/* see player.h for description */
 player_t**
 get_players(game_t* game)
 {
   return game->players;
+}
+
+/**************** FUNCTION ****************/
+/* see player.h for description */
+char*
+game_summary(game_t* game)
+{
+  char* summary = mem_malloc(sizeof(char) + 1);
+  char* temp = mem_malloc(sizeof(char) + 1);
+  summary = "GAME OVER:\n"
+  for (player_t* currPlayer = game->players; currPlayer != NULL; currPlayer++) {
+    currPlayer.
+  }
 }
 
 /* see player.h for description */
