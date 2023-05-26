@@ -24,7 +24,7 @@ void handle_display(const char* message);
 void handle_quit(const char* message);
 void handle_error(const char* message);
 void initDisplay();
-char* duplicate_str(const char*);
+void duplicate_str(const char*);
 
 
 // helper struct to hold all the client info we need throughout the program
@@ -81,6 +81,7 @@ int main(int argc, char* argv[])
     // clean up message modual
     message_done();
     endwin();
+    free(client_info->last_display);
     free(client_info);
    
     return ok? 0 : 2;
@@ -160,13 +161,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
         
         if (strncmp(message, prefix, strlen(prefix)) == 0) {
             
-            // free the previous memory if it exists
-            if (client_info->last_display != NULL) {
-                free(client_info->last_display); 
-            }
-
-            // duplicate and store the new message
-            client_info->last_display = duplicate_str(message); 
+            duplicate_str(message); 
         }
 
     } else if (strcmp(messageType, "QUIT") == 0){
@@ -181,11 +176,17 @@ handleMessage(void* arg, const addr_t from, const char* message)
         // if message is ERROR, call handle error with the message to take care of it
         handle_error(message);
         
+    } else {
+        // if unknown or malformed message, just display to player what came from server
+        
+        mvprintw(0, 0, "Server message: %s", message);
     }
+    
 
     // return false to keep the message looop going
     return false;
 }
+
 
 /**************** handle_quit ****************/
 /* 
@@ -235,7 +236,7 @@ handle_quit(const char* message)
             const char* explanation = spacePos + 1;
 
             // display the remaining message on the screen
-            mvprintw(0, 0, "Server message: %s", explanation);
+            mvprintw(0, 0, "%s", explanation);
             refresh();
         }
         // sleep for 3 seconds to allow the player enough time to read
@@ -323,13 +324,7 @@ handle_error(const char* message)
         
         // refresh to show changes
         refresh();
-    }
-
-    // sleep for 1 to allow the player enough time to see the error message
-    sleep(1);
-
-    // now call handle display to display the last known grid and status line
-    handle_display(client_info->last_display);
+    } 
  
 }
 
@@ -503,18 +498,24 @@ void initDisplay()
  * We return:
  *   pointer to a string
  */
-char* 
+void 
 duplicate_str(const char* str) 
 {
+    if (client_info->last_display != NULL) {
+        free(client_info->last_display); 
+    }
+
     // get the length of the string, including the null terminator
     size_t len = strlen(str) + 1;  
     // allocate memory for the new string
-    char* new_str = malloc(len);  
+    client_info->last_display = malloc(len);  
 
-    if (new_str != NULL) {
+    if (client_info->last_display != NULL) {
         // copy the string to the newly allocated memory
-        memcpy(new_str, str, len);  
+        memcpy(client_info->last_display, str, len);  
     }
 
-    return new_str;
+    
 }
+            
+      
