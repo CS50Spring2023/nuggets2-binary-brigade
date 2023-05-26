@@ -99,20 +99,48 @@ handleMessage(void* arg, const addr_t from, const char* message)
 
     if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
       const char* name = message + strlen("PLAY ");
-      player_t* player = player_new(from, name, 0, 0, "");
-      place_player(player);
-      add_player(game, player);
-      hashtable_insert(playersHash, from, player);
+      if (strlen(name) == 0){
+        line = "QUIT Sorry - you must provide player's name.";
+      }
+      else {
+        player_t* player = player_new(from, name, 0, 0, "");
+        place_player(player);
+        if (add_player(game, player) != 0){
+          line = "QUIT Game is full: no more players can join."
+        } else {
+          hashtable_insert(playersHash, from, player);
+          strcat(char line, strcat("OK ", player->letter));
+          message_send(from, get_grid_dimensions(game));
+          message_send(from, goldUpdate(game, player, 0));
+          message_send(from, getDisplay(player));
+        }
+      }
+    } if (strcmp(message, "SPECTATE") == 0) {
+      if (add_spectator(game, from) != 0){
+        line = "QUIT Game is full: no more spectators can join."
+      } else {
+        message_send(from, get_grid_dimensions(game));
+        message_send(from, spectatorGoldUpdate(game));
+        message_send(from, gridDisplaySpectator());
+      }
   
-    } else if (line == 'h' || line == 'l' || line == 'j' || line == 'k' || line == 'y' || line == 'u' || line == 'b' || line == 'n' || line == 'H' || line == 'L' || line == 'J' || line == 'K' || line == 'Y' || line == 'U' || line == 'B' || line == 'N') {
+    } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
+      const char* key = message + strlen("KEY ");
       player_t* player = hashtable_find(playersHash, from);
-      movePlayer(game, player, line);
-
+      int prevGold = get_gold(player);
+      movePlayer(game, player, key);
+      int currGold = get_gold(player);
+      message_send(from, goldUpdate(game, player, currGold-prevGold));
     } else if (line == "Q") {
       player_t* player = hashtable_find(playersHash, from);
       player_inactive(player);
     }
-    
+
+    //OK,GRID, GOLD, KEY
+    //GRID nrows ncols
+    //GOLD n p r
+    //DISPLAY\nstring
+
 
     // send as message back to client
     message_send(from, line);
@@ -120,4 +148,40 @@ handleMessage(void* arg, const addr_t from, const char* message)
     // normal case: keep looping
     return false;
   }
+}
+
+static char*
+goldUpdate(game_t* game, player_t* player, int collected){
+  int n = collected;
+  int p = get_gold(player);
+  int r = get_available_gold(game);
+
+  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) strlen(itoa(r));
+  char *update = malloc(sizeof(char) * outputLength);
+  update = "GOLD "+itoa(n)+" "+itoa(p)+" "+itoa(r); 
+
+  return update;
+}
+
+static char*
+spectatorGoldUpdate(game_t* game){
+  int n = 0;
+  int p = 0;
+  int r = get_available_gold(game);
+
+  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) strlen(itoa(r));
+  char *update = malloc(sizeof(char) * outputLength);
+  update = "GOLD "+itoa(n)+" "+itoa(p)+" "+itoa(r); 
+
+  return update;
+}
+
+static char*
+getDisplay(player_t* player){
+  char* display = gridDisplay(player);
+  int outputLength = strlen("DISPLAY\n") + strlen(display) + 1;
+  char *update = malloc(sizeof(char) * outputLength);
+  char* updateDisplay = "DISPLAY\n"+display;
+
+  return updateDisplay;
 }
