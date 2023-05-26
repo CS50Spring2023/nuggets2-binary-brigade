@@ -1,6 +1,5 @@
 /** 
- * grid.c
- * Author: Louis Weisdorf
+ * grid.c<
  * CS50 Spring 2023, Project
  * Date: 05/20/2023
  * Description: This program provides the grid component of the 
