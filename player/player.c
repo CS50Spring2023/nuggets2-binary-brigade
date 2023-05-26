@@ -107,6 +107,7 @@ get_y(player_t* player)
     
 }
 
+/* see player.h for description */
 char
 get_gold(player_t* player)
 {
@@ -116,6 +117,7 @@ get_gold(player_t* player)
     
 }
 
+/* see player.h for description */
 void
 set_x(player_t* player, int x)
 {
@@ -135,6 +137,7 @@ set_y(player_t* player, int y)
     
 }
 
+/* see player.h for description */
 void
 set_gold(player_t* player, int gold)
 {
@@ -142,6 +145,7 @@ set_gold(player_t* player, int gold)
         player->num_gold = gold;
     }
     
+
 }
 
 
@@ -318,3 +322,6 @@ lineCheck(const int pr, const int pc, const int row, const int col)
   }
   return true;
 }
+
+}
+
