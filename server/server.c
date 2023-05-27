@@ -142,6 +142,9 @@ handleMessage(void* arg, const addr_t from, const char* message)
         remove_spectator(game, from);
         message_send(from, "QUIT Thanks for watching!");
       }
+    } else if (get_available_gold(game) == 0){
+      char* summary = game_summary(game);
+      player_t** players = get_players(game);
     }
 
     // normal case: keep looping
