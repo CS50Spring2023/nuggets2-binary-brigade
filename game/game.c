@@ -68,14 +68,14 @@ add_player(game_t* game, player_t* player)
 
 /**************** FUNCTION ****************/
 /* see player.h for description */
-addr_t*
+char*
 add_spectator(game_t* game, player_t* spectator)
 {
   if (game->spectator == NULL){
     game->spectator = spectator;
     return NULL;
   }
-  addr_t* pastSpectator = player_get_port(game->spectator);
+  char* pastSpectator = player_get_port(game->spectator);
   game->spectator = spectator;
   return pastSpectator;
 }
@@ -150,10 +150,7 @@ game_summary(game_t* game)
 {
   char* summary = mem_malloc(sizeof(char) + 1);
   char* temp = mem_malloc(sizeof(char) + 1);
-  summary = "GAME OVER:\n"
-  for (player_t* currPlayer = game->players; currPlayer != NULL; currPlayer++) {
-    currPlayer.
-  }
+  summary = "GAME OVER:\n";
 }
 
 /* see player.h for description */

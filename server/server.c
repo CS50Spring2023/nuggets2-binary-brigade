@@ -100,24 +100,26 @@ handleMessage(void* arg, const addr_t from, const char* message)
     if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
       const char* name = message + strlen("PLAY ");
       if (strlen(name) == 0){
-        line = "QUIT Sorry - you must provide player's name.";
+        message_send(from, "QUIT Sorry - you must provide player's name.");
       }
       else {
-        player_t* player = player_new(from, name, 0, 0, "");
+        //need to find port
+        player_t* player = player_new("port", name, 0, 0, "");
         place_player(player);
         if (add_player(game, player) != 0){
-          line = "QUIT Game is full: no more players can join."
+          message_send(from, "QUIT Game is full: no more players can join.");
         } else {
-          hashtable_insert(playersHash, from, player);
-          strcat(char line, strcat("OK ", player->letter));
+          //hashtable_insert(playersHash, from, player);
+          strcat(line, strcat("OK ", get_letter(player)));
           message_send(from, get_grid_dimensions(game));
           message_send(from, goldUpdate(game, player, 0));
           message_send(from, getDisplay(player));
         }
       }
     } if (strcmp(message, "SPECTATE") == 0) {
-      addr_t* oldSpectator = add_spectator(game, from)
+      addr_t* oldSpectator = add_spectator(game, from);
       if (oldSpectator != NULL){
+        //oldSpectator is a port number -- how do I get addr_t
         message_send(oldSpectator, "QUIT Game is full: another spectator has joined.")
       } else {
       message_send(from, get_grid_dimensions(game));
@@ -127,7 +129,8 @@ handleMessage(void* arg, const addr_t from, const char* message)
   
     } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
       const char* key = message + strlen("KEY ");
-      player_t* player = hashtable_find(playersHash, from);
+      game
+      //player_t* player = hashtable_find(playersHash, from);
       int prevGold = get_gold(player);
       movePlayer(game, player, key);
       int currGold = get_gold(player);
