@@ -21,6 +21,9 @@ static game_t* game;
 /**************** file-local functions ****************/
 
 static bool handleMessage(void* arg, const addr_t from, const char* message);
+static char* goldUpdate(game_t* game, player_t* player, int collected);
+static char* spectatorGoldUpdate(game_t* game);
+static char* getDisplay(player_t* player);
 
 /***************** main *******************************/
 int 
@@ -146,6 +149,15 @@ handleMessage(void* arg, const addr_t from, const char* message)
   }
 }
 
+/**************** goldUpdate ****************/
+/* 
+ * Formats a goldUpdate correctly for each player using helper functions
+ * 
+ * Caller provides:
+ *   game, player, and collected
+ * We return:
+ *   char* update of gold
+ */
 static char*
 goldUpdate(game_t* game, player_t* player, int collected){
   int n = collected;
@@ -159,6 +171,15 @@ goldUpdate(game_t* game, player_t* player, int collected){
   return update;
 }
 
+/**************** spectatorGoldUpdate ****************/
+/* 
+ * Formats a goldUpdate correctly for a spectator using a helper function
+ * 
+ * Caller provides:
+ *   game
+ * We return:
+ *   char* update of gold
+ */
 static char*
 spectatorGoldUpdate(game_t* game){
   int n = 0;
@@ -172,6 +193,15 @@ spectatorGoldUpdate(game_t* game){
   return update;
 }
 
+/**************** getDisplay ****************/
+/* 
+ * Formats a display update for client
+ * 
+ * Caller provides:
+ *   player
+ * We return:
+ *   char* update of display
+ */
 static char*
 getDisplay(player_t* player){
   char* display = gridDisplay(player);

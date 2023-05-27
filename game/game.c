@@ -14,6 +14,7 @@
 #include "game.h"
 #include "../grid/grid.h"
 #include "../player/player.h"
+#include "../lib/mem.h"
 
 /**************** local global types ****************/
 static const int goldTotal = 250;
@@ -68,16 +69,36 @@ add_player(game_t* game, player_t* player)
 
 /**************** FUNCTION ****************/
 /* see player.h for description */
-char*
+player_t*
+find_player(game_t* game, addr_t address)
+{
+  // Looping over players in the game
+  for (int i = 0; i < game->playerCount; i++) {
+    player_t* currPlayer = game->players[i];
+    addr_t playerAddress = get_address(currPlayer);
+
+    // If adresses match, returning player
+    if (&address == &playerAddress) {
+      return currPlayer;
+    }
+  } 
+
+  // If no player was found with the correct address, returning NULL
+  return NULL;
+}
+
+/**************** FUNCTION ****************/
+/* see player.h for description */
+addr_t*
 add_spectator(game_t* game, player_t* spectator)
 {
   if (game->spectator == NULL){
     game->spectator = spectator;
     return NULL;
   }
-  char* pastSpectator = player_get_port(game->spectator);
+  addr_t pastSpectator = get_address(game->spectator);
   game->spectator = spectator;
-  return pastSpectator;
+  return &pastSpectator;
 }
 
 /**************** FUNCTION ****************/
@@ -98,7 +119,8 @@ get_grid_dimensions(game_t* game)
 int
 game_inactive_player(game_t* game, player_t* player)
 {
-  for (player_t* currPlayer = game->players; currPlayer != NULL; currPlayer++) {
+  for (int i = 0; i < game->playerCount; i++) {
+    player_t* currPlayer = game->players[i];
     if (player == currPlayer){
       player_inactive(currPlayer);
       return 0;
@@ -148,9 +170,38 @@ get_players(game_t* game)
 char*
 game_summary(game_t* game)
 {
-  char* summary = mem_malloc(sizeof(char) + 1);
-  char* temp = mem_malloc(sizeof(char) + 1);
-  summary = "GAME OVER:\n";
+  // Length of initial statement (letter and score) and max name length
+  int maxLineSize = 9 + get_MaxNameLength;
+  // Calculating maximum size of the entire summary string
+  int maxSummarySize = (maxLineSize + 1) * game->playerCount;
+
+  // Allocating memmory for the summary string
+  char* summary = mem_malloc(maxSummarySize * sizeof(char) + 1);
+
+  // Inserting GAME OVER as opening line for the summary
+  strcat(summary, "GAME OVER\n");
+
+  // Looping over the players in the game, adding their information to summary
+  for (int i = 0; i < game->playerCount; i++) {
+    player_t* currPlayer = game->players[i];
+
+    // Saving player information in variable currLine
+    char* currLine = mem_malloc(maxLineSize * sizeof(char) + 1); 
+    sprintf(currLine, "%c   %3d %s\n", 
+      get_letter(currPlayer), get_gold(currPlayer), get_name(currPlayer));
+    
+    // Adding information to summary string
+    strcat(summary, currLine);
+
+    // Cleaning up before next line
+    mem_free(currLine);
+  }
+
+  // Adding newline to end of summary for clean look
+  strcat(summary, "\n");
+
+  // Returning summary
+  return summary;
 }
 
 /* see player.h for description */
@@ -158,6 +209,11 @@ void
 delete_game(game_t* game)
 {
   if (game != NULL){
+    // Freeing each player
+    for (int i = 0; i < game->playerCount; i++) {
+      player_delete(game->players[i]);
+    }
+
     free(game->players);
     free(game);
   }
