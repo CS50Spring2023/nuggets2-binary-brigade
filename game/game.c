@@ -176,21 +176,31 @@ game_summary(game_t* game)
   int maxSummarySize = (maxLineSize + 1) * game->playerCount;
 
   // Allocating memmory for the summary string
-  char* summary = mem_calloc(maxSummarySize, sizeof(char) + 1);
+  char* summary = mem_malloc(maxSummarySize * sizeof(char) + 1);
 
   // Inserting GAME OVER as opening line for the summary
-  sprintf(summary, "%s", "GAME OVER:\n");
+  strcat(summary, "GAME OVER\n");
 
   // Looping over the players in the game, adding their information to summary
   for (int i = 0; i < game->playerCount; i++) {
     player_t* currPlayer = game->players[i];
-    sprintf(summary, "%c   %3d %s\n", 
+
+    // Saving player information in variable currLine
+    char* currLine = mem_malloc(maxLineSize * sizeof(char) + 1); 
+    sprintf(currLine, "%c   %3d %s\n", 
       get_letter(currPlayer), get_gold(currPlayer), get_name(currPlayer));
+    
+    // Adding information to summary string
+    strcat(summary, currLine);
+
+    // Cleaning up before next line
+    mem_free(currLine);
   }
 
   // Adding newline to end of summary for clean look
-  sprintf(summary, "\n");
+  strcat(summary, "\n");
 
+  // Returning summary
   return summary;
 }
 
@@ -199,6 +209,11 @@ void
 delete_game(game_t* game)
 {
   if (game != NULL){
+    // Freeing each player
+    for (int i = 0; i < game->playerCount; i++) {
+      player_delete(game->players[i]);
+    }
+
     free(game->players);
     free(game);
   }

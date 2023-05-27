@@ -30,6 +30,18 @@ game_t* initialize_game(grid_t* grid);
 int add_player(game_t* game, player_t* player);
 
 /**************** FUNCTION ****************/
+/* Caller provides a pointer to a game
+ * struct and an address struct. 
+ *
+ * We return:
+ * a pointer to the player with the address
+ * passed in, or NULL if there is no such
+ * player.
+ */
+player_t*
+find_player(game_t* game, addr_t address);
+
+/**************** FUNCTION ****************/
 /* Update gold count in game
  *
  * We return:
@@ -45,7 +57,20 @@ int update_gold(game_t* game, int updateGoldCount);
  */
 player_t** get_players(game_t* game);
 
-/* Take in a pointer to a game and frees the space to the players array and the game
+/**************** FUNCTION ****************/
+/* Provided a game, the function creates
+ * a summary of the game.
+ *
+ * We return:
+ *   a string-representation of the summary.
+ *   The caller is responsible for later 
+ *   freeing the summary string. 
+ */
+char*
+game_summary(game_t* game)
+
+/* Take in a pointer to a game and frees each player in the 
+ * array, then the space for the array and the game itself.
  *
  * We return:
  *   nothing
