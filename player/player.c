@@ -123,12 +123,13 @@ get_letter(player_t* player)
     return player->letter;
   }
   return '\0';
+}
 
 /* see player.h for description */
 int
 get_MaxNameLength()
 {
-  return MaxNameLength;
+  return maxNameLength;
 }
 
 
