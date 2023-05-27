@@ -1,6 +1,6 @@
-/* 
+/*
  * player.h - header file for CS50 player module
- * 
+ *
  * Binary Brigade, Spring, 2023
  */
 
@@ -10,12 +10,15 @@
 typedef struct player player_t;  // opaque to users of the module
 
 /**************** FUNCTION ****************/
+
+
 /* Create a new player structure w/ given parameters
  *
  * We return:
  *   pointer to a new playeryer; NULL if error (out of memory).
  */
 player_t* player_new(addr_t address, char* name, int x, int y, char letter);
+
 
 /* Take in a pointer to a player and makes it inactive
  *
@@ -24,6 +27,7 @@ player_t* player_new(addr_t address, char* name, int x, int y, char letter);
  */
 void player_inactive(player_t* player);
 
+
 /* Take in a pointer to a player and deletes it + frees up the space
  *
  * We return:
@@ -31,40 +35,46 @@ void player_inactive(player_t* player);
  */
 void player_delete(player_t* player);
 
-/* Take in a pointer to a player 
+
+/* Take in a pointer to a player
  *
  * We return:
  *   player's letter
  */
 char get_letter(player_t* player);
 
-/* Take in a pointer to a player 
+
+/* Take in a pointer to a player
  *
  * We return:
  *   player's x
  */
 char get_x(player_t* player);
 
-/* Take in a pointer to a player 
+
+/* Take in a pointer to a player
  *
  * We return:
  *   player's y
  */
 char get_y(player_t* player);
 
-/* Take in a pointer to a player 
+
+/* Take in a pointer to a player
  *
  * We return:
  *   player's gold
  */
-char get_gold(player_t* player);
+int get_gold(player_t* player);
 
-/* Take in a pointer to a player 
+
+/* Take in a pointer to a player
  *
  * We return:
- *   player's port
+ *   player's address
  */
 addr_t get_address(player_t* player);
+
 
 /* Take in a pointer to a player and change player's x
  *
@@ -73,12 +83,14 @@ addr_t get_address(player_t* player);
  */
 void set_x(player_t* player, int x);
 
+
 /* Take in a pointer to a player and change player's y
  *
  * We return:
  *   nothing
  */
-void set_y(player_t* player, int y); 
+void set_y(player_t* player, int y);
+
 
 /* Take in a pointer to a player and change player's gold
  *
@@ -86,6 +98,7 @@ void set_y(player_t* player, int y);
  *   nothing
  */
 void set_gold(player_t* player, int gold);
+
 
 /* Given a row and col, tell if the player currently sees
  * that point.
@@ -95,6 +108,7 @@ void set_gold(player_t* player, int gold);
  */
 bool isVisible(player_t* player, const int row, const int col);
 
+
 /* Given a row and col, tell if the player knows (has ever
  * seen) that point.
  *
@@ -103,6 +117,7 @@ bool isVisible(player_t* player, const int row, const int col);
  */
 bool isKnown(player_t* player, const int row, const int col);
 
+
 /* Updates visibility by changing the values of the known
  * and visible boolean arrays.
  *
@@ -110,10 +125,3 @@ bool isKnown(player_t* player, const int row, const int col);
  *   nothing
  */
 void updateVisibility(player_t* player);
-
-static bool** 
-initializeBooleanArray(const int numRows, const int numCols);
-
-static bool 
-lineCheck(const int pr, const int pc, const int row, const int col);
-
