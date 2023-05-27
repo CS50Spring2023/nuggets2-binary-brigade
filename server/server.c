@@ -58,6 +58,8 @@ main(int argc, char *argv[])
     printf("serverPort=%d\n", myPort);
   }
 
+  log_d("Ready to play, waiting at port '%d'", myPort);
+
   bool ok = message_loop(NULL, 0, NULL, NULL, handleMessage);
 
   // shut down the message module
@@ -101,8 +103,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
         message_send(from, "QUIT Sorry - you must provide player's name.");
       }
       else {
-        //need to find port
-        player_t* player = player_new("port", name, 0, 0, "");
+        player_t* player = player_new(from, name, 0, 0, "");
         place_player(player);
         if (add_player(game, player) != 0){
           message_send(from, "QUIT Game is full: no more players can join.");
@@ -116,8 +117,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
     } if (strcmp(message, "SPECTATE") == 0) {
       addr_t* oldSpectator = add_spectator(game, from);
       if (oldSpectator != NULL){
-        //oldSpectator is a port number -- how do I get addr_t
-        message_send(from, "QUIT Game is full: another spectator has joined.");
+        message_send(*oldSpectator, "QUIT You have been replaced by a new spectator.");
       } else {
       message_send(from, get_grid_dimensions(game));
       message_send(from, spectatorGoldUpdate(game));
@@ -132,9 +132,14 @@ handleMessage(void* arg, const addr_t from, const char* message)
       int currGold = get_gold(player);
       message_send(from, goldUpdate(game, player, currGold-prevGold));
     } else if (line == "Q") {
-      player_t* player = get_player(from);
-      player_inactive(player);
-      //send quit message
+      if (find_player(game, from) != NULL){
+        player_t* player = get_player(from);
+        player_inactive(player);
+        message_send(from, "QUIT Thanks for playing!");
+      } else {
+        remove_spectator(game, from);
+        message_send(from, "QUIT Thanks for watching!");
+      }
     }
 
     // normal case: keep looping
