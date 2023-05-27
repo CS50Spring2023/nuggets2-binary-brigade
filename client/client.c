@@ -182,7 +182,6 @@ handleMessage(void* arg, const addr_t from, const char* message)
         
         mvprintw(0, 0, "Server message: %s", message);
     }
-    
 
     // return false to keep the message looop going
     return false;
@@ -497,6 +496,7 @@ initDisplay()
 
     refresh();
 }
+
 
 /**************** duplicate_str ****************/
 /* 
