@@ -17,7 +17,6 @@
 
 /**************** local global types ****************/
 static const int maxPlayers = 27;
-static hashtable_t* playersHash;
 static game_t* game;
 
 /**************** file-local functions ****************/
@@ -50,7 +49,6 @@ main(int argc, char *argv[])
 
   grid_t* grid = gridInit(argv[1], randomSeed);
   game_t* game = initialize_game(grid);
-  playersHash = hashtable_new(27); 
 
   // initialize the message module (without logging)
   int myPort = message_init(NULL);
@@ -109,7 +107,6 @@ handleMessage(void* arg, const addr_t from, const char* message)
         if (add_player(game, player) != 0){
           message_send(from, "QUIT Game is full: no more players can join.");
         } else {
-          //hashtable_insert(playersHash, from, player);
           strcat(line, strcat("OK ", get_letter(player)));
           message_send(from, get_grid_dimensions(game));
           message_send(from, goldUpdate(game, player, 0));
@@ -120,7 +117,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
       addr_t* oldSpectator = add_spectator(game, from);
       if (oldSpectator != NULL){
         //oldSpectator is a port number -- how do I get addr_t
-        message_send(oldSpectator, "QUIT Game is full: another spectator has joined.")
+        message_send(from, "QUIT Game is full: another spectator has joined.");
       } else {
       message_send(from, get_grid_dimensions(game));
       message_send(from, spectatorGoldUpdate(game));
@@ -129,14 +126,13 @@ handleMessage(void* arg, const addr_t from, const char* message)
   
     } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
       const char* key = message + strlen("KEY ");
-      game
-      //player_t* player = hashtable_find(playersHash, from);
+      player_t* player = get_player(from);
       int prevGold = get_gold(player);
       movePlayer(game, player, key);
       int currGold = get_gold(player);
       message_send(from, goldUpdate(game, player, currGold-prevGold));
     } else if (line == "Q") {
-      player_t* player = hashtable_find(playersHash, from);
+      player_t* player = get_player(from);
       player_inactive(player);
       //send quit message
     }
@@ -152,9 +148,9 @@ goldUpdate(game_t* game, player_t* player, int collected){
   int p = get_gold(player);
   int r = get_available_gold(game);
 
-  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) strlen(itoa(r));
+  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) + strlen(itoa(r));
   char *update = malloc(sizeof(char) * outputLength);
-  update = "GOLD "+itoa(n)+" "+itoa(p)+" "+itoa(r); 
+  update = sprintf(update, "GOLD %d %d %d", n, p, r);
 
   return update;
 }
@@ -165,9 +161,9 @@ spectatorGoldUpdate(game_t* game){
   int p = 0;
   int r = get_available_gold(game);
 
-  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) strlen(itoa(r));
+  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) + strlen(itoa(r));
   char *update = malloc(sizeof(char) * outputLength);
-  update = "GOLD "+itoa(n)+" "+itoa(p)+" "+itoa(r); 
+  update = sprintf(update, "GOLD %d %d %d", n, p, r);
 
   return update;
 }
@@ -177,7 +173,7 @@ getDisplay(player_t* player){
   char* display = gridDisplay(player);
   int outputLength = strlen("DISPLAY\n") + strlen(display) + 1;
   char *update = malloc(sizeof(char) * outputLength);
-  char* updateDisplay = "DISPLAY\n"+display;
+  char* updateDisplay = strcat("DISPLAY\n",display);
 
   return updateDisplay;
 }
