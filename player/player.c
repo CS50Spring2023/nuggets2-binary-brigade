@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "message.h"
 #include "player.h"
 #include "grid.h"
 
@@ -18,6 +19,7 @@
 typedef struct player{
    
     char* port;
+    addr_t address;
     char* name;
     char letter;
     int x_coord;
@@ -37,7 +39,7 @@ int MaxNameLength = 50;
 /**************** FUNCTION ****************/
 /* see player.h for description */
 player_t* 
-player_new(char* port, char* name, int x, int y, char letter)
+player_new(addr_t address, char* name, int x, int y, char letter)
 {
     player_t* player = mem_malloc(sizeof(player_t));
     const int rows = getnRows();
@@ -49,7 +51,7 @@ player_new(char* port, char* name, int x, int y, char letter)
     } else {
 
         // initialize contents of player structure
-        player->port = port;
+        player->address = address;
         player->x_coord = x;
         player->y_coord = y;
         player->num_gold = 0;
@@ -132,6 +134,17 @@ get_gold(player_t* player)
     }
     
 }
+
+/* see player.h for description */
+addr_t
+get_address(player_t* player)
+{
+    if (player != NULL){
+        return player->address;
+    }
+    
+}
+
 
 /* see player.h for description */
 void
