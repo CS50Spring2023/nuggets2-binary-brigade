@@ -34,9 +34,30 @@ void player_delete(player_t* player);
 /* Take in a pointer to a player 
  *
  * We return:
+ *   player's name
+ */
+char* get_name(player_t* player);
+
+/* Take in a pointer to a player 
+ *
+ * We return:
  *   player's letter
  */
 char get_letter(player_t* player);
+
+/*  
+ *
+ * We return:
+ *   MaxNameLength global variable.
+ */
+get_MaxNameLength();
+
+/* Take in a pointer to a player 
+ *
+ * We return:
+ *   player's port
+ */
+char get_port(player_t* player);
 
 /* Take in a pointer to a player 
  *
