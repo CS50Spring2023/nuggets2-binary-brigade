@@ -496,7 +496,6 @@ initDisplay()
     getmaxyx(stdscr, client_info->display_nr, client_info->display_nc);
 
     refresh();
-
 }
 
 /**************** duplicate_str ****************/
@@ -524,8 +523,4 @@ duplicate_str(const char* str)
         // copy the string to the newly allocated memory
         memcpy(client_info->last_display, str, len);  
     }
-
-    
 }
-            
-      
