@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include "message.h"
 #include "player.h"
-#include "grid.h"
+#include "../grid/grid.h"
 
 /**************** global types ****************/
 typedef struct player{
@@ -96,7 +96,7 @@ player_delete(player_t* player)
 }
 
 /* see player.h for description */
-char
+char*
 get_name(player_t* player)
 {
     if (player != NULL){

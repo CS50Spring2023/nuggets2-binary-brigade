@@ -69,16 +69,36 @@ add_player(game_t* game, player_t* player)
 
 /**************** FUNCTION ****************/
 /* see player.h for description */
-char*
+player_t*
+find_player(game_t* game, addr_t address)
+{
+  // Looping over players in the game
+  for (int i = 0; i < game->playerCount; i++) {
+    player_t* currPlayer = game->players[i];
+    addr_t playerAddress = get_address(currPlayer);
+
+    // If adresses match, returning player
+    if (&address == &playerAddress) {
+      return currPlayer;
+    }
+  } 
+
+  // If no player was found with the correct address, returning NULL
+  return NULL;
+}
+
+/**************** FUNCTION ****************/
+/* see player.h for description */
+addr_t*
 add_spectator(game_t* game, player_t* spectator)
 {
   if (game->spectator == NULL){
     game->spectator = spectator;
     return NULL;
   }
-  char* pastSpectator = player_get_port(game->spectator);
+  addr_t pastSpectator = get_address(game->spectator);
   game->spectator = spectator;
-  return pastSpectator;
+  return &pastSpectator;
 }
 
 /**************** FUNCTION ****************/

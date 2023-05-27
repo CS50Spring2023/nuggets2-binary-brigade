@@ -36,7 +36,7 @@ void player_delete(player_t* player);
  * We return:
  *   player's name
  */
-get_name(player_t* player);
+char* get_name(player_t* player);
 
 /* Take in a pointer to a player 
  *

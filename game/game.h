@@ -50,4 +50,4 @@ player_t** get_players(game_t* game);
  * We return:
  *   nothing
  */
-void delete_game(game_t* game)
+void delete_game(game_t* game);
