@@ -4,6 +4,7 @@
  * Binary Brigade, Spring, 2023
  */
 
+#include "message.h"
 
 /**************** global types ****************/
 typedef struct player player_t;  // opaque to users of the module
@@ -14,7 +15,7 @@ typedef struct player player_t;  // opaque to users of the module
  * We return:
  *   pointer to a new playeryer; NULL if error (out of memory).
  */
-player_t* player_new(char* port, char* name, int x, int y, char letter);
+player_t* player_new(addr_t address, char* name, int x, int y, char letter);
 
 /* Take in a pointer to a player and makes it inactive
  *
@@ -63,7 +64,7 @@ char get_gold(player_t* player);
  * We return:
  *   player's port
  */
-char* get_port(player_t* player);
+addr_t get_address(player_t* player);
 
 /* Take in a pointer to a player and change player's x
  *
