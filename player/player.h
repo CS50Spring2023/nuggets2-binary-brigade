@@ -63,7 +63,7 @@ char get_gold(player_t* player);
  * We return:
  *   player's port
  */
-char get_port(player_t* player);
+char* get_port(player_t* player);
 
 /* Take in a pointer to a player and change player's x
  *

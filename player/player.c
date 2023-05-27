@@ -134,7 +134,7 @@ get_gold(player_t* player)
 }
 
 /* see player.h for description */
-char
+char*
 get_port(player_t* player)
 {
     if (player != NULL){
