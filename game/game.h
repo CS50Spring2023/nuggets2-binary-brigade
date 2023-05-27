@@ -58,6 +58,14 @@ int update_gold(game_t* game, int updateGoldCount);
 player_t** get_players(game_t* game);
 
 /**************** FUNCTION ****************/
+/* Returns the current spectator's address
+ *
+ * We return:
+ *   the current spectator's address if there is one and NULL if there isn't 
+ */
+addr_t* get_spectator_addr(game_t* game);
+
+/**************** FUNCTION ****************/
 /* Provided a game, the function creates
  * a summary of the game.
  *

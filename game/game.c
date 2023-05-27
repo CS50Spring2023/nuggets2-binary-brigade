@@ -6,7 +6,6 @@
  * Binary Brigade, Spring, 2023
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -167,6 +166,18 @@ get_players(game_t* game)
 
 /**************** FUNCTION ****************/
 /* see player.h for description */
+addr_t*
+get_spectator_address(game_t* game)
+{
+  if (game->spectator != NULL){
+    addr_t address = get_address(game->spectator);
+    return &address;
+  }
+  return NULL;
+}
+
+/**************** FUNCTION ****************/
+/* see player.h for description */
 char*
 game_summary(game_t* game)
 {
@@ -213,8 +224,10 @@ delete_game(game_t* game)
     for (int i = 0; i < game->playerCount; i++) {
       player_delete(game->players[i]);
     }
+    player_delete(game->spectator);
 
     free(game->players);
+    free(game->spectator);
     free(game);
   }
 }
