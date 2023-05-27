@@ -198,16 +198,9 @@ set_gold(player_t* player, int gold)
     if (player != NULL){
         player->num_gold = gold;
     }
-    
-
 }
 
-
-
-// gettter and setter for x and y and gold.
-
-
-
+/* see player.h for description */
 bool
 isVisible(player_t* player, const int row, const int col)
 {
@@ -219,6 +212,7 @@ isVisible(player_t* player, const int row, const int col)
   }
 }
 
+/* see player.h for description */
 bool
 isKnown(player_t* player, const int row, const int col)
 {
@@ -230,7 +224,7 @@ isKnown(player_t* player, const int row, const int col)
   }
 }
 
-// Function to initialize a two-dimensional boolean array
+/* see player.h for description */
 static bool** 
 initializeBooleanArray(const int numRows, const int numCols) 
 {
@@ -252,6 +246,7 @@ initializeBooleanArray(const int numRows, const int numCols)
   return array;
 }
 
+/* see player.h for description */
 void
 updateVisibility(player_t* player)
 {
@@ -270,7 +265,7 @@ updateVisibility(player_t* player)
   }
 }
 
-// returns true if point is in sight, false if not
+/* see player.h for description */
 static bool 
 lineCheck(const int pr, const int pc, const int row, const int col)
 {

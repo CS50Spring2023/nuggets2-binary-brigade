@@ -182,7 +182,6 @@ handleMessage(void* arg, const addr_t from, const char* message)
         
         mvprintw(0, 0, "Server message: %s", message);
     }
-    
 
     // return false to keep the message looop going
     return false;
@@ -209,7 +208,7 @@ handle_quit(const char* message)
         const char* explanation = message + strlen("QUIT GAME OVER:") + 1;
 
         // display the remaining message on the screen
-        mvprintw(0, 0, "QUIT GAME OVER:\n");
+        mvprintw(0, 0, "GAME OVER:\n");
         refresh();
 
         // print line by line
@@ -496,8 +495,8 @@ initDisplay()
     getmaxyx(stdscr, client_info->display_nr, client_info->display_nc);
 
     refresh();
-
 }
+
 
 /**************** duplicate_str ****************/
 /* 
@@ -524,8 +523,4 @@ duplicate_str(const char* str)
         // copy the string to the newly allocated memory
         memcpy(client_info->last_display, str, len);  
     }
-
-    
 }
-            
-      
