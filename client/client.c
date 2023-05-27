@@ -209,7 +209,7 @@ handle_quit(const char* message)
         const char* explanation = message + strlen("QUIT GAME OVER:") + 1;
 
         // display the remaining message on the screen
-        mvprintw(0, 0, "QUIT GAME OVER:\n");
+        mvprintw(0, 0, "GAME OVER:\n");
         refresh();
 
         // print line by line

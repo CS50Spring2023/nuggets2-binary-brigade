@@ -1,0 +1,95 @@
+START OF LOG
+message_init: ready at port '57281'
+message_send: TO 127.0.1.1:45174
+message_send: 1 lines:
+SPECTATE
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 1 lines:
+GRID 21 79
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 1 lines:
+GOLD 0 0 131
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 22 lines:
+DISPLAY
+  +----------+                                                                 
+  |..........|                 +---------+                                     
+  |..........####              |.........|                +-------+            
+  |..........|                 +-----#---+                |.......|            
+  +---------#+                       #              #######.......|            
+            #                        #              #     +---#---+            
+            #  +-----------+         #     +--------#+        #                
+            ####...........##############  |.........|        #                
+               |...........|            #  |.........|        #                
+               +-----------+            ####.........|        #                
+                                           +----#----+        #                
+                                                #    +--------#--+             
+     +---------------------------------+        #    |....A......|             
+     |............................*....|        ######...........|             
+     |..............*......*...........|        #    |...........|             
+     |.*....+---------------+..........|        #    |...........|             
+     |......|               |.......*..##########    +-----------+             
+     |.*....|               |..........|                                       
+     |......|               |.......*.*|                                       
+     |....*.|               |...*....*.|                                       
+     +------+               +----------+                                       
+
+message_loop: select() EINTR: interrupted by signal: Interrupted system call
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:45174
+message_send: 1 lines:
+KEY h
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 1 lines:
+ERROR usage: unknown Spectator keystroke
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:45174
+message_send: 1 lines:
+KEY š
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:45174
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 1 lines:
+ERROR usage: unknown Spectator keystroke
+
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 1 lines:
+ERROR usage: unknown Spectator keystroke
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:45174
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 1 lines:
+ERROR usage: unknown Spectator keystroke
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:45174
+message_send: 1 lines:
+KEY l
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 1 lines:
+ERROR usage: unknown Spectator keystroke
+
+message_loop: input ready on stdin
+message_send: TO 127.0.1.1:45174
+message_send: 1 lines:
+KEY Q
+message_loop: message ready on socket
+message_loop: FROM 127.0.0.1:45174
+message_loop: 1 lines:
+QUIT Thanks for watching!
+
+message_done: message module closing down.
