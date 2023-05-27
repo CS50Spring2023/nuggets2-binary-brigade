@@ -58,6 +58,13 @@ char get_y(player_t* player);
  */
 char get_gold(player_t* player);
 
+/* Take in a pointer to a player 
+ *
+ * We return:
+ *   player's port
+ */
+char get_port(player_t* player);
+
 /* Take in a pointer to a player and change player's x
  *
  * We return:
@@ -108,3 +115,4 @@ initializeBooleanArray(const int numRows, const int numCols);
 
 static bool 
 lineCheck(const int pr, const int pc, const int row, const int col);
+

@@ -134,6 +134,17 @@ get_gold(player_t* player)
 }
 
 /* see player.h for description */
+char
+get_port(player_t* player)
+{
+    if (player != NULL){
+        return player->port;
+    }
+    
+}
+
+
+/* see player.h for description */
 void
 set_x(player_t* player, int x)
 {
