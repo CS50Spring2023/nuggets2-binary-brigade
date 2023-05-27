@@ -24,13 +24,13 @@ void handle_display(const char* message);
 void handle_quit(const char* message);
 void handle_error(const char* message);
 void initDisplay();
-char* duplicate_str(const char*);
+void duplicate_str(const char*);
 
 
 // helper struct to hold all the client info we need throughout the program
 typedef struct client_info{
-    int NR;
-    int NC;
+    int display_nr;
+    int display_nc;
     int map_nr;
     int map_nc;
     int collected;
@@ -53,7 +53,8 @@ client_info_t* client_info;
 /* 
  * takes in commmand line arguments and calls helper functions to do rest
  */
-int main(int argc, char* argv[])
+int 
+main(int argc, char* argv[])
 {
     char* hostname;
     char* port;
@@ -66,11 +67,11 @@ int main(int argc, char* argv[])
 
     client_info = calloc(1, sizeof(client_info_t));
 
-    // initialize display
-    initDisplay();
-
     // store playername for later use
     client_info->playername = playername;
+
+    // initialize display
+    initDisplay();
 
     // initalize network + join the game
     addr_t server = server_setup(hostname, port, playername);
@@ -81,6 +82,7 @@ int main(int argc, char* argv[])
     // clean up message modual
     message_done();
     endwin();
+    free(client_info->last_display);
     free(client_info);
    
     return ok? 0 : 2;
@@ -120,15 +122,15 @@ handleMessage(void* arg, const addr_t from, const char* message)
         client_info->map_nr= nrows;
         
         // get curr display size
-        getmaxyx(stdscr, client_info->NR, client_info->NC);
+        getmaxyx(stdscr, client_info->display_nr, client_info->display_nc);
 
         // don't let the user proceed until the display is at least as large as the size of the grid
-        while (nrows +1 > client_info->NR || ncols > client_info->NC) {
+        while (nrows +1 > client_info->display_nr || ncols > client_info->display_nc) {
             
             clear();
             mvprintw(0, 0, "Your window must be at least %d high", nrows+1);
             mvprintw(1, 0, "Your window must be at least %d wide", ncols);
-            mvprintw(3, 0, "Current size: %d (height) x %d (width)", client_info->NR, client_info->NC);
+            mvprintw(3, 0, "Current size: %d (height) x %d (width)", client_info->display_nr, client_info->display_nc);
             mvprintw(2, 0, "Resize your window, and press Enter to continue.");
            
             refresh();
@@ -138,7 +140,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
             }
 
             // get the update display size
-            getmaxyx(stdscr, client_info->NR, client_info->NC);
+            getmaxyx(stdscr, client_info->display_nr, client_info->display_nc);
             refresh();
 
         }
@@ -160,13 +162,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
         
         if (strncmp(message, prefix, strlen(prefix)) == 0) {
             
-            // free the previous memory if it exists
-            if (client_info->last_display != NULL) {
-                free(client_info->last_display); 
-            }
-
-            // duplicate and store the new message
-            client_info->last_display = duplicate_str(message); 
+            duplicate_str(message); 
         }
 
     } else if (strcmp(messageType, "QUIT") == 0){
@@ -181,15 +177,21 @@ handleMessage(void* arg, const addr_t from, const char* message)
         // if message is ERROR, call handle error with the message to take care of it
         handle_error(message);
         
+    } else {
+        // if unknown or malformed message, just display to player what came from server
+        
+        mvprintw(0, 0, "Server message: %s", message);
     }
+    
 
     // return false to keep the message looop going
     return false;
 }
 
+
 /**************** handle_quit ****************/
 /* 
- * uses the servr message to handle the quit protocol
+ * uses the server message to handle the quit protocol
  * 
  * Caller provides:
  *   the message
@@ -235,7 +237,7 @@ handle_quit(const char* message)
             const char* explanation = spacePos + 1;
 
             // display the remaining message on the screen
-            mvprintw(0, 0, "Server message: %s", explanation);
+            mvprintw(0, 0, "%s", explanation);
             refresh();
         }
         // sleep for 3 seconds to allow the player enough time to read
@@ -253,7 +255,8 @@ handle_quit(const char* message)
  * We return:
  *   nothing
  */
-void handle_display(const char* message)
+void 
+handle_display(const char* message)
 {
 
     // skip the "DISPLAY" part of the message
@@ -266,8 +269,8 @@ void handle_display(const char* message)
     // print each line of the grid string
     while (*gridString != '\0')
     {
-        printw("%.*s", client_info->NC, gridString);  // Print one line
-        gridString += client_info->NC;  // Move to the next line
+        printw("%.*s", client_info->display_nc, gridString);  // Print one line
+        gridString += client_info->display_nc;  // Move to the next line
     }
 
     // update status line
@@ -323,13 +326,7 @@ handle_error(const char* message)
         
         // refresh to show changes
         refresh();
-    }
-
-    // sleep for 1 to allow the player enough time to see the error message
-    sleep(1);
-
-    // now call handle display to display the last known grid and status line
-    handle_display(client_info->last_display);
+    } 
  
 }
 
@@ -387,7 +384,8 @@ handleInput(void* arg) {
 
 /**************** handleInput ****************/
 /* 
- * Takes in message (char) from the player and send it to the the server with the right format 
+ * Uses the hostname and port to create a connection with the server and sends an 
+ * initial message depending on whether the client is a player or spectator
  * 
  * Caller provides:
  *   void* arg (server)
@@ -472,7 +470,8 @@ parseArgs(const int argc, char* argv[], char** hostname, char** port, char** pla
  * We return:
  *   nothing
  */
-void initDisplay()
+void 
+initDisplay()
 {
     // Initialize curses
     initscr();
@@ -483,12 +482,18 @@ void initDisplay()
 
     // Set the background and text colors
     start_color();
-    init_pair(1, COLOR_BLUE, COLOR_BLACK); 
+    if (client_info->playername == NULL){
+        init_pair(1, COLOR_BLUE, COLOR_BLACK); 
+        
+    } else {
+        init_pair(1, COLOR_GREEN, COLOR_BLACK); 
+    }
+    
 
     wbkgd(stdscr, COLOR_PAIR(1));
     
     // Initialize the size of the window to current screen size
-    getmaxyx(stdscr, client_info->NR, client_info->NC);
+    getmaxyx(stdscr, client_info->display_nr, client_info->display_nc);
 
     refresh();
 
@@ -496,25 +501,31 @@ void initDisplay()
 
 /**************** duplicate_str ****************/
 /* 
- * duplicates string. We use to to keep track of latest display
+ * duplicates string. We use to to keep a copy of the latest display
  * 
  * Caller provides:
  *   the string to duplicate
  * We return:
  *   pointer to a string
  */
-char* 
+void 
 duplicate_str(const char* str) 
 {
+    if (client_info->last_display != NULL) {
+        free(client_info->last_display); 
+    }
+
     // get the length of the string, including the null terminator
     size_t len = strlen(str) + 1;  
     // allocate memory for the new string
-    char* new_str = malloc(len);  
+    client_info->last_display = malloc(len);  
 
-    if (new_str != NULL) {
+    if (client_info->last_display != NULL) {
         // copy the string to the newly allocated memory
-        memcpy(new_str, str, len);  
+        memcpy(client_info->last_display, str, len);  
     }
 
-    return new_str;
+    
 }
+            
+      
