@@ -116,12 +116,13 @@ handleMessage(void* arg, const addr_t from, const char* message)
         }
       }
     } if (strcmp(message, "SPECTATE") == 0) {
-      if (add_spectator(game, from) != 0){
-        line = "QUIT Game is full: no more spectators can join."
+      addr_t* oldSpectator = add_spectator(game, from)
+      if (oldSpectator != NULL){
+        message_send(oldSpectator, "QUIT Game is full: another spectator has joined.")
       } else {
-        message_send(from, get_grid_dimensions(game));
-        message_send(from, spectatorGoldUpdate(game));
-        message_send(from, gridDisplaySpectator());
+      message_send(from, get_grid_dimensions(game));
+      message_send(from, spectatorGoldUpdate(game));
+      message_send(from, gridDisplaySpectator());
       }
   
     } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
@@ -134,16 +135,8 @@ handleMessage(void* arg, const addr_t from, const char* message)
     } else if (line == "Q") {
       player_t* player = hashtable_find(playersHash, from);
       player_inactive(player);
+      //send quit message
     }
-
-    //OK,GRID, GOLD, KEY
-    //GRID nrows ncols
-    //GOLD n p r
-    //DISPLAY\nstring
-
-
-    // send as message back to client
-    message_send(from, line);
 
     // normal case: keep looping
     return false;
