@@ -95,10 +95,35 @@ player_delete(player_t* player)
 
 /* see player.h for description */
 char
+get_name(player_t* player)
+{
+    if (player != NULL){
+        return player->name;
+    } 
+}
+
+/* see player.h for description */
+char
 get_letter(player_t* player)
 {
     if (player != NULL){
         return player->letter;
+    } 
+}
+
+/* see player.h for description */
+int
+get_MaxNameLength()
+{
+  return MaxNameLength;
+}
+
+/* see player.h for description */
+char
+get_port(player_t* player)
+{
+    if (player != NULL){
+        return player->port;
     }
     
 }
