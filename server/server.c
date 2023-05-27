@@ -10,7 +10,6 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <stdio.h>
-#include "../../shared/tse/libcs50.a"
 #include "../support/message.h"
 #include "../grid/grid.h"
 #include "../game/game.h"
