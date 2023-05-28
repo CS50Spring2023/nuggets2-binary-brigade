@@ -46,50 +46,6 @@ grid_t* gridInit(char* pathName, int randomSeed);
  */
 void gridDelete();
 
-/**************** gridDisplay ****************/
-/* The function takes in a player, creates a 
-*  string to display the player-specific grid.
-*  Upon checking that the grid is not NULL, 
-*  it loops over each point in the grid, printing
-*  players/gold/terrain/empty spaces based on
-*  what is known and visible to the player.
-*/
-char* gridDisplay(player_t* player);
-
-/**************** gridDisplaySpectator ****************/
-/* The function creates a string to display the
- * grid. It is designed for the spectator mode, meaning
- * that the function has full visibility of the grid
- * as well as the gold and players in it.  
- */
-char* gridDisplaySpectator(); 
-
-/**************** movePlayer ****************/
-/* The function handles the overall
- * functionality related to moving a player
- * across the grid. It takes in a game and
- * player struct, as well as the letter
- * pressed by the client indicating the desired
- * movement. Depending on the letter, the
- * x and y coordinates of the player are
- * determined accordingly. If the letter 
- * passed in is uppercase (requesting
- * continuous movement), the movement is
- * executed so long as possible. If the letter
- * is lowercase, the movement is executed 
- * once (if possible). The execution of the
- * movement itself is handled by a call to
- * the executeMovement function.
- */
-void movePlayer(game_t* game, player_t* player, char letter);
-
-/**************** placePlayer ****************/
-/* Function takes in a player struct, placing
- * it into the map (either in an empty room
- * spot or passage).
- */
-void placePlayer(player_t* player);
-
 /**************** blocksVisibility ****************/
 /* Function determines if a point's terrain is open
  * space that can be seen through (room spot or gold).

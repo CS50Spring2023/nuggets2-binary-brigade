@@ -13,6 +13,7 @@
 #include "../support/message.h"
 #include "../grid/grid.h"
 #include "../game/game.h"
+#include "../lib/mem.h"
 
 /**************** local global types ****************/
 static const int maxPlayers = 27;

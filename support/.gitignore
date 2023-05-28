@@ -3,3 +3,4 @@ miniclient
 messagetest
 *.log
 *.gch
+*.o

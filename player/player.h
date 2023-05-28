@@ -55,7 +55,7 @@ char get_letter(player_t* player);
  * We return:
  *   MaxNameLength global variable.
  */
-get_MaxNameLength();
+int get_MaxNameLength();
 
 
 /* Take in a pointer to a player 

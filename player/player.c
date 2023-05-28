@@ -13,7 +13,7 @@
 #include "player.h"
 #include "../grid/grid.h"
 #include "message.h"
-
+#include "../lib/mem.h"
 
 
 /**************** global constants ****************/

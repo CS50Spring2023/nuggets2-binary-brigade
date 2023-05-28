@@ -21,6 +21,50 @@ typedef struct game game_t;  // opaque to users of the module
  */
 game_t* initialize_game(grid_t* grid);
 
+/**************** gridDisplay ****************/
+/* The function takes in a player, creates a 
+*  string to display the player-specific grid.
+*  Upon checking that the grid is not NULL, 
+*  it loops over each point in the grid, printing
+*  players/gold/terrain/empty spaces based on
+*  what is known and visible to the player.
+*/
+char* gridDisplay(player_t* player);
+
+/**************** gridDisplaySpectator ****************/
+/* The function creates a string to display the
+ * grid. It is designed for the spectator mode, meaning
+ * that the function has full visibility of the grid
+ * as well as the gold and players in it.  
+ */
+char* gridDisplaySpectator(); 
+
+/**************** movePlayer ****************/
+/* The function handles the overall
+ * functionality related to moving a player
+ * across the grid. It takes in a game and
+ * player struct, as well as the letter
+ * pressed by the client indicating the desired
+ * movement. Depending on the letter, the
+ * x and y coordinates of the player are
+ * determined accordingly. If the letter 
+ * passed in is uppercase (requesting
+ * continuous movement), the movement is
+ * executed so long as possible. If the letter
+ * is lowercase, the movement is executed 
+ * once (if possible). The execution of the
+ * movement itself is handled by a call to
+ * the executeMovement function.
+ */
+void movePlayer(game_t* game, player_t* player, char letter);
+
+/**************** placePlayer ****************/
+/* Function takes in a player struct, placing
+ * it into the map (either in an empty room
+ * spot or passage).
+ */
+void placePlayer(player_t* player);
+
 /**************** FUNCTION ****************/
 /* Add a new player to the game
  *
@@ -67,7 +111,7 @@ player_t** get_players(game_t* game);
  *   freeing the summary string. 
  */
 char*
-game_summary(game_t* game)
+game_summary(game_t* game);
 
 /* Take in a pointer to a game and frees each player in the 
  * array, then the space for the array and the game itself.
