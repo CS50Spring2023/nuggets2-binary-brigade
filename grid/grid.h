@@ -1,10 +1,16 @@
-/** 
- * grid.h
- * Author: Louis Weisdorf
- * CS50 Spring 2023, Project
- * Date: 05/20/2023
- * Description: This is a header file for the grid.c program.
+/*
+ * grid.h - header file for Nuggets grid module
+ *
+ * A grid stores a 2D array of gridpoints, where each point
+ * represents a certain row and column in the map. Each
+ * gridpoint stores the terrain of the point, gold, and
+ * players. The module includes functions to move players,
+ * Handle gold collection, and return the display of the
+ * grid to the players.
+ *
+ * Binary Brigade, Spring 2023
  */
+
 #include "grid.c"
 
 /**************** global types ****************/
@@ -29,7 +35,7 @@ typedef struct grid grid_t;
 *  the gold. The function
 *  returns a pointer to the created grid
 *  upon successful termination. 
-*/
+ */
 grid_t* gridInit(char* pathName, int randomSeed);
 
 /**************** readnColumns ****************/
@@ -59,7 +65,7 @@ static void insertGridpoints(char* pathName);
 *  the memory allocated in the gridInit and
 *  insertGridpoints functions and later
 *  frees the array and the grid itself.  
-*/
+ */
 void gridDelete();
 
 /**************** gridpointNew ****************/
@@ -89,7 +95,7 @@ char* gridDisplay();
 *  grid. It is designed for the spectator mode, meaning
 *  that the function has full visibility of the grid
 *  as well as the gold and players in it.  
-*/
+ */
 char* gridDisplaySpectator(); 
 
 /**************** generateGold ****************/
@@ -121,7 +127,7 @@ static void generateGold(int randomSeed);
 *  once (if possible). The execution of the
 *  movement itself is handled by a call to
 *  the executeMovement function.
-*/
+ */
 void movePlayer(game_t* game, player_t* player, char letter);
 
 /**************** executeMovement ****************/
@@ -173,7 +179,7 @@ static void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gri
 /* Function takes in a player struct, placing
 *  it into the map (either in an empty room
 *  spot or passage).
-*/
+ */
 void placePlayer(player_t* player);
 
 /**************** blocksVisibility ****************/
@@ -181,19 +187,19 @@ void placePlayer(player_t* player);
 *  space that can be seen through (room spot or gold).
 *  Returns false if it's an open space and true if
 *  it's not. 
-*/
+ */
 static bool blocksVisibility(const int row, const int col);
 
 /**************** getnRows ****************/
 /* Function is a getter for the number of
 *  rows in the grid, making the information
 *  available to other modules. 
-*/
+ */
 int getnRows();
 
 /**************** getnColumns ****************/
 /* Function is a getter for the number of
 *  columns in the grid, making the information
 *  available to other modules. 
-*/
+ */
 int getnColumns();
