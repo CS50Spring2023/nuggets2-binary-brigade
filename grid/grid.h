@@ -83,8 +83,9 @@ void gridDelete();
 static gridpoint_t* gridpointNew(int row, int column, char terrain);
 
 /**************** gridDisplay ****************/
-/* The function creates a string to display the
-*  grid. Upon checking that the grid is not NULL, 
+/* The function takes in a player, creates a 
+*  string to display the player-specific grid.
+*  Upon checking that the grid is not NULL, 
 *  it loops over each point in the grid, printing
 *  players/gold/terrain/empty spaces based on
 *  what is known and visible to the player.
