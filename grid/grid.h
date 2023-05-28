@@ -12,6 +12,7 @@
  */
 
 #include "grid.c"
+#include "game.h"
 
 /**************** global types ****************/
 typedef struct gridpoint gridpoint_t;
