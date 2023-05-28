@@ -6,7 +6,6 @@
  * Binary Brigade, Spring, 2023
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,7 +27,7 @@ typedef struct game{
   int goldAvailable;
   int playerCount;
   player_t** players;
-  player_t* spectator;
+  addr_t* spectator;
 } game_t;
 
 // Functions added from grid (for ease of overview, Charlie)
@@ -60,7 +59,7 @@ initialize_game(grid_t* grid)
     game->playerCount = 0;
     player_t** players = calloc(maxPlayers, sizeof(player_t*));
     game->players = players;
-    player_t* spectator = malloc(sizeof(player_t*));
+    addr_t* spectator = malloc(sizeof(addr_t*));
     game->spectator = spectator;
   }
 }
@@ -431,15 +430,15 @@ find_player(game_t* game, addr_t address)
 /**************** FUNCTION ****************/
 /* see player.h for description */
 addr_t*
-add_spectator(game_t* game, player_t* spectator)
+add_spectator(game_t* game, addr_t* spectator)
 {
   if (game->spectator == NULL){
     game->spectator = spectator;
     return NULL;
   }
-  addr_t pastSpectator = get_address(game->spectator);
+  addr_t* pastSpectator = game->spectator;
   game->spectator = spectator;
-  return &pastSpectator;
+  return pastSpectator;
 }
 
 /**************** FUNCTION ****************/
@@ -554,8 +553,10 @@ delete_game(game_t* game)
     for (int i = 0; i < game->playerCount; i++) {
       player_delete(game->players[i]);
     }
+    player_delete(game->spectator);
 
     free(game->players);
+    free(game->spectator);
     free(game);
   }
 }

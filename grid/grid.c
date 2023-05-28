@@ -288,7 +288,7 @@ generateGold(int randomSeed)
   }
 }
 
-/**************** blockVisibility ****************/
+/**************** blocksVisibility ****************/
 /* See grid.h for description. */
 bool 
 blocksVisibility(const int row, const int col)

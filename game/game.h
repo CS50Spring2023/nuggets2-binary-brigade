@@ -6,10 +6,6 @@
 
 #include "../player/player.h"
 
-/**************** local global types ****************/
-static const int goldTotal;    //amount of gold in each game
-static const int maxPlayers;   //max amount of players a game can hold
-
 /**************** global types ****************/
 typedef struct game game_t;  // opaque to users of the module
 
@@ -82,8 +78,32 @@ int add_player(game_t* game, player_t* player);
  * passed in, or NULL if there is no such
  * player.
  */
-player_t*
-find_player(game_t* game, addr_t address);
+player_t* find_player(game_t* game, addr_t address);
+
+/**************** FUNCTION ****************/
+/* Add a new spectator to the game
+ *
+ * We return:
+ *   NULL if no previous spectator;
+ *   old spectator's address if previous spectator.
+ */
+addr_t* add_spectator(game_t* game, addr_t* spectator);
+
+/**************** FUNCTION ****************/
+/* Gets the grid dimensions of the game
+ *
+ * We return:
+ *   formatted dimensions of the grid
+ */
+char* get_grid_dimensions(game_t* game);
+
+/**************** FUNCTION ****************/
+/* Sets player as inactive in game
+ *
+ * We return:
+ *   0 if success; 1 if error (no matching player)
+ */
+int game_inactive_player(game_t* game, player_t* player);
 
 /**************** FUNCTION ****************/
 /* Update gold count in game
@@ -92,6 +112,22 @@ find_player(game_t* game, addr_t address);
  *   0 if success; 1 if error (new gold count isn't in correct range).
  */
 int update_gold(game_t* game, int updateGoldCount);
+
+/**************** FUNCTION ****************/
+/* Getter for total gold in game
+ *
+ * We return:
+ *   total gold in game -- should always be 250.
+ */
+int get_total_gold(game_t* game);
+
+/**************** FUNCTION ****************/
+/* Getter for gold still available in game
+ *
+ * We return:
+ *   current available gold in game.
+ */
+int  get_available_gold(game_t* game);
 
 /**************** FUNCTION ****************/
 /* Returns the list of players
@@ -105,7 +141,7 @@ player_t** get_players(game_t* game);
 /* Provided a game, the function creates
  * a summary of the game.
  *
- * We return:
+ * We return:a
  *   a string-representation of the summary.
  *   The caller is responsible for later 
  *   freeing the summary string. 
@@ -119,4 +155,4 @@ game_summary(game_t* game);
  * We return:
  *   nothing
  */
-void delete_game(game_t* game);
+void  delete_game(game_t* game);

@@ -12,37 +12,40 @@
  */
 
 #include "grid.c"
+#include "game.h"
 
 /**************** global types ****************/
+typedef struct gridpoint gridpoint_t;
 typedef struct grid grid_t;
+
 
 /**************** functions ****************/
 
 /**************** gridInit ****************/
 /* The functions is responsible for 
- * initializing the grid. Given a map text
- * file and a randomeSeed as parameters, 
- * it first determines the number of rows 
- * and columns in the map. In case the 
- * randomSeed was not originally provided, 
- * the caller is responsible for passing it 
- * to this function as a negative integer.
- * Hereafter, it iterates through the
- * contents of the map, saving each point
- * in a gridpoint struct, before generating
- * the gold. The function
- * returns a pointer to the created grid
- * upon successful termination. 
+*  initializing the grid. Given a map text
+*  file and a randomeSeed as parameters, 
+*  it first determines the number of rows 
+*  and columns in the map. In case the 
+*  randomSeed was not originally provided, 
+*  the caller is responsible for passing it 
+*  to this function as a negative integer.
+*  Hereafter, it iterates through the
+*  contents of the map, saving each point
+*  in a gridpoint struct, before generating
+*  the gold. The function
+*  returns a pointer to the created grid
+*  upon successful termination. 
  */
 grid_t* gridInit(char* pathName, int randomSeed);
 
 /**************** gridDelete ****************/
 /* The function deletes the grid.
- * Upon checking that the grid is not NULL,
- * it iterates through the 2D array, freeing
- * the memory allocated in the gridInit and
- * insertGridpoints functions and later
- * frees the array and the grid itself.  
+*  Upon checking that the grid is not NULL,
+*  it iterates through the 2D array, freeing
+*  the memory allocated in the gridInit and
+*  insertGridpoints functions and later
+*  frees the array and the grid itself.  
  */
 void gridDelete();
 
@@ -55,11 +58,15 @@ void gridDelete();
 bool blocksVisibility(const int row, const int col);
 
 /**************** getnRows ****************/
-/* Return the number of rows in the grid. 
+/* Function is a getter for the number of
+*  rows in the grid, making the information
+*  available to other modules. 
  */
 int getnRows();
 
 /**************** getnColumns ****************/
-/* Returns the number of columns in the grid.
+/* Function is a getter for the number of
+*  columns in the grid, making the information
+*  available to other modules. 
  */
 int getnColumns();
