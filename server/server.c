@@ -14,6 +14,7 @@
 #include "../grid/grid.h"
 #include "../game/game.h"
 #include "../player/player.h"
+#include "../lib/mem.h"
 
 /**************** global variable ****************/
 game_t* game;
