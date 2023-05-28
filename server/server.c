@@ -66,6 +66,8 @@ main(int argc, char *argv[])
 
   // shut down the message module
   message_done();
+  delete_game(game);
+  grid.gridDelete();
   
   return ok? 0 : 1; // status code depends on result of message_loop
 }
@@ -112,7 +114,8 @@ handleMessage(void* arg, const addr_t from, const char* message)
           message_send(from, "QUIT Game is full: no more players can join.");
         } else {
           strcat(line, strcat("OK ", get_letter(player)));
-          message_send(from, line);
+          message_send(from, line); //sending ok and letter of player
+
           //sending grid dimensions, gold update, and display
           message_send(from, get_grid_dimensions(game));
           message_send(from, goldUpdate(game, player, 0));
@@ -161,8 +164,6 @@ handleMessage(void* arg, const addr_t from, const char* message)
       if (address != NULL){
         message_send(*address, summary); //sends game summary to a spectator if it exists
       }
-
-      delete_game(game);
     }
 
     // normal case: keep looping
