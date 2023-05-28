@@ -133,7 +133,6 @@ get_MaxNameLength()
 }
 
 
-
 /**************** get_x ****************/
 /* see player.h for description */
 char
