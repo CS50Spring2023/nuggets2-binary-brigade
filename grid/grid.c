@@ -324,16 +324,6 @@ gridDisplaySpectator()
   char terrain;
   int index = 0;
 
-    // Checking if the grid is NULL
-    if (grid != NULL) {
-        // Looping over rows and columns in the grid
-        for (int row = 0; row < grid->nRows; row++) {
-            for (int column = 0; column < grid->nColumns; column++) {
-                // If the point contains a player, printing the player letter
-                char player = grid->points[row][column]->player;
-                if (player != 0) {
-                    sprintf(gridString, "%c", player);
-                }
   // Checking if the grid is NULL
   if (grid != NULL) {
     // Looping over rows and columns in the grid
@@ -373,59 +363,59 @@ gridDisplaySpectator()
 static void 
 generateGold(int randomSeed)
 {
-    // Setting random based on the randomSeed from the server
-    srand(randomSeed);
+  // Setting random based on the randomSeed from the server
+  srand(randomSeed);
 
-    // Generating the amount of gold in the grid
-    int undistributedGold = TotalGold;
+  // Generating the amount of gold in the grid
+  int undistributedGold = TotalGold;
 
-    // Setting minimum and maximum sizes for gold piles
-    int minPile = 10;
-    int maxPile = 30;
+  // Setting minimum and maximum sizes for gold piles
+  int minPile = 10;
+  int maxPile = 30;
 
-    // Distributing gold for as long as there is something left to distribute
-    while (undistributedGold > 0) {
-        // Setting a variable to store the size of current pile
-        int goldPile;
+  // Distributing gold for as long as there is something left to distribute
+  while (undistributedGold > 0) {
+      // Setting a variable to store the size of current pile
+      int goldPile;
 
-        // Making sure the last pile renders the remaining gold to 0
-        if (undistributedGold <= maxPile) {
-            goldPile = undistributedGold;
-        }
+      // Making sure the last pile renders the remaining gold to 0
+      if (undistributedGold <= maxPile) {
+          goldPile = undistributedGold;
+      }
 
-        // If there is more gold to be distributed than maxPile
-        else {
-            // Creating a pile of random size (between minPile and maxPile)
-            goldPile = ((rand() % (maxPile - minPile + 1)) + minPile);
-        }
+      // If there is more gold to be distributed than maxPile
+      else {
+          // Creating a pile of random size (between minPile and maxPile)
+          goldPile = ((rand() % (maxPile - minPile + 1)) + minPile);
+      }
 
-        // Finding a point to insert the gold
-        while (true) {
-            // Finding a random number for the row and column for gold to be placed
-            int randRow = ((rand() % (grid->nRows)));
-            int randColumn = ((rand() % (grid->nColumns)));
-            
-            // If the random location is in a room, inserting gold into it
-            if (grid->points[randRow][randColumn]->terrain == '.') {
-                // If there is no gold in the spot currently
-                if (grid->points[randRow][randColumn]->nGold == 0) {
-                    grid->points[randRow][randColumn]->nGold = goldPile;
-                    grid->points[randRow][randColumn]->terrain = '*';
-                } 
+      // Finding a point to insert the gold
+      while (true) {
+          // Finding a random number for the row and column for gold to be placed
+          int randRow = ((rand() % (grid->nRows)));
+          int randColumn = ((rand() % (grid->nColumns)));
+          
+          // If the random location is in a room, inserting gold into it
+          if (grid->points[randRow][randColumn]->terrain == '.') {
+              // If there is no gold in the spot currently
+              if (grid->points[randRow][randColumn]->nGold == 0) {
+                  grid->points[randRow][randColumn]->nGold = goldPile;
+                  grid->points[randRow][randColumn]->terrain = '*';
+              } 
 
-                // If there is already gold in the spot, adding to gold
-                else {
-                    grid->points[randRow][randColumn]->nGold += goldPile;
-                }
+              // If there is already gold in the spot, adding to gold
+              else {
+                  grid->points[randRow][randColumn]->nGold += goldPile;
+              }
 
-                // Updating the number of total gold to be distributed
-                undistributedGold -= goldPile;
+              // Updating the number of total gold to be distributed
+              undistributedGold -= goldPile;
 
-                // Exiting the loop
-                break;
-            }
-        }
-    }
+              // Exiting the loop
+              break;
+          }
+      }
+  }
 }
 
 /**************** movePlayer ****************/

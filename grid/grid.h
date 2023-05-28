@@ -83,51 +83,6 @@ char* gridDisplaySpectator();
  */
 void movePlayer(game_t* game, player_t* player, char letter);
 
-/**************** executeMovement ****************/
-/* The function does the work of executing
-*  the movement of a player following a letter
-*  press, having been set up by the movePlayer
-*  function. It takes in a game struct, player
-*  struct, as well as the changes to x and y. 
-*  The function calls other functions 
-*  to handle various cases arising from the 
-*  player movement.
-*/
-static void executeMovement(game_t* game, player_t* player, 
-                    int changeRow, int changeColumn);
-
-/**************** movePossible ****************/
-/* Function checks if a move is possible. It 
-*  takes in a player struct, as well prospective
-*  changes in the position of the player. 
-*  If the new coordinates land the player in a 
-*  room spot, gold spot, or passage, the 
-*  function returns true (indicating that the 
-*  move is possible).
-*  Otherwise, it returns false.  
-*/
-static bool movePossible(player_t* player, int changeRow, int changeColumn);
-
-/**************** foundGold ****************/
-/* Function checks if the new position of the
-*  player, following their movement, causes
-*  them to find gold. If it does, the gold
-*  of held in that point transfers to the 
-*  gold purse of the player. The terrain of
-*  the gridpoint is updated to reflect the
-*  changes.  
-*/
-static void foundGold(player_t* player);
-
-/**************** foundPlayer ****************/
-/* Function handles situations where a movement
-*  causes the player to collide with another
-*  player. If that is the case, the players
-*  switch places.
-*/
-static void foundPlayer(player_t* player, game_t* game, 
-                        gridpoint_t* current, gridpoint_t* newPoint);
-
 /**************** placePlayer ****************/
 /* Function takes in a player struct, placing
  * it into the map (either in an empty room
