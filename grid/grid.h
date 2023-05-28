@@ -5,7 +5,7 @@
  * Date: 05/20/2023
  * Description: This is a header file for the grid.c program.
  */
-#include <grid.c>
+#include "grid.c"
 
 /**************** global types ****************/
 typedef struct gridpoint gridpoint_t;

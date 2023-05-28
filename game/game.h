@@ -74,8 +74,7 @@ addr_t* get_spectator_addr(game_t* game);
  *   The caller is responsible for later 
  *   freeing the summary string. 
  */
-char*
-game_summary(game_t* game)
+char* game_summary(game_t* game);
 
 /* Take in a pointer to a game and frees each player in the 
  * array, then the space for the array and the game itself.
@@ -83,4 +82,4 @@ game_summary(game_t* game)
  * We return:
  *   nothing
  */
-void delete_game(game_t* game);
+void  delete_game(game_t* game);
