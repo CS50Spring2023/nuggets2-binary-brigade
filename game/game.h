@@ -6,10 +6,6 @@
 
 #include "../player/player.h"
 
-/**************** local global types ****************/
-static const int goldTotal;    //amount of gold in each game
-static const int maxPlayers;   //max amount of players a game can hold
-
 /**************** global types ****************/
 typedef struct game game_t;  // opaque to users of the module
 
@@ -47,7 +43,7 @@ player_t* find_player(game_t* game, addr_t address);
  *   NULL if no previous spectator;
  *   old spectator's address if previous spectator.
  */
-addr_t* add_spectator(game_t* game, player_t* spectator);
+addr_t* add_spectator(game_t* game, addr_t* spectator)
 
 /**************** FUNCTION ****************/
 /* Gets the grid dimensions of the game
@@ -96,14 +92,6 @@ int  get_available_gold(game_t* game);
  *   the list of players associated with the given game.
  */
 player_t** get_players(game_t* game);
-
-/**************** FUNCTION ****************/
-/* Returns the current spectator's address
- *
- * We return:
- *   the current spectator's address if there is one and NULL if there isn't 
- */
-addr_t* get_spectator_address(game_t* game);
 
 /**************** FUNCTION ****************/
 /* Provided a game, the function creates

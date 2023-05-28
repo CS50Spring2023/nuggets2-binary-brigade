@@ -27,7 +27,7 @@ typedef struct game{
   int goldAvailable;
   int playerCount;
   player_t** players;
-  player_t* spectator;
+  addr_t* spectator;
 } game_t;
 
 /**************** FUNCTION ****************/
@@ -47,7 +47,7 @@ initialize_game(grid_t* grid)
     game->playerCount = 0;
     player_t** players = calloc(maxPlayers, sizeof(player_t*));
     game->players = players;
-    player_t* spectator = malloc(sizeof(player_t*));
+    addr_t* spectator = malloc(sizeof(addr_t*));
     game->spectator = spectator;
   }
 }
@@ -89,15 +89,15 @@ find_player(game_t* game, addr_t address)
 /**************** FUNCTION ****************/
 /* see player.h for description */
 addr_t*
-add_spectator(game_t* game, player_t* spectator)
+add_spectator(game_t* game, addr_t* spectator)
 {
   if (game->spectator == NULL){
     game->spectator = spectator;
     return NULL;
   }
-  addr_t pastSpectator = get_address(game->spectator);
+  addr_t* pastSpectator = game->spectator;
   game->spectator = spectator;
-  return &pastSpectator;
+  return pastSpectator;
 }
 
 /**************** FUNCTION ****************/
@@ -162,18 +162,6 @@ player_t**
 get_players(game_t* game)
 {
   return game->players;
-}
-
-/**************** FUNCTION ****************/
-/* see player.h for description */
-addr_t*
-get_spectator_address(game_t* game)
-{
-  if (game->spectator != NULL){
-    addr_t address = get_address(game->spectator);
-    return &address;
-  }
-  return NULL;
 }
 
 /**************** FUNCTION ****************/

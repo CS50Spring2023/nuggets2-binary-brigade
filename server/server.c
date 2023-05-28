@@ -13,10 +13,10 @@
 #include "../support/message.h"
 #include "../grid/grid.h"
 #include "../game/game.h"
+#include "../player/player.h"
 
-/**************** local global types ****************/
-static const int maxPlayers = 27;
-static game_t* game;
+/**************** global variable ****************/
+game_t* game;
 
 /**************** file-local functions ****************/
 
@@ -121,7 +121,8 @@ handleMessage(void* arg, const addr_t from, const char* message)
       }
     //client has input spectate
     } if (strcmp(message, "SPECTATE") == 0) {
-      addr_t* oldSpectator = add_spectator(game, from);
+      player_t* player = player_new(from, "SPECTATOR", 0, 0, "");
+      addr_t* oldSpectator = add_spectator(game, player);
       if (oldSpectator != NULL){
         //sending a message to the old spectator that they have been replaced
         message_send(*oldSpectator, "QUIT You have been replaced by a new spectator.");
@@ -184,7 +185,7 @@ goldUpdate(game_t* game, player_t* player, int collected){
   int p = get_gold(player);
   int r = get_available_gold(game);
 
-  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) + strlen(itoa(r));
+  int outputLength = strlen("GOLD   ") + strlen((char *) itoa(n)) + strlen((char *) itoa(p)) + strlen((char *) itoa(r));
   char *update = malloc(sizeof(char) * outputLength);
   update = sprintf(update, "GOLD %d %d %d", n, p, r);
 
@@ -206,7 +207,7 @@ spectatorGoldUpdate(game_t* game){
   int p = 0;
   int r = get_available_gold(game);
 
-  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) + strlen(itoa(r));
+  int outputLength = strlen("GOLD   ") + strlen((char *) itoa(n)) + strlen((char *) itoa(p)) + strlen((char *) itoa(r));
   char *update = malloc(sizeof(char) * outputLength);
   update = sprintf(update, "GOLD %d %d %d", n, p, r);
 
