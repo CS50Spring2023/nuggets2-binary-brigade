@@ -182,14 +182,6 @@ static void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gri
  */
 void placePlayer(player_t* player);
 
-/**************** blocksVisibility ****************/
-/* Function determines if a point's terrain is open
-*  space that can be seen through (room spot or gold).
-*  Returns false if it's an open space and true if
-*  it's not. 
- */
-static bool blocksVisibility(const int row, const int col);
-
 /**************** getnRows ****************/
 /* Function is a getter for the number of
 *  rows in the grid, making the information

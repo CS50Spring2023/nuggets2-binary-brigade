@@ -452,7 +452,7 @@ movePlayer(game_t* game, player_t* player, char letter)
   }
 
   // Current location of the player
-  gridpoint_t current = grid->points[get_Y(player)][get_x(player)];
+  gridpoint_t current = grid->points[get_y(player)][get_x(player)];
 
   // Potential new location of the player
   gridpoint_t updated = grid->points[current.row + changeRow][current.column + changeColumn];
@@ -609,8 +609,12 @@ placePlayer(player_t* player)
   }
 }
 
-/**************** blockVisibility ****************/
-/* See grid.h for description. */
+/**************** blocksVisibility ****************/
+/* Function determines if a point's terrain is open
+*  space that can be seen through (room spot or gold).
+*  Returns false if it's an open space and true if
+*  it's not. 
+ */
 bool 
 blocksVisibility(const int row, const int col)
 {
