@@ -13,10 +13,10 @@
 #include "../support/message.h"
 #include "../grid/grid.h"
 #include "../game/game.h"
+#include "../player/player.h"
 
-/**************** local global types ****************/
-static const int maxPlayers = 27;
-static game_t* game;
+/**************** global variable ****************/
+game_t* game;
 
 /**************** file-local functions ****************/
 
@@ -98,10 +98,11 @@ handleMessage(void* arg, const addr_t from, const char* message)
     if (len > 0 && line[len-1] == '\n') {
       line[len-1] = '\0';
     }
-
+    //client has input play
     if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
       const char* name = message + strlen("PLAY ");
       if (strlen(name) == 0){
+        //sending message to client that name is empty
         message_send(from, "QUIT Sorry - you must provide player's name.");
       }
       else {
@@ -111,21 +112,27 @@ handleMessage(void* arg, const addr_t from, const char* message)
           message_send(from, "QUIT Game is full: no more players can join.");
         } else {
           strcat(line, strcat("OK ", get_letter(player)));
+          message_send(from, line);
+          //sending grid dimensions, gold update, and display
           message_send(from, get_grid_dimensions(game));
           message_send(from, goldUpdate(game, player, 0));
           message_send(from, getDisplay(player));
         }
       }
+    //client has input spectate
     } if (strcmp(message, "SPECTATE") == 0) {
-      addr_t* oldSpectator = add_spectator(game, from);
+      player_t* player = player_new(from, "SPECTATOR", 0, 0, "");
+      addr_t* oldSpectator = add_spectator(game, player);
       if (oldSpectator != NULL){
+        //sending a message to the old spectator that they have been replaced
         message_send(*oldSpectator, "QUIT You have been replaced by a new spectator.");
       } else {
+      //sending grid dimensions, gold update, and display
       message_send(from, get_grid_dimensions(game));
       message_send(from, spectatorGoldUpdate(game));
       message_send(from, gridDisplaySpectator());
       }
-  
+    //client has input a keystroke
     } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
       const char* key = message + strlen("KEY ");
       player_t* player = get_player(from);
@@ -142,6 +149,20 @@ handleMessage(void* arg, const addr_t from, const char* message)
         remove_spectator(game, from);
         message_send(from, "QUIT Thanks for watching!");
       }
+    } else if (get_available_gold(game) == 0){    //game is over
+      char* summary = game_summary(game);
+      
+      player_t** players = get_players(game);
+      for (int i = 0; i < players; i++) {
+        message_send(get_address(players[i]), summary); //sends game summary to all players
+      }
+
+      addr_t* address = get_spectator_addr(game);
+      if (address != NULL){
+        message_send(*address, summary); //sends game summary to a spectator if it exists
+      }
+
+      delete_game(game);
     }
 
     // normal case: keep looping
@@ -164,7 +185,7 @@ goldUpdate(game_t* game, player_t* player, int collected){
   int p = get_gold(player);
   int r = get_available_gold(game);
 
-  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) + strlen(itoa(r));
+  int outputLength = strlen("GOLD   ") + strlen((char *) itoa(n)) + strlen((char *) itoa(p)) + strlen((char *) itoa(r));
   char *update = malloc(sizeof(char) * outputLength);
   update = sprintf(update, "GOLD %d %d %d", n, p, r);
 
@@ -186,7 +207,7 @@ spectatorGoldUpdate(game_t* game){
   int p = 0;
   int r = get_available_gold(game);
 
-  int outputLength = strlen("GOLD   ") + strlen(itoa(n)) + strlen(itoa(p)) + strlen(itoa(r));
+  int outputLength = strlen("GOLD   ") + strlen((char *) itoa(n)) + strlen((char *) itoa(p)) + strlen((char *) itoa(r));
   char *update = malloc(sizeof(char) * outputLength);
   update = sprintf(update, "GOLD %d %d %d", n, p, r);
 
