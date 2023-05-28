@@ -1,10 +1,11 @@
-/** 
- * grid.c
- * CS50 Spring 2023, Project
- * Date: 05/20/2023
- * Description: This program provides the grid component of the 
- *      nuggest project.
+/*
+ * grid.c - Nuggets 'grid' module
+ *
+ * see grid.h for more information.
+ *
+ * Binary Brigade, Spring 2023
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -18,16 +19,13 @@
 
 /**************** types ****************/
 
-// Defining the gridpoint struct
-typedef struct gridpoint
-{
-    int row;
-    int column;
-    int nGold;
-    char player;
-    char terrain;
-    bool known;
-    bool visible;
+/**************** local types ****************/
+typedef struct gridpoint {
+  int row;
+  int column;
+  int nGold;
+  char player;
+  char terrain;
 } gridpoint_t;
 
 // Defining the grid struct
@@ -53,15 +51,16 @@ void placePlayer(player_t* player);
 void movePlayer(game_t* game, player_t* player, char letter);
 char* gridDisplay(player_t* player);
 char* gridDisplaySpectator();
+bool blocksVisibility(const int row, const int col);
 int getnRows();
 int getnColumns();
 void gridDelete();
 
 /**************** local functions ****************/
 
+static gridpoint_t* gridpointNew(int row, int column, char terrain);
 static int readnColumns(FILE* map, int nRows); 
 static void insertGridpoints(char* pathName);
-static gridpoint_t* gridpointNew(int row, int column, char terrain);
 static void generateGold(int randomSeed); 
 static void executeMovement(game_t* game, player_t* player, 
                     int changeRow, int changeColumn);
@@ -72,29 +71,30 @@ static bool movePossible(player_t* player, int changeRow, int changeColumn);
 
 
 /**************** gridInit ****************/
-/* See detailed description in grid.h. */
-grid_t* gridInit(char* pathName, int randomSeed) 
+/* See grid.h for description. */
+grid_t* 
+gridInit(char* pathName, int randomSeed) 
 {
-    // Allocating memory for the grid, checking for NULL pointer
-    grid = mem_malloc(sizeof(grid_t));
+  // Allocating memory for the grid, checking for NULL pointer
+  grid = mem_malloc(sizeof(grid_t));
 
-    if (grid == NULL) {
-        return NULL;
-    }
+  if (grid == NULL) {
+    return NULL;
+  }
 
-    // Opening the map file, checking for readability
-    FILE* map = fopen(pathName, "r");
+  // Opening the map file, checking for readability
+  FILE* map = fopen(pathName, "r");
 
-    if (map == NULL) {
-        return NULL;
-    }
+  if (map == NULL) {
+    return NULL;
+  }
 
-    // Setting the number of columns and rows in the map
-    grid->nRows = file_numLines(map);
-    grid->nColumns = readnColumns(map, grid->nRows);
+  // Setting the number of columns and rows in the map
+  grid->nRows = file_numLines(map);
+  grid->nColumns = readnColumns(map, grid->nRows);
 
-    // Closing the file (to reset line count)
-    fclose(map);
+  // Closing the file (to reset line count)
+  fclose(map);
 
     /* Allocating memory for the rows and columns in the 
     2D array to hold gridpoints */
@@ -105,52 +105,61 @@ grid_t* gridInit(char* pathName, int randomSeed)
         grid->points[row] = mem_malloc(grid->nColumns * sizeof(gridpoint_t*));
     }
 
-    // Creating gridpoints
-    insertGridpoints(pathName);
+  // Creating gridpoints
+  insertGridpoints(pathName);
 
-    // Generating the gold, inserting it into the map
-    generateGold(randomSeed);
+  // Generating the gold, inserting it into the map
+  generateGold(randomSeed);
 
-    // Returning a pointer to the initialized grid
-    return grid;
+  // Returning a pointer to the initialized grid
+  return grid;
 }
 
 /**************** readnColumns ****************/
-/* See detailed description in grid.h. */
-static int readnColumns(FILE* map, int nRows)
+/* See grid.h for description. */
+static int 
+readnColumns(FILE* map, int nRows)
 {
-    // Setting a variable for the number of columns
-    int nColumns = 0;
+  // Setting a variable for the number of columns
+  int nColumns = 0;
 
-    // Reading through the map to find nColumns
-    for (int row = 0; row < nRows; row++) {
-        // Reading the line, determining its length
-        char* line = file_readLine(map);
-        int length = strlen(line);
+  // Reading through the map to find nColumns
+  for (int row = 0; row < nRows; row++) {
+    // Reading the line, determining its length
+    char* line = file_readLine(map);
+    int length = strlen(line);
 
-        // If the length is greater than nColumns, updating the variable
-        if (nColumns < length) {
-            nColumns = length;
-        }
-
-        // Freeing memory allocated for the line
-        mem_free(line);
+    // If the length is greater than nColumns, updating the variable
+    if (nColumns < length) {
+      nColumns = length;
     }
 
-    // Returning the number of columns
-    return nColumns;
+    // Freeing memory allocated for the line
+    mem_free(line);
+  }
+
+  // Returning the number of columns
+  return nColumns;
 }
 
 /**************** insertGridpoints ****************/
-/* See detailed description in grid.h. */
-static void insertGridpoints(char* pathName)
+/* The function takes the pathname for a map file.
+*  Upon checking the parameters,
+*  the function loops through the map (rows and
+*  columns), creating and inserting a gridpoint
+*  struct into the 2D array belonging to the grid.
+*/
+static void 
+insertGridpoints(char* pathName)
 {
-    // Opening the map file, checking for readability
-    FILE* map = fopen(pathName, "r");
+  // Opening the map file, checking for readability
+  FILE* map = fopen(pathName, "r");
+  char terrain;
+  gridpoint_t* gridpoint;
 
-    if (map == NULL || grid == NULL) {
-        return;
-    }
+  if (map == NULL || grid == NULL) {
+    return;
+  }
 
     // Looping through the map, inserting grid points
     for (int row = 0; row < grid->nRows; row++) {
@@ -161,17 +170,18 @@ static void insertGridpoints(char* pathName)
             grid->points[row][column] = gridpoint;
         }
         
-        // Moving to the next line
-        fgetc(map);
-    }
+    // Moving to the next line
+    fgetc(map);
+  }
 
-    // Closing the file
-    fclose(map);
+  // Closing the file
+  fclose(map);
 }
 
 /**************** gridDelete ****************/
-/* See detailed description in grid.h. */
-void gridDelete()
+/* See grid.h for description. */
+void 
+gridDelete()
 {
     // Only performing operations if the grid is not NULL
     if (grid != NULL) {
@@ -186,42 +196,56 @@ void gridDelete()
             mem_free(grid->points[row]);
         }
 
-        // Freeing the array and the grid itself
-        mem_free(grid->points);
-        mem_free(grid);
-    }
+  // Freeing the array and the grid itself
+  mem_free(grid->points);
+  mem_free(grid);
+  }
 } 
 
 /**************** gridpointNew ****************/
-/* See detailed description in grid.h. */
-static gridpoint_t* gridpointNew(int row, int column, char terrain)
+/* The functions takes in the coordinates of
+ * the gridpoint (row, column) and the terrain
+ * (what type of character is at the point).
+ * It allocates memory for the gridpoint and 
+ * sets the properties of the gridpoint
+ * according to the parameters passed in. 
+ * If the memory allocation is successful, it
+ * returns a pointer to the gridpoint
+ * (otherwise NULL).
+ */
+static gridpoint_t* 
+gridpointNew(int row, int column, char terrain)
 {
-    // Allocating memory for the gridpoint
-    gridpoint_t* gridpoint = mem_malloc(sizeof(gridpoint_t));
+  // Allocating memory for the gridpoint
+  gridpoint_t* gridpoint = mem_malloc(sizeof(gridpoint_t));
 
-    // Checking for successful memory allocation
-    if (gridpoint == NULL) {
-        return NULL;
-    }
+  // Checking for successful memory allocation
+  if (gridpoint == NULL) {
+    return NULL;
+  }
 
-    // Setting struct variables according to parameters
-    gridpoint->row = row;
-    gridpoint->column = column;
-    gridpoint->terrain = terrain;
-    gridpoint->nGold = 0;
-    gridpoint->player = 0;
+  // Setting struct variables according to parameters
+  gridpoint->row = row;
+  gridpoint->column = column;
+  gridpoint->terrain = terrain;
+  gridpoint->nGold = 0;
+  gridpoint->player = 0;
 
-    // Returning the created gridpoint
-    return gridpoint;
+  // Returning the created gridpoint
+  return gridpoint;
 }
 
 /**************** gridDisplay ****************/
-/* See detailed description in grid.h. */
-char* gridDisplay(player_t* player) 
+/* See grid.h for description. */
+char* 
+gridDisplay(player_t* player) 
 {
-  // Size of grid string: rows*columns, plus one newline per row
-  //char[(grid->nRows)*(grid->nColumns + 1)] gridString;
-  char* gridString = mem_calloc((grid->nRows)*(grid->nColumns + 1), sizeof(char));
+  // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
+  //char[(grid->nRows)*(grid->nColumns + 1) + 1] gridString;
+  char* gridString = mem_calloc(((grid->nRows)*(grid->nColumns + 1) + 1), sizeof(char));
+  char terrain;
+  char playerAtPoint;
+  int index = 0;
 
   // Checking if the grid is NULL
   if (grid != NULL) {
@@ -236,15 +260,19 @@ char* gridDisplay(player_t* player)
           if (isVisible(player, row, column)) {
             // If the player at the point is the player itself, print @ sign
             if (playerAtPoint == get_letter(player)) {
-                sprintf(gridString, "%c", '@');
+                gridString[index] = '@';
+                index++;
             }
-            sprintf(gridString, "%c", playerAtPoint);
+            gridString[index] = playerAtPoint;
+            index++;
           }
           else if (isKnown(player, row, column)) {
-            sprintf(gridString, "%c", terrain);
+            gridString[index] = terrain;
+            index++;
           }
           else {
-            sprintf(gridString, " ");
+            gridString[index] = ' ';
+            index++;
           }
         }
         // Point does not contain a player
@@ -252,39 +280,49 @@ char* gridDisplay(player_t* player)
           // Tile contains gold
            if (terrain == "*" ) {
             if (isVisible(player, row, column)) {
-              sprintf(gridString, "%c", terrain);
+              gridString[index] = terrain;
+              index++;
             }
             else if (isKown(player, row, column)) {
-              sprintf(gridString, ".");
+              gridString[index] = '.';
+              index++;
             }
             else {
-              sprintf(gridString, " ");
+              gridString[index] = ' ';
+              index++;
             }
           }
           // Tile does not contain gold
           else {
             if (isKnown(player, row, column)) {
-              sprintf(gridString, "%c", terrain);
+              gridString[index] = terrain;
+              index++;
             }
             else {
-              sprintf(gridString, " ");
+              gridString[index] = ' ';
+              index++;
             }
           }
         }     
       }
       // Printing newline for the next row
-      sprintf(gridString, "\n");
+      gridString[index] = '\n';
+      index++;
     }
   }
   return gridString;
 }
 
 /**************** gridDisplaySpectator ****************/
-/* See detailed description in grid.h. */
-char* gridDisplaySpectator() 
+/* See grid.h for description. */
+char* 
+gridDisplaySpectator() 
 {   
-    // Allocating memory for the grid string
-    char* gridString = mem_calloc((grid->nRows)*(grid->nColumns + 1), sizeof(char));
+  // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
+  char* gridString = mem_calloc(((grid->nRows)*(grid->nColumns + 1) + 1), sizeof(char));
+  char playerAtPoint;
+  char terrain;
+  int index = 0;
 
     // Checking if the grid is NULL
     if (grid != NULL) {
@@ -296,24 +334,44 @@ char* gridDisplaySpectator()
                 if (player != 0) {
                     sprintf(gridString, "%c", player);
                 }
-
-                // If the point does not contain a player, printing the terrain
-                else {
-                    char terrain = grid->points[row][column]->terrain;
-                    sprintf(gridString, "%c", terrain);
-                }
-
-            }
-
-            // Printing newline for the next row
-            sprintf(gridString, "\n");
+  // Checking if the grid is NULL
+  if (grid != NULL) {
+    // Looping over rows and columns in the grid
+    for (int row = 0; row < grid->nRows; row++) {
+      for (int column = 0; column < grid->nColumns; column++) {
+        // If the point contains a player, printing the player letter
+        playerAtPoint = grid->points[row][column]->player;
+        if (playerAtPoint != 0) {
+          gridString[index] = playerAtPoint;
+          index++;
         }
+
+        // If the point does not contain a player, printing the terrain
+        else {
+          terrain = grid->points[row][column]->terrain;
+          gridString[index] = terrain;
+          index++;
+        }
+      }
+      // Printing newline for the next row
+      gridString[index] = '\n';
     }
+  }
 }
 
 /**************** generateGold ****************/
-/* See detailed description in grid.h. */
-static void generateGold(int randomSeed)
+/* The functions is called in the gridInit
+ * method, taking in a randomSeed.
+ * Depending on the randomSeed
+ * input, the function creates a random seed.
+ * Tracking the amount of undistributed gold,
+ * it generates gold piles of varying size
+ * (between 10 to 30 nuggets), before placing
+ * the piles in random locations on the map
+ * (if the spot is in a room).
+ */
+static void 
+generateGold(int randomSeed)
 {
     // Setting random based on the randomSeed from the server
     srand(randomSeed);
@@ -372,47 +430,48 @@ static void generateGold(int randomSeed)
 
 /**************** movePlayer ****************/
 /* See detailed description in grid.h. */
-void movePlayer(game_t* game, player_t* player, char letter) 
+void 
+movePlayer(game_t* game, player_t* player, char letter) 
 {
-    // Changes to location if successful movement
-    int changeRow;
-    int changeColumn;
+  // Changes to location if successful movement
+  int changeRow;
+  int changeColumn;
     
-    // Setting up the switch to handle each character press
-    switch (letter) {
-        case 'h': 
-            changeRow = 0;
-            changeColumn = -1;
-            break;
-        case 'l': 
-            changeRow = 0;
-            changeColumn = 1;
-            break;
-        case 'j': 
-            changeRow = 1;
-            changeColumn = 0;
-            break;
-        case 'k': 
-            changeRow = -1;
-            changeColumn = 0;
-            break;
-        case 'y': 
-            changeRow = -1;
-            changeColumn = -1;
-            break;
-        case 'u': 
-            changeRow = -1;
-            changeColumn = 1;
-            break;
-        case 'b': 
-            changeRow = 1;
-            changeColumn = -1;
-            break;
-        case 'n': 
-            changeRow = 1;
-            changeColumn = 1;
-            break;
-    }
+  // Setting up the switch to handle each character press
+  switch (letter) {
+    case 'h': 
+      changeRow = 0;
+      changeColumn = -1;
+      break;
+    case 'l': 
+      changeRow = 0;
+      changeColumn = 1;
+      break;
+    case 'j': 
+      changeRow = 1;
+      changeColumn = 0;
+      break;
+    case 'k': 
+      changeRow = -1;
+      changeColumn = 0;
+      break;
+    case 'y': 
+      changeRow = -1;
+      changeColumn = -1;
+      break;
+    case 'u': 
+      changeRow = -1;
+      changeColumn = 1;
+      break;
+    case 'b': 
+      changeRow = 1;
+      changeColumn = -1;
+      break;
+    case 'n': 
+      changeRow = 1;
+      changeColumn = 1;
+       break;
+  }
 
     // If the letter is uppercase (continuous movement)
     if (isupper(letter)) {
@@ -431,9 +490,18 @@ void movePlayer(game_t* game, player_t* player, char letter)
 }
 
 /**************** executeMovement ****************/
-/* See detailed description in grid.h. */
-static void executeMovement(game_t* game, player_t* player, 
-                    int changeRow, int changeColumn)
+/* The function does the work of executing
+ * the movement of a player following a letter
+ * press, having been set up by the movePlayer
+ * function. It takes in a game struct, player
+ * struct, as well as the current and new points
+ * of the player (as product of the movement).
+ * The function calls other functions
+ * to handle various cases arising from the
+ * player movement.
+ */
+static void 
+executeMovement(game_t* game, player_t* player, int changeRow, int changeColumn)
 {
     // Current location of the player
     gridpoint_t* current = grid->points[get_y(player)][get_x(player)];
@@ -452,14 +520,21 @@ static void executeMovement(game_t* game, player_t* player,
     // Updating the contents of the gridpoints
     updated->player = get_letter(player);
 
-    // Checking if the move causes the player to find gold
-    foundGold(player);
+  // Checking if the move causes the player to find gold
+  foundGold(player);
 }
 
-
 /**************** foundGold ****************/
-/* See detailed description in grid.h. */
-static void foundGold(player_t* player)
+/* Function checks if the new position of the
+ * player, following their movement, causes
+ * them to find gold. If it does, the gold
+ * of held in that point transfers to the
+ * gold purse of the player. The terrain of
+ * the gridpoint is updated to reflect the
+ * changes.
+ */
+static void 
+foundGold(player_t* player)
 {
     // Setting a variable for the gridpoint
     gridpoint_t* gridpoint = grid->points[get_y(player)][get_x(player)];
@@ -477,12 +552,16 @@ static void foundGold(player_t* player)
 }
 
 /**************** foundPlayer ****************/
-/* See detailed description in grid.h. */
-static void foundPlayer(player_t* player, game_t* game, 
-                gridpoint_t* current, gridpoint_t* updated)
+/* Function handles situations where a movement
+ * causes the player to collide with another
+ * player. If that is the case, the players
+ * switch places.
+ */
+static void 
+foundPlayer(player_t* player, game_t* game, gridpoint_t* current, gridpoint_t* updated)
 {
-    // Saving the players array from the game struct in variable
-    player_t** players = get_players(game);
+  // Saving the players array from the game struct in variable
+  player_t** players = get_players(game);
 
     // If there is a player in the new location
     if (updated->player != 0) {
@@ -505,8 +584,17 @@ static void foundPlayer(player_t* player, game_t* game,
 }
 
 /**************** movePossible ****************/
-/* See detailed description in grid.h. */
-static bool movePossible(player_t* player, int changeRow, int changeColumn) 
+/* Function checks if a move is possible. It
+ * takes in a player struct, as well the current
+ * and prospective new position of the player.
+ * If the new coordinates land the player in a
+ * room spot, gold spot, or passage, the
+ * function returns true (indicating that the
+ * move is possible).
+ * Otherwise, it returns false.
+ */
+static bool 
+movePossible(player_t* player, int changeRow, int changeColumn) 
 {   
     // Current location of the player
     gridpoint_t* current = grid->points[get_y(player)][get_x(player)];
@@ -528,7 +616,8 @@ static bool movePossible(player_t* player, int changeRow, int changeColumn)
 
 /**************** placePlayer ****************/
 /* See detailed description in grid.h. */
-void placePlayer(player_t* player)
+void 
+placePlayer(player_t* player)
 {
     while (true) {
         // Generating a random row and column for the player to be placed into
@@ -548,15 +637,16 @@ void placePlayer(player_t* player)
             set_y(player, randomPoint->row);
             set_x(player, randomPoint->column);
 
-            // Exiting the loop
-            break;
-        }
+      // Exiting the loop
+      break;
     }
+  }
 }
 
 /**************** blockVisibility ****************/
-/* See detailed description in grid.h. */
-static bool blocksVisibility(const int row, const int col)
+/* See grid.h for description. */
+bool 
+blocksVisibility(const int row, const int col)
 {
   char terrain = grid->points[row][col]->terrain;
   if (terrain == '.' || terrain == '*') {
@@ -568,15 +658,17 @@ static bool blocksVisibility(const int row, const int col)
 }
 
 /**************** getnRows ****************/
-/* See detailed description in grid.h. */
-int getnRows()
+/* See grid.h for description. */
+int 
+getnRows()
 {
-    return grid->nRows;
+  return grid->nRows;
 }
 
 /**************** getnColumns ****************/
-/* See detailed description in grid.h. */
-int getnColumns()
+/* See grid.h for description. */
+int 
+getnColumns()
 {
-    return grid->nColumns;
+  return grid->nColumns;
 }
