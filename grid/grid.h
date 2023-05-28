@@ -76,13 +76,14 @@ void gridDelete();
 static gridpoint_t* gridpointNew(int row, int column, char terrain);
 
 /**************** gridDisplay ****************/
-/* The function creates a string to display the
-*  grid. Upon checking that the grid is not NULL, 
+/* The function takes in a player, creates a 
+*  string to display the player-specific grid.
+*  Upon checking that the grid is not NULL, 
 *  it loops over each point in the grid, printing
 *  players/gold/terrain/empty spaces based on
 *  what is known and visible to the player.
 */
-char* gridDisplay();
+char* gridDisplay(player_t* player);
 
 /**************** gridDisplaySpectator ****************/
 /* The function creates a string to display the
@@ -129,26 +130,25 @@ void movePlayer(game_t* game, player_t* player, char letter);
 *  the movement of a player following a letter
 *  press, having been set up by the movePlayer
 *  function. It takes in a game struct, player
-*  struct, as well as the current and new points
-*  of the player (as product of the movement). 
+*  struct, as well as the changes to x and y. 
 *  The function calls other functions 
 *  to handle various cases arising from the 
 *  player movement.
 */
 static void executeMovement(game_t* game, player_t* player, 
-                    gridpoint_t current, gridpoint_t newPoint);
+                    int changeRow, int changeColumn);
 
 /**************** movePossible ****************/
 /* Function checks if a move is possible. It 
-*  takes in a player struct, as well the current
-*  and prospective new position of the player. 
+*  takes in a player struct, as well prospective
+*  changes in the position of the player. 
 *  If the new coordinates land the player in a 
 *  room spot, gold spot, or passage, the 
 *  function returns true (indicating that the 
 *  move is possible).
 *  Otherwise, it returns false.  
 */
-static bool movePossible(player_t* player, gridpoint_t current, gridpoint_t newPoint);
+static bool movePossible(player_t* player, int changeRow, int changeColumn);
 
 /**************** foundGold ****************/
 /* Function checks if the new position of the
@@ -167,7 +167,8 @@ static void foundGold(player_t* player);
 *  player. If that is the case, the players
 *  switch places.
 */
-static void foundPlayer(player_t* player, game_t* game, gridpoint_t current, gridpoint_t newPoint);
+static void foundPlayer(player_t* player, game_t* game, 
+                        gridpoint_t* current, gridpoint_t* newPoint);
 
 /**************** placePlayer ****************/
 /* Function takes in a player struct, placing
