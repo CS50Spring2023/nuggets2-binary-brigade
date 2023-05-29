@@ -44,7 +44,7 @@ main(int argc, char *argv[])
   fp = fopen(argv[1], "r");
   if (fp == NULL){
     fprintf(stderr, "Map txt file is not a readable file");
-    return 1;
+    return 2;
   }
   fclose(fp);
 
@@ -61,7 +61,7 @@ main(int argc, char *argv[])
   // initialize the message module (without logging)
   int myPort = message_init(NULL);
   if (myPort == 0) {
-    return 2; // failure to initialize message module
+    return 3; // failure to initialize message module
   } else {
     printf("serverPort=%d\n", myPort);
   }
@@ -75,7 +75,7 @@ main(int argc, char *argv[])
   delete_game(game);
   gridDelete();
   
-  return ok? 0 : 1; // status code depends on result of message_loop
+  return ok? 0 : 4; // status code depends on result of message_loop
 }
 
 /**************** handleMessage ****************/
@@ -145,27 +145,45 @@ handleMessage(void* arg, const addr_t from, const char* message)
       }
     //client has input a keystroke
     } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
-      const char* key = message + strlen("KEY ");
-      player_t* player = find_player(game, from);
-      int prevGold = get_gold(player);
-      movePlayer(game, player, *key);
-      int currGold = get_gold(player);
-      message_send(from, goldUpdate(game, player, currGold-prevGold));
-    } else if (strcmp(line, "Q") == 0) {
-      if (find_player(game, from) != NULL){
-        player_t* player = find_player(game, from);
-        player_inactive(player);
-        message_send(from, "QUIT Thanks for playing!");
+      //extract key command
+      char key[strlen(message) - 4];
+      strncpy(key, message + 5, strlen(message) - 4);
+
+      if (strcmp(key, "Q") == 0) {
+        if (find_player(game, from) != NULL){
+          player_t* player = find_player(game, from);
+          player_inactive(player);
+          message_send(from, "QUIT Thanks for playing!");
+        } else {
+          add_spectator(game, NULL);
+          message_send(from, "QUIT Thanks for watching!");
+        }
       } else {
-        add_spectator(game, NULL);
-        message_send(from, "QUIT Thanks for watching!");
+        if (find_player(game, from) != NULL){
+          player_t* player = find_player(game, from);
+          int prevGold = get_gold(player);
+          int prevX = get_x(player);
+          int prevY = get_y(player);
+          movePlayer(game, player, *key);
+          int currGold = get_gold(player);
+          int oldX = get_x(player);
+          int oldY = get_y(player);
+          if (currGold != prevGold){
+            message_send(from, goldUpdate(game, player, currGold-prevGold));
+          }
+          if (prevX != oldX || prevY != oldY){
+            message_send(from, getDisplay(player));
+          }
+        }
       }
     } else if (get_available_gold(game) == 0){    //game is over
       char* summary = game_summary(game);
       
       player_t** players = get_players(game);
       for (int i = 0; i < maxPlayers; i++) {
-        message_send(get_address(players[i]), summary); //sends game summary to all players
+        if (players[i] != NULL){
+          message_send(get_address(players[i]), summary); //sends game summary to all players
+        }
       }
 
       addr_t* address = get_spectator(game);
