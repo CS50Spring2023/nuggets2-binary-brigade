@@ -10,11 +10,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
+#include <ctype.h>
 #include "player.h"
 #include "../grid/grid.h"
-#include "message.h"
+#include "../support/message.h"
 #include "../lib/mem.h"
 
+static bool lineCheck(const int pr, const int pc, const int row, const int col);
+static bool** initializeBooleanArray(const int numRows, const int numCols);
 
 /**************** global constants ****************/
 const int maxNameLength = 50;
@@ -112,6 +116,7 @@ get_name(player_t* player)
     if (player != NULL){
         return player->name;
     } 
+    return " ";
 }
 
 /* see player.h for description */
@@ -135,25 +140,25 @@ get_MaxNameLength()
 
 /**************** get_x ****************/
 /* see player.h for description */
-char
+int
 get_x(player_t* player)
 {
   if (player != NULL) {
     return player->x_coord;
   }
-  return '\0';
+  return -1;
 }
 
 
 /**************** get_y  ****************/
 /* see player.h for description */
-char
+int
 get_y(player_t* player)
 {
   if (player != NULL) {
     return player->y_coord;
   }
-  return '\0';
+  return -1;
 }
 
 
@@ -174,13 +179,18 @@ get_gold(player_t* player)
 addr_t
 get_address(player_t* player)
 {
-  if (player != NULL) {
-    return player->address;
-  }
-  addr_t blank;
-  return blank;
+  
+  return player->address;
+ 
 }
 
+void 
+set_letter(player_t* player, char letter)
+{
+  if (player != NULL){
+    player->letter = letter;
+  }
+}
 
 /**************** set_x ****************/
 /* see player.h for description */

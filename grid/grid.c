@@ -317,3 +317,72 @@ getnColumns()
 {
   return grid->nColumns;
 }
+
+/**************** getPoint ****************/
+/* See grid.h for description. */
+gridpoint_t* 
+getPoint(int row, int column)
+{
+  return grid->points[row][column];
+}
+
+/**************** getTerrain ****************/
+/* See grid.h for description. */
+int 
+getTerrain(gridpoint_t* gridpoint)
+{
+  return gridpoint->terrain;
+}
+
+/**************** getPlayer ****************/
+/* See grid.h for description. */
+char
+getPlayer(gridpoint_t* gridpoint)
+{
+  return gridpoint->player;
+}
+
+void setPlayer(gridpoint_t* gridpoint, char player)
+{
+  if (gridpoint != NULL) {
+    gridpoint->player = player;
+  }
+}
+
+void setTerrain(gridpoint_t* gridpoint, char terrain)
+{
+  if (gridpoint != NULL) {
+    gridpoint->terrain = terrain;
+  }
+}
+
+int getPointRow(gridpoint_t* gridpoint)
+{
+  if (gridpoint != NULL) {
+    return gridpoint->row;
+  }
+  return -1;
+}
+
+int getPointColumn(gridpoint_t* gridpoint)
+{
+  if (gridpoint != NULL) {
+    return gridpoint->column;
+  }
+  return -1;
+}
+
+int getPointGold(gridpoint_t* gridpoint)
+{
+  if (gridpoint != NULL) {
+    return gridpoint->nGold;
+  }
+  return -1;
+}
+
+void setPointGold(gridpoint_t* gridpoint, int nGold)
+{
+  if (gridpoint != NULL) {
+    gridpoint->nGold = nGold;
+  }
+}

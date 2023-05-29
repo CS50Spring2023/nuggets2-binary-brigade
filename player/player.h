@@ -4,10 +4,10 @@
  * Binary Brigade, Spring, 2023
  */
 
-#include "message.h"
+#include "../support/message.h"
 
-/**************** global types ****************/
-typedef struct player player_t;  // opaque to users of the module
+// /**************** global types ****************/
+typedef struct player player_t;
 
 /**************** FUNCTION ****************/
 
@@ -63,7 +63,7 @@ int get_MaxNameLength();
  * We return:
  *   player's x
  */
-char get_x(player_t* player);
+int get_x(player_t* player);
 
 
 /* Take in a pointer to a player
@@ -71,7 +71,7 @@ char get_x(player_t* player);
  * We return:
  *   player's y
  */
-char get_y(player_t* player);
+int get_y(player_t* player);
 
 
 /* Take in a pointer to a player
@@ -89,6 +89,12 @@ int get_gold(player_t* player);
  */
 addr_t get_address(player_t* player);
 
+/* Take in a pointer to a player and change player's letter
+ *
+ * We return:
+ *   nothing
+ */
+void set_letter(player_t* player, char letter);
 
 /* Take in a pointer to a player and change player's x
  *
