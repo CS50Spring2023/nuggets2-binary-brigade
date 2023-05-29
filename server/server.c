@@ -56,7 +56,8 @@ main(int argc, char *argv[])
   }
 
   grid_t* grid = gridInit(argv[1], randomSeed);
-  game_t* game = initialize_game(grid);
+  // game_t* game = initialize_game(grid);
+  initialize_game(grid);
 
   // initialize the message module (without logging)
   int myPort = message_init(NULL);
@@ -72,7 +73,7 @@ main(int argc, char *argv[])
 
   // shut down the message module
   message_done();
-  delete_game(game);
+  delete_game();
   gridDelete();
   
   return ok? 0 : 1; // status code depends on result of message_loop
@@ -165,7 +166,9 @@ handleMessage(void* arg, const addr_t from, const char* message)
       
       player_t** players = get_players(game);
       for (int i = 0; i < maxPlayers; i++) {
-        message_send(get_address(players[i]), summary); //sends game summary to all players
+        if (players[i] != NULL){
+          message_send(get_address(players[i]), summary); //sends game summary to all players
+        }
       }
 
       addr_t* address = get_spectator(game);

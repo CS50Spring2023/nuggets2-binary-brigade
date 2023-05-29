@@ -16,27 +16,26 @@ CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$(SUPPORT_DIR) -I../game -I../grid -I.
 
 all: server
 
-server: server.o
+server: server.o $(SUPPORT_DIR)/message.o ../grid/grid.o ../player/player.o ../game/game.o
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
-
-##################### Dependencies #####################
 
 server.o: server.c $(SUPPORT_DIR)/message.h ../game/game.h ../grid/grid.h ../player/player.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-message.o: $(SUPPORT_DIR)/message.c $(SUPPORT_DIR)/message.h
+$(SUPPORT_DIR)/message.o: $(SUPPORT_DIR)/message.c $(SUPPORT_DIR)/message.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-../grid/grid.o: ../grid/grid.h ../file/file.h ../lib/mem.h ../player/player.h ../game/game.h
+../grid/grid.o: ../grid/grid.c ../grid/grid.h ../lib/file.h ../lib/mem.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-../player/player.o: ../player/player.h ../grid/grid.h $(SUPPORT_DIR)/message.h
+../player/player.o: ../player/player.c ../player/player.h ../grid/grid.h $(SUPPORT_DIR)/message.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-../game/game.o: ../game/game.h ../grid/grid.h ../player/player.h ../lib/mem.h
+../game/game.o: ../game/game.c ../game/game.h ../grid/grid.h ../player/player.h ../lib/mem.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-############# clean ###########
 clean:
 	rm -f core
 	rm -rf *~ *.o *.gch *.dSYM
 	rm -f *.log
-	rm -f $(LIB)
-	rm -f $(TESTS)
-	rm -f *.o server
+	rm -f server

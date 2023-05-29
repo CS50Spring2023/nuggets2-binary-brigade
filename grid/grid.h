@@ -11,9 +11,6 @@
  * Binary Brigade, Spring 2023
  */
 
-#include "grid.c"
-#include "game.h"
-
 /**************** global types ****************/
 typedef struct gridpoint gridpoint_t;
 typedef struct grid grid_t;
@@ -70,3 +67,66 @@ int getnRows();
 *  available to other modules. 
  */
 int getnColumns();
+
+/**************** getPoints ****************/
+/* Function is a getter for a point
+*  in the grid, making the information
+*  available to other modules. 
+ */
+gridpoint_t* getPoint(int row, int column);
+
+/**************** getTerrain ****************/
+/* Function is a getter for the terrain of
+*  the gridpoint, making the information
+*  available to other modules. 
+ */
+char getTerrain(gridpoint_t* gridpoint);
+
+/**************** getPlayer ****************/
+/* Function is a getter for the player of
+*  a gridpoint, making the information
+*  available to other modules. 
+ */
+char getPlayer(gridpoint_t* gridpoint);
+
+/**************** getPointColumn ****************/
+/* Function is a getter for the column of
+*  a gridpoint, making the information
+*  available to other modules. 
+ */
+int getPointColumn(gridpoint_t* gridpoint);
+
+/**************** getPointRow ****************/
+/* Function is a getter for the column of
+*  a gridpoint, making the information
+*  available to other modules. 
+ */
+int getPointRow(gridpoint_t* gridpoint);
+
+/**************** setPlayer ****************/
+/* Function is a setter for the player of
+*  a gridpoint, making the information
+*  available to other modules. 
+ */
+void setPlayer(gridpoint_t* gridpoint, char player);
+
+/**************** setTerrain ****************/
+/* Function is a setter for the player of
+*  a gridpoint, making the information
+*  available to other modules. 
+ */
+void setTerrain(gridpoint_t* gridpoint, char terrain);
+
+/**************** setPointGold ****************/
+/* Function is a setter for the gold of
+*  a gridpoint, making the information
+*  available to other modules. 
+ */
+void setPointGold(gridpoint_t* gridpoint, int nGold)
+
+/**************** getPointGold ****************/
+/* Function is a getter for the column of
+*  a gridpoint, making the information
+*  available to other modules. 
+ */
+int getPointGold(gridpoint_t* gridpoint);

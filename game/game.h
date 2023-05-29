@@ -5,6 +5,7 @@
  */
 
 #include "../player/player.h"
+#include "../grid/grid.h"
 
 /**************** global types ****************/
 typedef struct game game_t;  // opaque to users of the module
@@ -15,7 +16,7 @@ typedef struct game game_t;  // opaque to users of the module
  * We return:
  *   pointer to a new game; NULL if error (out of memory).
  */
-game_t* initialize_game(grid_t* grid);
+void initialize_game(grid_t* grid);
 
 /**************** gridDisplay ****************/
 /* The function takes in a player, creates a 
@@ -163,4 +164,4 @@ char* game_summary(game_t* game);
  * We return:
  *   nothing
  */
-void  delete_game(game_t* game);
+void delete_game();
