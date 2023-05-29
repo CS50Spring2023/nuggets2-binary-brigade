@@ -56,7 +56,14 @@ char get_y(player_t* player);
  * We return:
  *   player's gold
  */
-char get_gold(player_t* player);
+int get_gold(player_t* player);
+
+/* Take in a pointer to a player 
+ *
+ * We return:
+ *   player's address
+ */
+addr_t* get_address(player_t* player);
 
 /* Take in a pointer to a player and change player's x
  *

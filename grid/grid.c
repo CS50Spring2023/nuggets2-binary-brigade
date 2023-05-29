@@ -232,6 +232,7 @@ gridDisplay(player_t* player)
   char* gridString = mem_calloc(((grid->nRows)*(grid->nColumns + 1) + 1), sizeof(char));
   char terrain;
   char playerAtPoint;
+  int index = 0;
 
   // Checking if the grid is NULL
   if (grid != NULL) {
@@ -246,15 +247,19 @@ gridDisplay(player_t* player)
           if (isVisible(player, row, column)) {
             // If the player at the point is the player itself, print @ sign
             if (playerAtPoint == get_letter(player)) {
-                sprintf(gridString, "%c", '@');
+                gridString[index] = '@';
+                index++;
             }
-            sprintf(gridString, "%c", playerAtPoint);
+            gridString[index] = playerAtPoint;
+            index++;
           }
           else if (isKnown(player, row, column)) {
-            sprintf(gridString, "%c", terrain);
+            gridString[index] = terrain;
+            index++;
           }
           else {
-            sprintf(gridString, " ");
+            gridString[index] = ' ';
+            index++;
           }
         }
         // Point does not contain a player
@@ -262,28 +267,34 @@ gridDisplay(player_t* player)
           // Tile contains gold
            if (terrain == "*" ) {
             if (isVisible(player, row, column)) {
-              sprintf(gridString, "%c", terrain);
+              gridString[index] = terrain;
+              index++;
             }
             else if (isKown(player, row, column)) {
-              sprintf(gridString, ".");
+              gridString[index] = '.';
+              index++;
             }
             else {
-              sprintf(gridString, " ");
+              gridString[index] = ' ';
+              index++;
             }
           }
           // Tile does not contain gold
           else {
             if (isKnown(player, row, column)) {
-              sprintf(gridString, "%c", terrain);
+              gridString[index] = terrain;
+              index++;
             }
             else {
-              sprintf(gridString, " ");
+              gridString[index] = ' ';
+              index++;
             }
           }
         }     
       }
       // Printing newline for the next row
-      sprintf(gridString, "\n");
+      gridString[index] = '\n';
+      index++;
     }
   }
   return gridString;
@@ -296,8 +307,9 @@ gridDisplaySpectator()
 {   
   // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
   char* gridString = mem_calloc(((grid->nRows)*(grid->nColumns + 1) + 1), sizeof(char));
-  char player;
+  char playerAtPoint;
   char terrain;
+  int index = 0;
 
   // Checking if the grid is NULL
   if (grid != NULL) {
@@ -305,19 +317,21 @@ gridDisplaySpectator()
     for (int row = 0; row < grid->nRows; row++) {
       for (int column = 0; column < grid->nColumns; column++) {
         // If the point contains a player, printing the player letter
-        player = grid->points[row][column].player;
-        if (player != 0) {
-          sprintf(gridString, "%c", player);
+        playerAtPoint = grid->points[row][column].player;
+        if (playerAtPoint != 0) {
+          gridstring[index] = playerAtPoint;
+          index++;
         }
 
         // If the point does not contain a player, printing the terrain
         else {
           terrain = grid->points[row][column].terrain;
-          sprintf(gridString, "%c", terrain);
+          gridstring[index] = terrain;
+          index++;
         }
       }
       // Printing newline for the next row
-      sprintf(gridString, "\n");
+      gridstring[index] = '\n';
     }
   }
 }

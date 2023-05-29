@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "player.h"
-#include "grid.h"
+#include "../grid/grid.h"
 
 /**************** global constants ****************/
 const int maxNameLength = 50;
@@ -19,6 +19,7 @@ const int maxNameLength = 50;
 /**************** global types ****************/
 typedef struct player {
   char* port;
+  addr_t address;
   char* name;
   char letter;
   int x_coord;
@@ -34,7 +35,7 @@ typedef struct player {
 /**************** player_new ****************/
 /* see player.h for description */
 player_t* 
-player_new(char* port, char* name, int x, int y, char letter)
+player_new(addr_t address, char* name, int x, int y, char letter)
 {
   player_t* player = mem_malloc(sizeof(player_t));
   const int rows = getnRows();
@@ -46,6 +47,7 @@ player_new(char* port, char* name, int x, int y, char letter)
   } 
   else {
     // initialize contents of player structure
+    player->address = address;
     player->port = port;
     player->x_coord = x;
     player->y_coord = y;
@@ -84,7 +86,7 @@ player_inactive(player_t* player)
 void 
 player_delete(player_t* player)
 {
-  if (player != NULL){
+  if (player != NULL) {
     free(player);
   }
 }
@@ -94,9 +96,10 @@ player_delete(player_t* player)
 char
 get_letter(player_t* player)
 {
-  if (player != NULL){
+  if (player != NULL) {
     return player->letter;
   }
+  return '\0';
 }
 
 /**************** get_x ****************/
@@ -104,9 +107,10 @@ get_letter(player_t* player)
 char
 get_x(player_t* player)
 {
-  if (player != NULL){
+  if (player != NULL) {
     return player->x_coord;
   }
+  return '\0';
 }
 
 /**************** get_y  ****************/
@@ -114,19 +118,33 @@ get_x(player_t* player)
 char
 get_y(player_t* player)
 {
-  if (player != NULL){
+  if (player != NULL) {
     return player->y_coord;
   } 
+  return '\0';
 }
 
 /**************** get_gold ****************/
 /* see player.h for description */
-char
+int
 get_gold(player_t* player)
 {
-  if (player != NULL){
+  if (player != NULL) {
     return player->num_gold;
-  }   
+  }  
+  return -1; 
+}
+
+/**************** get_address ****************/
+/* see player.h for description */
+addr_t
+get_address(player_t* player)
+{
+  if (player != NULL) {
+    return player->address;
+  }
+  addr_t blank;
+  return blank;
 }
 
 /**************** set_x ****************/
@@ -190,14 +208,24 @@ isKnown(player_t* player, const int row, const int col)
 void
 updateVisibility(player_t* player)
 {
+  static int visibilityRange = 5;
+  const int pr = player->y_coord;
+  const int pc = player->x_coord;
+
   for (int row = 0; row < player->numRows; row++) {
     for (int col = 0; col < player->numCols; col++) {
-      // point visible, make it known
-      if (lineCheck(player->y_coord, player->x_coord, row, col)) {
-        player->visible[row][col] = true;
-        player->known[row][col] = true;
-      }
-      // point not visible, but can remain known
+      // if point is within visibility range, based on Pythagorean theorem
+      if (sqrt(pow((row - pr), 2) + pow((col - pc), 2)) <= visibilityRange) {
+        // point visible, make it known
+        if (lineCheck(pr, pc, row, col)) {
+          player->visible[row][col] = true;
+          player->known[row][col] = true;
+        }
+        // point not visible, but can remain known
+        else {
+          player->visible[row][col] = false;
+        }
+      // point out of range, thus not visible
       else {
         player->visible[row][col] = false;
       }
