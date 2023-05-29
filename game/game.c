@@ -43,7 +43,7 @@ static void foundPlayer(player_t* player, game_t* game,
 static bool movePossible(player_t* player, int changeRow, int changeColumn); */
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 game_t* 
 initialize_game(grid_t* grid)
 {
@@ -65,7 +65,7 @@ initialize_game(grid_t* grid)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 int
 add_player(game_t* game, player_t* player)
 {
@@ -408,7 +408,7 @@ gridDisplaySpectator()
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 player_t*
 find_player(game_t* game, addr_t address)
 {
@@ -428,9 +428,9 @@ find_player(game_t* game, addr_t address)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 addr_t*
-add_spectator(game_t* game, addr_t* spectator)
+add_spectator(game_t* game, const addr_t* spectator)
 {
   if (game->spectator == NULL){
     game->spectator = spectator;
@@ -442,7 +442,16 @@ add_spectator(game_t* game, addr_t* spectator)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
+addr_t*
+get_spectator(game_t* game)
+{
+  addr_t* pastSpectator = game->spectator;
+  return pastSpectator;
+}
+
+/**************** FUNCTION ****************/
+/* see game.h for description */
 char* 
 get_grid_dimensions(game_t* game)
 {
@@ -455,7 +464,7 @@ get_grid_dimensions(game_t* game)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 int
 game_inactive_player(game_t* game, player_t* player)
 {
@@ -470,7 +479,7 @@ game_inactive_player(game_t* game, player_t* player)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 int
 update_gold(game_t* game, int updateGoldCount)
 {
@@ -482,7 +491,7 @@ update_gold(game_t* game, int updateGoldCount)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 int
 get_total_gold(game_t* game)
 {
@@ -490,7 +499,7 @@ get_total_gold(game_t* game)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 int 
 get_available_gold(game_t* game)
 {
@@ -498,7 +507,7 @@ get_available_gold(game_t* game)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 player_t**
 get_players(game_t* game)
 {
@@ -506,7 +515,7 @@ get_players(game_t* game)
 }
 
 /**************** FUNCTION ****************/
-/* see player.h for description */
+/* see game.h for description */
 char*
 game_summary(game_t* game)
 {
@@ -544,7 +553,7 @@ game_summary(game_t* game)
   return summary;
 }
 
-/* see player.h for description */
+/* see game.h for description */
 void 
 delete_game(game_t* game)
 {
