@@ -10,7 +10,7 @@ LIBS = -lncurses
 LLIBS = support/support.a
 
 CC = gcc
-CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$(SUPPORT_DIR) -I../game -I../grid -I../player -I../file -I../game -I../lib
+CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$(SUPPORT_DIR) -I../game -I../grid -I../player -I../game -I../lib
 
 .PHONY: all clean
 
@@ -26,7 +26,7 @@ server.o: server.c $(SUPPORT_DIR)/message.h ../game/game.h ../grid/grid.h ../pla
 
 message.o: $(SUPPORT_DIR)/message.c $(SUPPORT_DIR)/message.h
 
-../grid/grid.o: ../grid/grid.h ../file/file.h ../lib/mem.h ../player/player.h ../game/game.h
+../grid/grid.o: ../grid/grid.h ../lib/file.h ../lib/mem.h ../player/player.h ../game/game.h
 
 ../player/player.o: ../player/player.h ../grid/grid.h $(SUPPORT_DIR)/message.h
 
