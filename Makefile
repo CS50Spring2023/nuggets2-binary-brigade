@@ -12,9 +12,10 @@ LLIBS = support/support.a lib/library.a
 CC = gcc
 CFLAGS = -Wall -pedantic -std=c11 -ggdb -Isupport  -Ilib
 
-.PHONY: all clean
+.PHONY: all clean client
 
-all: library support server/server client
+all: library support/support.a server/server client
+	
 
 server/server: server/server.o $(SUPPORT_DIR)/message.o grid/grid.o player/player.o game/game.o 
 	$(CC) $(CFLAGS) $^  $(LLIBS) $(LIBS) -o $@
@@ -37,11 +38,11 @@ player/player.o: player/player.c player/player.h grid/grid.h $(SUPPORT_DIR)/mess
 library: 
 	make -C lib
 
-support: 
-	make -C support
+support/support.a:
+	make -C $(SUPPORT_DIR)
 
 client:
-	$(MAKE) -C client
+	$(MAKE) --directory=client
 
 clean:
 	rm -f core
@@ -52,7 +53,9 @@ clean:
 	rm -f game/game.o
 	rm -f grid/grid.o
 	rm -f player/player.o
-	rm -f client/client.o
-	rm -f client/client
+	make --directory=client clean
+	make --directory=support clean
+	make --directory=lib clean
+
 
 

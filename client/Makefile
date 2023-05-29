@@ -35,3 +35,4 @@ clean:
 	rm -f $(LIB)
 	rm -f $(TESTS)
 	rm -f *.o client
+	rm -f *.log
