@@ -361,6 +361,7 @@ int getPointRow(gridpoint_t* gridpoint)
   if (gridpoint != NULL) {
     return gridpoint->row;
   }
+  return -1;
 }
 
 int getPointColumn(gridpoint_t* gridpoint)
@@ -368,6 +369,7 @@ int getPointColumn(gridpoint_t* gridpoint)
   if (gridpoint != NULL) {
     return gridpoint->column;
   }
+  return -1;
 }
 
 int getPointGold(gridpoint_t* gridpoint)
@@ -375,6 +377,7 @@ int getPointGold(gridpoint_t* gridpoint)
   if (gridpoint != NULL) {
     return gridpoint->nGold;
   }
+  return -1;
 }
 
 void setPointGold(gridpoint_t* gridpoint, int nGold)

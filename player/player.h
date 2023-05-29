@@ -7,7 +7,7 @@
 #include "../support/message.h"
 
 // /**************** global types ****************/
-typedef struct player player_t;  // opaque to users of the module
+typedef struct player player_t;
 
 /**************** FUNCTION ****************/
 

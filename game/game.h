@@ -53,7 +53,7 @@ char* gridDisplaySpectator();
  * movement itself is handled by a call to
  * the executeMovement function.
  */
-void movePlayer(game_t* game, player_t* player, char letter);
+void movePlayer(player_t* player, char letter);
 
 /**************** placePlayer ****************/
 /* Function takes in a player struct, placing
@@ -68,7 +68,7 @@ void placePlayer(player_t* player);
  * We return:
  *   0 if success; 1 if error (maxPlayers already reached).
  */
-int add_player(game_t* game, player_t* player);
+int add_player(player_t* player);
 
 /**************** FUNCTION ****************/
 /* Caller provides a pointer to a game
@@ -79,7 +79,7 @@ int add_player(game_t* game, player_t* player);
  * passed in, or NULL if there is no such
  * player.
  */
-player_t* find_player(game_t* game, addr_t address);
+player_t* find_player(addr_t address);
 
 /**************** FUNCTION ****************/
 /* Add a new spectator to the game
@@ -88,7 +88,7 @@ player_t* find_player(game_t* game, addr_t address);
  *   NULL if no previous spectator;
  *   old spectator's address if previous spectator.
  */
-addr_t* add_spectator(game_t* game, const addr_t* spectator);
+addr_t* add_spectator(addr_t* spectator);
 
 /**************** FUNCTION ****************/
 /* Get spectator's address from the game
@@ -97,7 +97,7 @@ addr_t* add_spectator(game_t* game, const addr_t* spectator);
  *   NULL if no previous spectator;
  *   spectator's address if exists
  */
-addr_t* get_spectator(game_t* game);
+addr_t* get_spectator();
 
 /**************** FUNCTION ****************/
 /* Gets the grid dimensions of the game
@@ -105,7 +105,7 @@ addr_t* get_spectator(game_t* game);
  * We return:
  *   formatted dimensions of the grid
  */
-char* get_grid_dimensions(game_t* game);
+char* get_grid_dimensions();
 
 /**************** FUNCTION ****************/
 /* Sets player as inactive in game
@@ -137,15 +137,8 @@ int get_total_gold(game_t* game);
  * We return:
  *   current available gold in game.
  */
-int  get_available_gold(game_t* game);
+int  get_available_gold();
 
-/**************** FUNCTION ****************/
-/* Returns the list of players
- *
- * We return:
- *   the list of players associated with the given game.
- */
-player_t** get_players(game_t* game);
 
 /**************** FUNCTION ****************/
 /* Provided a game, the function creates
@@ -156,7 +149,7 @@ player_t** get_players(game_t* game);
  *   The caller is responsible for later 
  *   freeing the summary string. 
  */
-char* game_summary(game_t* game);
+char* game_summary();
 
 /* Take in a pointer to a game and frees each player in the 
  * array, then the space for the array and the game itself.
@@ -165,3 +158,10 @@ char* game_summary(game_t* game);
  *   nothing
  */
 void delete_game();
+/**************** FUNCTION ****************/
+/* Returns the list of players
+ *
+ * We return:
+ *   the list of players associated with the given game.
+ */
+player_t** get_players(); 

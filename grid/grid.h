@@ -122,7 +122,7 @@ void setTerrain(gridpoint_t* gridpoint, char terrain);
 *  a gridpoint, making the information
 *  available to other modules. 
  */
-void setPointGold(gridpoint_t* gridpoint, int nGold)
+void setPointGold(gridpoint_t* gridpoint, int nGold);
 
 /**************** getPointGold ****************/
 /* Function is a getter for the column of
