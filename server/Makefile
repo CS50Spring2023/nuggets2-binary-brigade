@@ -10,7 +10,7 @@ LIBS = -lncurses
 LLIBS = support/support.a
 
 CC = gcc
-CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$(SUPPORT_DIR) -I../game -I../grid -I../player -I../file -I../game -I../lib
+CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$(SUPPORT_DIR) -I../game -I../grid -I../player -I../game -I../lib
 
 .PHONY: all clean
 
