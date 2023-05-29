@@ -87,7 +87,16 @@ player_t* find_player(game_t* game, addr_t address);
  *   NULL if no previous spectator;
  *   old spectator's address if previous spectator.
  */
-addr_t* add_spectator(game_t* game, addr_t* spectator);
+addr_t* add_spectator(game_t* game, const addr_t* spectator);
+
+/**************** FUNCTION ****************/
+/* Get spectator's address from the game
+ *
+ * We return:
+ *   NULL if no previous spectator;
+ *   spectator's address if exists
+ */
+addr_t* get_spectator(game_t* game);
 
 /**************** FUNCTION ****************/
 /* Gets the grid dimensions of the game
@@ -146,8 +155,7 @@ player_t** get_players(game_t* game);
  *   The caller is responsible for later 
  *   freeing the summary string. 
  */
-char*
-game_summary(game_t* game);
+char* game_summary(game_t* game);
 
 /* Take in a pointer to a game and frees each player in the 
  * array, then the space for the array and the game itself.
