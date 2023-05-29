@@ -1,6 +1,7 @@
 miniserver
 miniclient
 messagetest
+support.a
 *.log
 *.gch
 *.o
