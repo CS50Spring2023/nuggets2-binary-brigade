@@ -184,7 +184,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
           int prevGold = get_gold(player);
           int prevX = get_x(player);
           int prevY = get_y(player);
-          movePlayer(game, player, *key);
+          movePlayer(player, *key);
           int currGold = get_gold(player);
           int oldX = get_x(player);
           int oldY = get_y(player);
