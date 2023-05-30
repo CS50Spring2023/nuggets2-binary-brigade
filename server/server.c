@@ -97,6 +97,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
   //client has input play
   if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
     char name[strlen(message) - 5];
+    
     strcpy(name, message + 5);
     
     printf("This is the new name %s\n", name);
@@ -119,6 +120,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
       printf("after place player");
       
       if (add_player(player) != 0){
+
         message_send(from, "QUIT Game is full: no more players can join.\n");
       
       } else {
@@ -155,6 +157,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
       message_send(*oldSpectator, "QUIT You have been replaced by a new spectator.");
       mem_free(oldSpectator);
     
+
     } else {
     //sending grid dimensions, gold update, and display
     message_send(from, get_grid_dimensions());
