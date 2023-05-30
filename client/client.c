@@ -482,7 +482,7 @@ initDisplay()
     // Set the background and text colors
     start_color();
     if (client_info->playername == NULL){
-        init_pair(1, COLOR_BLUE, COLOR_BLACK); 
+        init_pair(1, COLOR_YELLOW, COLOR_BLACK); 
         
     } else {
         init_pair(1, COLOR_GREEN, COLOR_BLACK); 
