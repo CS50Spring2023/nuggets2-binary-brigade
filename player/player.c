@@ -27,7 +27,7 @@ const int maxNameLength = 50;
 typedef struct player {
   char* port;
   addr_t address;
-  char name[50];
+  char name[maxNameLength];
   char letter;
   int x_coord;
   int y_coord;
@@ -107,7 +107,7 @@ player_delete(player_t* player)
 }
 
 
-/**************** get_letter ****************/
+/**************** get_name ****************/
 /* see player.h for description */
 char*
 get_name(player_t* player)
@@ -118,6 +118,7 @@ get_name(player_t* player)
     return " ";
 }
 
+/**************** get_letter ****************/
 /* see player.h for description */
 char
 get_letter(player_t* player)
@@ -129,6 +130,7 @@ get_letter(player_t* player)
   return '\0';
 }
 
+/**************** get_MaxNameLength ****************/
 /* see player.h for description */
 int
 get_MaxNameLength()
@@ -149,7 +151,7 @@ get_x(player_t* player)
 }
 
 
-/**************** get_y  ****************/
+/**************** get_y ****************/
 /* see player.h for description */
 int
 get_y(player_t* player)
@@ -183,6 +185,8 @@ get_address(player_t* player)
  
 }
 
+/**************** set_letter ****************/
+/* see player.h for description */
 void 
 set_letter(player_t* player, char letter)
 {

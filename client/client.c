@@ -1,5 +1,9 @@
 /*
- * Nuggets: client.c file
+ * Nuggets client.c file
+ *
+ * Connects a player to a server, sends
+ * keystrokes, and recieves a display
+ * of the map and information about the game.
  * 
  * Binary Brigade, Spring, 2023
 */
@@ -15,17 +19,15 @@
 #include "../support/message.h"
 #include "../support/log.h"
 
-
 bool parseArgs(const int argc, char* argv[], char** hostname, char** port, char** playername);
-static bool handleInput(void* arg);
-static bool handleMessage(void* arg, const addr_t from, const char* message);
+bool handleInput(void* arg);
+bool handleMessage(void* arg, const addr_t from, const char* message);
 addr_t server_setup(char* hostname, char* port, char* playername);
 void handle_display(const char* message);
 void handle_quit(const char* message);
 void handle_error(const char* message);
 void initDisplay();
 void duplicate_str(const char*);
-
 
 // helper struct to hold all the client info we need throughout the program
 typedef struct client_info{
@@ -42,12 +44,7 @@ typedef struct client_info{
     bool gold_update;
 } client_info_t;
 
-// ONE ALLOWED GLOBAL VARIABLE FOR THE FILE
 client_info_t* client_info;
-
-
-/******************************* FUNCTIONS *******************************/
-
 
 /**************** main ****************/
 /* 
@@ -99,7 +96,7 @@ main(int argc, char* argv[])
  * We return:
  *   false to keep game going; true otherwise
  */
-static bool
+bool
 handleMessage(void* arg, const addr_t from, const char* message)
 {   
     // extract the message type from the message
@@ -339,7 +336,7 @@ handle_error(const char* message)
  * We return:
  *   false to keep looping; true otherwise
  */
-static bool 
+bool 
 handleInput(void* arg) {
 
     // We use 'arg' to receive an addr_t referring to the 'server' correspondent.
@@ -381,7 +378,7 @@ handleInput(void* arg) {
 }
 
 
-/**************** handleInput ****************/
+/**************** server_setup ****************/
 /* 
  * Uses the hostname and port to create a connection with the server and sends an 
  * initial message depending on whether the client is a player or spectator

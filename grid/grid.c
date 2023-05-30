@@ -26,9 +26,7 @@ typedef struct gridpoint {
   char terrain;
 } gridpoint_t;
 
-// Defining the grid struct
-typedef struct grid 
-{
+typedef struct grid {
     int nRows;
     int nColumns;
     gridpoint_t*** points;
@@ -103,7 +101,7 @@ gridInit(char* pathName, int randomSeed)
 }
 
 /**************** readnColumns ****************/
-/* See grid.h for description. */
+/* Returns the number of columns in a given map file. */
 static int 
 readnColumns(FILE* map, int nRows)
 {
