@@ -105,7 +105,7 @@ addr_t get_spectator();
  * We return:
  *   formatted dimensions of the grid
  */
-char* get_grid_dimensions();
+void get_grid_dimensions();
 
 /**************** FUNCTION ****************/
 /* Sets player as inactive in game
@@ -149,7 +149,7 @@ int  get_available_gold();
  *   The caller is responsible for later 
  *   freeing the summary string. 
  */
-char* game_summary();
+void game_summary(addr_t address);
 
 /* Take in a pointer to a game and frees each player in the 
  * array, then the space for the array and the game itself.
