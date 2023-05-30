@@ -486,16 +486,15 @@ get_spectator()
 
 /**************** FUNCTION ****************/
 /* see game.h for description */
-char* 
-get_grid_dimensions()
+void
+get_grid_dimensions(addr_t address)
 {
   int rows = getnRows(game->grid);
   int columns = getnColumns(game->grid);
-  // int outputLength = strlen("GRID  ") + strlen(itoa(rows)) + strlen(itoa(columns));
-  int outputLength = strlen("GRID  ") + snprintf(NULL, 0, "%d", rows) + snprintf(NULL, 0, "%d", columns);
-  char *dimensions = malloc(sizeof(char) * outputLength);
-  sprintf(dimensions, "%s %d %d", "GRID ", rows, columns);
-  return dimensions;
+
+  char dimensions[100];
+  sprintf(dimensions, "GRID %d %d", rows, columns);
+  message_send(address, dimensions);
 }
 
 /**************** FUNCTION ****************/
@@ -545,42 +544,38 @@ get_available_gold()
 
 /**************** FUNCTION ****************/
 /* see game.h for description */
-char*
-game_summary()
+void
+game_summary(addr_t address)
 {
-  // Length of initial statement (letter and score) and max name length
-  int maxLineSize = 9 + get_MaxNameLength();
-  // Calculating maximum size of the entire summary string
-  int maxSummarySize = (maxLineSize + 1) * game->playerCount;
-
-  // Allocating memmory for the summary string
-  char* summary = mem_malloc(maxSummarySize * sizeof(char) + 1);
+  char summary[65507];
 
   // Inserting GAME OVER as opening line for the summary
-  strcat(summary, "QUIT GAME OVER\n");
+  char quitMessage[100];
+  strcpy(quitMessage, "QUIT GAME OVER\n");
+  strcat(summary, quitMessage);
 
   // Looping over the players in the game, adding their information to summary
   for (int i = 0; i < game->playerCount; i++) {
     player_t* currPlayer = game->players[i];
 
     // Saving player information in variable currLine
-    //char* currLine = mem_malloc(maxLineSize * sizeof(char) + 1); 
+
     char currLine[100]; 
-    sprintf(currLine, "%c   %3d %s\n", 
-      get_letter(currPlayer), get_gold(currPlayer), get_name(currPlayer));
+    char letter = get_letter(currPlayer);
+    int playerGold = get_gold(currPlayer);
+    char* name = get_name(currPlayer);
+
+    sprintf(currLine, "%c   %3d %s\n", letter, playerGold, name);
     
     // Adding information to summary string
     strcat(summary, currLine);
 
-    // Cleaning up before next line
-   // mem_free(currLine);
   }
 
   // Adding newline to end of summary for clean look
   strcat(summary, "\n");
 
-  // Returning summary
-  return summary;
+  message_send(address, summary);
 }
 
 /* see game.h for description */
