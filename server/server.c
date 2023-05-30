@@ -92,136 +92,116 @@ handleMessage(void* arg, const addr_t from, const char* message)
 {
   // print the message and a prompt
   printf("'%s'\n", message);
-  printf("> ");
-  fflush(stdout);
 
-  // allocate a buffer into which we can read a line of input
-  // (it can't be any longer than a message)!
-  char line[message_MaxBytes];
+  //client has input play
+  if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
+    char name[strlen(message) - 5];
+    strncpy(name, message + 5, strlen(message) - 5);
+    
+    printf("This is the new name %s\n", name);
 
-  // read a line from stdin: this is VERY unusual for a handleMessage()
-  if (fgets(line, message_MaxBytes, stdin) == NULL) {
+    if (strlen(name) == 0){
+      //sending message to client that name is empty
+      message_send(from, "QUIT Sorry - you must provide player's name.");
     
-    // EOF case: stop looping
-    putchar('\n');
-    return true;
-  
-  } else {
-    
-    // strip trailing newline
-    const int len = strlen(line);
-    
-    if (len > 0 && line[len-1] == '\n') {
-      line[len-1] = '\0';
-    }
-    printf("This is the message: %s\n", message);
-    printf("\n");
-    
-    //client has input play
-    if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
-      printf("I'm inside of play if statement\n");
-      char name[strlen(message) - 5];
-      strncpy(name, message + 5, strlen(message) - 5);
+    } else {
+      printf("name len was greater than 0");
+
+      printf("inside else");
       
-      printf("This is the new name %s\n", name);
+      char* letter = "";
+      player_t* player = player_new(from, name, 0, 0, *letter);
+      placePlayer(player);
 
-      if (strlen(name) == 0){
-        //sending message to client that name is empty
-        message_send(from, "QUIT Sorry - you must provide player's name.");
+      printf("after place player");
+      
+      if (add_player(player) != 0){
+        message_send(from, "QUIT Game is full: no more players can join.");
       
       } else {
-        printf("name len was greater than 0");
-        
-        char* letter = "";
-        player_t* player = player_new(from, name, 0, 0, *letter);
-        placePlayer(player);
-        
-        if (add_player(player) != 0){
-          message_send(from, "QUIT Game is full: no more players can join.");
-       
-        } else {
-          char letter = get_letter(player);
-          strcat(line, strcat("OK ", &letter));
-          message_send(from, line); //sending ok and letter of player
+        printf("added player and getting ready to send message");
+        char letter = get_letter(player);
+        char* line = mem_malloc(sizeof(char)*5);
+        strcat(line, strcat("OK ", &letter));
+        message_send(from, line); //sending ok and letter of player
+        mem_free(line);
 
-          //sending grid dimensions, gold update, and display
-          message_send(from, get_grid_dimensions());
-          message_send(from, goldUpdate(player, 0));
+        //sending grid dimensions, gold update, and display
+        message_send(from, get_grid_dimensions());
+        message_send(from, goldUpdate(player, 0));
+        message_send(from, getDisplay(player));
+      }
+    }
+  
+  //client has input spectate
+  } else if (strcmp(message, "SPECTATE") == 0) {
+    addr_t newSpectator;
+    memcpy(&newSpectator, &from, sizeof(addr_t));
+    addr_t* oldSpectator = add_spectator(&newSpectator);
+    
+    if (oldSpectator != NULL){
+      //sending a message to the old spectator that they have been replaced
+      message_send(*oldSpectator, "QUIT You have been replaced by a new spectator.");
+      mem_free(oldSpectator);
+    
+    } else {
+    //sending grid dimensions, gold update, and display
+    message_send(from, get_grid_dimensions());
+    message_send(from, spectatorGoldUpdate());
+    message_send(from, getDisplaySpectator());
+    }
+  
+  //client has input a keystroke
+  } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
+    //extract key command
+    char key[strlen(message) - 4];
+    strncpy(key, message + 5, strlen(message) - 4);
+
+    if (strcmp(key, "Q") == 0) {
+      if (find_player(from) != NULL){
+        player_t* player = find_player(from);
+        player_inactive(player);
+        message_send(from, "QUIT Thanks for playing!");
+      } else {
+        add_spectator(NULL);
+        message_send(from, "QUIT Thanks for watching!");
+      }
+    } else {
+      if (find_player(from) != NULL){
+        player_t* player = find_player(from);
+        int prevGold = get_gold(player);
+        int prevX = get_x(player);
+        int prevY = get_y(player);
+        movePlayer(player, *key);
+        int currGold = get_gold(player);
+        int oldX = get_x(player);
+        int oldY = get_y(player);
+        if (currGold != prevGold){
+          message_send(from, goldUpdate(player, currGold-prevGold));
+        }
+        if (prevX != oldX || prevY != oldY){
           message_send(from, getDisplay(player));
         }
       }
+    }
+  
+  } else if (get_available_gold() == 0){    //game is over
+    char* summary = game_summary();
     
-    //client has input spectate
-    } else if (strcmp(message, "SPECTATE") == 0) {
-      addr_t newSpectator;
-      memcpy(&newSpectator, &from, sizeof(addr_t));
-      addr_t* oldSpectator = add_spectator(&newSpectator);
-      
-      if (oldSpectator != NULL){
-        //sending a message to the old spectator that they have been replaced
-        message_send(*oldSpectator, "QUIT You have been replaced by a new spectator.");
-        mem_free(oldSpectator);
-      
-      } else {
-      //sending grid dimensions, gold update, and display
-      message_send(from, get_grid_dimensions());
-      message_send(from, spectatorGoldUpdate());
-      message_send(from, getDisplaySpectator());
-      }
-    
-    //client has input a keystroke
-    } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
-      //extract key command
-      char key[strlen(message) - 4];
-      strncpy(key, message + 5, strlen(message) - 4);
-
-      if (strcmp(key, "Q") == 0) {
-        if (find_player(from) != NULL){
-          player_t* player = find_player(from);
-          player_inactive(player);
-          message_send(from, "QUIT Thanks for playing!");
-        } else {
-          add_spectator(NULL);
-          message_send(from, "QUIT Thanks for watching!");
-        }
-      } else {
-        if (find_player(from) != NULL){
-          player_t* player = find_player(from);
-          int prevGold = get_gold(player);
-          int prevX = get_x(player);
-          int prevY = get_y(player);
-          movePlayer(player, *key);
-          int currGold = get_gold(player);
-          int oldX = get_x(player);
-          int oldY = get_y(player);
-          if (currGold != prevGold){
-            message_send(from, goldUpdate(player, currGold-prevGold));
-          }
-          if (prevX != oldX || prevY != oldY){
-            message_send(from, getDisplay(player));
-          }
-        }
-      }
-   
-    } else if (get_available_gold() == 0){    //game is over
-      char* summary = game_summary();
-      
-      player_t** players = get_players();
-      for (int i = 0; i < maxPlayers; i++) {
-        if (players[i] != NULL){
-          message_send(get_address(players[i]), summary); //sends game summary to all players
-        }
-      }
-
-      addr_t* address = get_spectator();
-      if (address != NULL){
-        message_send(*address, summary); //sends game summary to a spectator if it exists
+    player_t** players = get_players();
+    for (int i = 0; i < maxPlayers; i++) {
+      if (players[i] != NULL){
+        message_send(get_address(players[i]), summary); //sends game summary to all players
       }
     }
 
-    // normal case: keep looping
-    return false;
+    addr_t* address = get_spectator();
+    if (address != NULL){
+      message_send(*address, summary); //sends game summary to a spectator if it exists
+    }
   }
+  // normal case: keep looping
+  return false;
 }
 
 /**************** goldUpdate ****************/
