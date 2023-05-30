@@ -28,7 +28,7 @@ typedef struct game{
   int goldAvailable;
   int playerCount;
   player_t** players;
-  addr_t* spectator;
+  addr_t spectator;
 } game_t;
 
 /**************** static functions ****************/
@@ -57,8 +57,7 @@ initialize_game(grid_t* grid)
     game->playerCount = 0;
     player_t** players = calloc(maxPlayers, sizeof(player_t*));
     game->players = players;
-    addr_t* spectator = malloc(sizeof(addr_t*));
-    game->spectator = spectator;
+    game->spectator = message_noAddr();
   }
 
 }
@@ -148,23 +147,56 @@ movePlayer(player_t* player, char letter)
     case 'n': 
       changeRow = 1;
       changeColumn = 1;
-       break;
+      break;
+    case 'H': 
+      changeRow = 0;
+      changeColumn = -1;
+      break;
+    case 'L': 
+      changeRow = 0;
+      changeColumn = 1;
+      break;
+    case 'J': 
+      changeRow = 1;
+      changeColumn = 0;
+      break;
+    case 'K': 
+      changeRow = -1;
+      changeColumn = 0;
+      break;
+    case 'Y': 
+      changeRow = -1;
+      changeColumn = -1;
+      break;
+    case 'U': 
+      changeRow = -1;
+      changeColumn = 1;
+      break;
+    case 'B': 
+      changeRow = 1;
+      changeColumn = -1;
+      break;
+    case 'N': 
+      changeRow = 1;
+      changeColumn = 1;
+      break;
+    default: return;
   }
 
-    // If the letter is uppercase (continuous movement)
-    if (isupper(letter)) {
-        // As long as the move is possible, executing movement
-        while (movePossible(player, changeRow, changeColumn)) {
-            executeMovement(player, changeRow, changeColumn);
-        }
-    }
+  // If the letter is uppercase (continuous movement)
+  if (isupper(letter)) {
+      // As long as the move is possible, executing movement
+      while (movePossible(player, changeRow, changeColumn)) {
+          executeMovement(player, changeRow, changeColumn);
+      }
+  }
 
-    // If the letter is lowercase (single movement)
-    else {
-        if (movePossible(player, changeRow, changeColumn)) {
-            executeMovement(player, changeRow, changeColumn);
-        }
-    }
+  // If the letter is lowercase (single movement)
+  else {
+      if (movePossible(player, changeRow, changeColumn)) {
+          executeMovement(player, changeRow, changeColumn);
+      }
+  }
 }
 
 /**************** movePossible ****************/
@@ -211,24 +243,27 @@ movePossible(player_t* player, int changeRow, int changeColumn)
 static void 
 executeMovement(player_t* player, int changeRow, int changeColumn)
 {
-    // Current location of the player
-   gridpoint_t* current = getPoint(get_y(player), get_x(player));
+  // Current location of the player
+  gridpoint_t* current = getPoint(get_y(player), get_x(player));
 
-    // Potential new location of the player
-    gridpoint_t* updated = getPoint( (getPointRow(current) + changeRow), (getPointColumn(current) + changeColumn) );
-    
-    // Checking if the move causes the player to step into another player
-    foundPlayer(player, current, updated);
+  // Potential new location of the player
+  gridpoint_t* updated = getPoint( (getPointRow(current) + changeRow), (getPointColumn(current) + changeColumn) );
+  
+  // Checking if the move causes the player to step into another player
+  foundPlayer(player, current, updated);
 
-    // Updating the location of the player
-    set_y(player, getPointRow(updated));
-    set_x(player, getPointColumn(updated));
+  // Updating the location of the player
+  set_y(player, getPointRow(updated));
+  set_x(player, getPointColumn(updated));
 
-    // Updating the contents of the gridpoints
-    setPlayer(updated, get_letter(player));
+  // Updating the contents of the gridpoints
+  setPlayer(updated, get_letter(player));
 
   // Checking if the move causes the player to find gold
   foundGold(player);
+
+  // Updating the visibility
+  updateVisibility(player);
 }
 
 /**************** foundGold ****************/
@@ -250,6 +285,7 @@ foundGold(player_t* player)
     if (getTerrain(gridpoint) == '*') {
         // Assign gold from point to player
         int playerNewGold = get_gold(player) + getPointGold(gridpoint);
+        game->goldAvailable -= getPointGold(gridpoint);
         set_gold(player, playerNewGold);
         setPointGold(gridpoint, 0);
 
@@ -281,6 +317,9 @@ foundPlayer(player_t* player, gridpoint_t* current, gridpoint_t* updated)
                 // Setting these coordinates to be those of current
                 set_x(players[i], getPointColumn(current));
                 set_y(players[i], getPointRow(current));
+
+                // Updating the contents of the gridpoints
+                setPlayer(current, get_letter(players[i]));
             }
         }
     }
@@ -297,7 +336,6 @@ char*
 gridDisplay(player_t* player) 
 {
   // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
-  //char[(grid->nRows)*(grid->nColumns + 1) + 1] gridString;
   char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)+ 1) + 1), sizeof(char));
   int index = 0;
 
@@ -309,16 +347,20 @@ gridDisplay(player_t* player)
       for (int column = 0; column < getnColumns(game->grid); column++) {
         char terrain = getTerrain(getPoint(row, column));
         char playerAtPoint = getPlayer(getPoint(row, column));
+
         // Point contains a player
-        if (playerAtPoint != 0) {
+        if (isalpha(playerAtPoint)) {
           if (isVisible(player, row, column)) {
+
             // If the player at the point is the player itself, print @ sign
             if (playerAtPoint == get_letter(player)) {
                 gridString[index] = '@';
                 index++;
+            } else {
+              gridString[index] = playerAtPoint;
+              index++;
             }
-            gridString[index] = playerAtPoint;
-            index++;
+            
           }
           else if (isKnown(player, row, column)) {
             gridString[index] = terrain;
@@ -374,8 +416,6 @@ gridDisplaySpectator()
 {
   // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
   char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)+ 1) + 1), sizeof(char));
-  char playerAtPoint;
-  char terrain;
   int index = 0;
 
   // Checking if the grid is NULL
@@ -384,21 +424,22 @@ gridDisplaySpectator()
     for (int row = 0; row < getnRows(game->grid); row++) {
       for (int column = 0; column < getnColumns(game->grid); column++) {
         // If the point contains a player, printing the player letter
-        playerAtPoint = getPlayer(getPoint(row, column));
-        if (playerAtPoint != 0) {
+        char playerAtPoint = getPlayer(getPoint(row, column));
+        if (isalpha(playerAtPoint)) {
           gridString[index] = playerAtPoint;
           index++;
         }
 
         // If the point does not contain a player, printing the terrain
         else {
-          terrain = getTerrain(getPoint(row, column));
+          char terrain = getTerrain(getPoint(row, column));
           gridString[index] = terrain;
           index++;
         }
       }
       // Printing newline for the next row
       gridString[index] = '\n';
+      index++;
     }
   }
   return gridString;
@@ -415,7 +456,7 @@ find_player(addr_t address)
     addr_t playerAddress = get_address(currPlayer);
 
     // If adresses match, returning player
-    if (&address == &playerAddress) {
+    if (message_eqAddr(address, playerAddress)) {
       return currPlayer;
     }
   } 
@@ -426,24 +467,20 @@ find_player(addr_t address)
 
 /**************** FUNCTION ****************/
 /* see game.h for description */
-addr_t*
-add_spectator(addr_t* spectator)
+addr_t
+add_spectator(addr_t spectator)
 {
-  if (game->spectator == NULL){
-    game->spectator = spectator;
-    return NULL;
-  }
-  addr_t* pastSpectator = game->spectator;
+  addr_t pastSpectator = game->spectator;
   game->spectator = spectator;
   return pastSpectator;
 }
 
 /**************** FUNCTION ****************/
 /* see game.h for description */
-addr_t*
+addr_t
 get_spectator()
 {
-  addr_t* pastSpectator = game->spectator;
+  addr_t pastSpectator = game->spectator;
   return pastSpectator;
 }
 
@@ -469,6 +506,7 @@ game_inactive_player(game_t* game, player_t* player)
   for (int i = 0; i < game->playerCount; i++) {
     player_t* currPlayer = game->players[i];
     if (player == currPlayer){
+      setPlayer(getPoint(get_y(player), get_x(player)), '0');
       player_inactive(currPlayer);
       return 0;
     }
@@ -519,14 +557,15 @@ game_summary()
   char* summary = mem_malloc(maxSummarySize * sizeof(char) + 1);
 
   // Inserting GAME OVER as opening line for the summary
-  strcat(summary, "GAME OVER\n");
+  strcat(summary, "QUIT GAME OVER\n");
 
   // Looping over the players in the game, adding their information to summary
   for (int i = 0; i < game->playerCount; i++) {
     player_t* currPlayer = game->players[i];
 
     // Saving player information in variable currLine
-    char* currLine = mem_malloc(maxLineSize * sizeof(char) + 1); 
+    //char* currLine = mem_malloc(maxLineSize * sizeof(char) + 1); 
+    char currLine[100]; 
     sprintf(currLine, "%c   %3d %s\n", 
       get_letter(currPlayer), get_gold(currPlayer), get_name(currPlayer));
     
@@ -534,7 +573,7 @@ game_summary()
     strcat(summary, currLine);
 
     // Cleaning up before next line
-    mem_free(currLine);
+   // mem_free(currLine);
   }
 
   // Adding newline to end of summary for clean look
@@ -556,7 +595,6 @@ delete_game()
     // player_delete(game->spectator);
 
     free(game->players);
-    free(game->spectator);
     free(game);
   }
 }
