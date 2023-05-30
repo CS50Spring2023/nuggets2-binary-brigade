@@ -1,0 +1,2 @@
+# Grid
+The grid directory provides the representation of the map in the game. It provides the functionality for reading a map text file into a grid data structure, creating gridpoint data structures for every point in the map, and later deleting these structures.

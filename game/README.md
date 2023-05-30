@@ -1,0 +1,2 @@
+# Game
+The game directory holds information about the occurring game, providing the functionality for several of the commands called by the server through client request (such as addition, placement, and movement of players).
