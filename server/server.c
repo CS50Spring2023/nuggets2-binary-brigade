@@ -46,7 +46,7 @@ main(int argc, char *argv[])
   fp = fopen(argv[1], "r");
   
   if (fp == NULL){
-    fprintf(stderr, "Map txt file is not a readable file");
+    fprintf(stderr, "Map txt file is not a readable file\n");
     return 2;
   }
   fclose(fp);
@@ -65,15 +65,12 @@ main(int argc, char *argv[])
 
   // initialize the message module (without logging)
   int myPort = message_init(NULL);
-  
+
   if (myPort == 0) {
     return 3; // failure to initialize message module
-
   } else {
-    printf("serverPort=%d\n", myPort);
+    printf("Ready to play, waiting at port %d\n", myPort);
   }
-
-  fprintf(stdout, "Ready to play, waiting at port '%d'", myPort);
 
   bool ok = message_loop(NULL, 0, NULL, NULL, handleMessage);
 
@@ -117,17 +114,23 @@ handleMessage(void* arg, const addr_t from, const char* message)
     if (len > 0 && line[len-1] == '\n') {
       line[len-1] = '\0';
     }
+    printf("This is the message: %s\n", message);
+    printf("\n");
     
     //client has input play
     if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
+      printf("I'm inside of play if statement\n");
       char name[strlen(message) - 5];
       strncpy(name, message + 5, strlen(message) - 5);
       
+      printf("This is the new name %s\n", name);
+
       if (strlen(name) == 0){
         //sending message to client that name is empty
         message_send(from, "QUIT Sorry - you must provide player's name.");
       
       } else {
+        printf("name len was greater than 0");
         
         char* letter = "";
         player_t* player = player_new(from, name, 0, 0, *letter);
@@ -150,11 +153,14 @@ handleMessage(void* arg, const addr_t from, const char* message)
     
     //client has input spectate
     } else if (strcmp(message, "SPECTATE") == 0) {
-      addr_t* oldSpectator = add_spectator(&from);
+      addr_t newSpectator;
+      memcpy(&newSpectator, &from, sizeof(addr_t));
+      addr_t* oldSpectator = add_spectator(&newSpectator);
       
       if (oldSpectator != NULL){
         //sending a message to the old spectator that they have been replaced
         message_send(*oldSpectator, "QUIT You have been replaced by a new spectator.");
+        mem_free(oldSpectator);
       
       } else {
       //sending grid dimensions, gold update, and display
