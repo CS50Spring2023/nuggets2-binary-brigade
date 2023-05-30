@@ -24,10 +24,10 @@ static const int maxPlayers = 26;
 /**************** file-local functions ****************/
 
 static bool handleMessage(void* arg, const addr_t from, const char* message);
-static char* goldUpdate(player_t* player, int collected);
-static char* spectatorGoldUpdate();
-static char* getDisplay(player_t* player);
-static char* getDisplaySpectator();
+static void goldUpdate(addr_t address, player_t* player, int collected);
+static void spectatorGoldUpdate(addr_t address);
+static void getDisplay(addr_t address, player_t* player);
+static void getDisplaySpectator(addr_t address);
 
 /***************** main *******************************/
 int 
@@ -126,17 +126,17 @@ handleMessage(void* arg, const addr_t from, const char* message)
         mem_free(line);
 
         //sending grid dimensions, gold update, and display
-        message_send(from, get_grid_dimensions());
-        message_send(from, goldUpdate(player, 0));
-        message_send(from, getDisplay(player));
+        get_grid_dimensions(from);
+        goldUpdate(from, player, 0);
+        getDisplay(from, player);
 
         player_t** players = get_players();
         for (int i = 0; i < maxPlayers; i++) {
           if (players[i] != NULL && !message_eqAddr(from, get_address(player))){
-            message_send(get_address(players[i]), getDisplay(players[i])); //sends game gold update to all players
+            getDisplay(get_address(players[i]), players[i]);  //sends display update to all players
           }
         }
-        message_send(get_spectator(), getDisplaySpectator());
+        getDisplaySpectator(get_spectator());  //sends display update to spectator
       }
     }
   
@@ -150,9 +150,9 @@ handleMessage(void* arg, const addr_t from, const char* message)
     }
 
     //sending grid dimensions, gold update, and display
-    message_send(from, get_grid_dimensions());
-    message_send(from, spectatorGoldUpdate());
-    message_send(from, getDisplaySpectator());
+    get_grid_dimensions(from);
+    spectatorGoldUpdate(from);
+    getDisplaySpectator(from);
   
   //client has input a keystroke
   } else if (strncmp(message, "KEY ", strlen("KEY ")) == 0) {
@@ -192,42 +192,40 @@ handleMessage(void* arg, const addr_t from, const char* message)
 
         //comparing to see if messages needs to be sent
         if (newGold != prevGold || prevAvailable != newAvailable){
-          message_send(from, goldUpdate(player, newGold-prevGold));
+          goldUpdate(from, player, newGold-prevGold);
 
           player_t** players = get_players();
           for (int i = 0; i < maxPlayers; i++) {
             if (players[i] != NULL && !message_eqAddr(from, get_address(player))){
-              message_send(get_address(players[i]), 0); //sends game gold update to all
+              goldUpdate(get_address(players[i]), players[i], 0); //sends game gold update to all
             }
           }
-          message_send(get_spectator(), spectatorGoldUpdate());
+          spectatorGoldUpdate(from);
         }
         if (prevX != newX || prevY != newY){
           player_t** players = get_players();
           for (int i = 0; i < maxPlayers; i++) {
             if (players[i] != NULL){
-              message_send(get_address(players[i]), getDisplay(players[i])); //sends game gold update to all players
+              getDisplay(get_address(players[i]), players[i]); //sends game gold update to all players
             }
           }
-          message_send(get_spectator(), getDisplaySpectator());
+          getDisplaySpectator(get_spectator());
         }
       }
     }
   }
   
   if (get_available_gold() == 0){    //game is over
-    char* summary = game_summary();
-    
     player_t** players = get_players();
     for (int i = 0; i < maxPlayers; i++) {
       if (players[i] != NULL){
-        message_send(get_address(players[i]), summary); //sends game summary to all players
+        game_summary(get_address(players[i])); //sends game summary to all players
       }
     }
 
     addr_t address = get_spectator();
     if (message_isAddr(address)){
-      message_send(address, summary); //sends game summary to a spectator if it exists
+      game_summary(address); //sends game summary to a spectator if it exists
     }
   }
   // normal case: keep looping
@@ -243,21 +241,16 @@ handleMessage(void* arg, const addr_t from, const char* message)
  * We return:
  *   char* update of gold
  */
-static char*
-goldUpdate(player_t* player, int collected) {
+static void
+goldUpdate(addr_t address, player_t* player, int collected) {
   int n = collected;
   int p = get_gold(player);
   int r = get_available_gold();
-
-  char* stringLength = mem_malloc(sizeof(char) * 3);
-  sprintf(stringLength, "%d%d%d", n, p, r);
-  int outputLength = strlen("GOLD   ") + strlen(stringLength);
   
-  char *update = malloc(sizeof(char) * outputLength);
+  char update[100];
   sprintf(update, "GOLD %d %d %d", n, p, r);
-  free(stringLength);
-
-  return update;
+  
+  message_send(address, update);
 }
 
 /**************** spectatorGoldUpdate ****************/
@@ -269,21 +262,16 @@ goldUpdate(player_t* player, int collected) {
  * We return:
  *   char* update of gold
  */
-static char*
-spectatorGoldUpdate() {
+static void
+spectatorGoldUpdate(addr_t address) {
   int n = 0;
   int p = 0;
   int r = get_available_gold();
 
-  char* stringLength = mem_malloc(sizeof(char) * 3);
-  sprintf(stringLength, "%d%d%d", n, p, r);
-  int outputLength = strlen("GOLD   ") + strlen(stringLength);
-  
-  char *update = malloc(sizeof(char) * outputLength);
+  char update[100];
   sprintf(update, "GOLD %d %d %d", n, p, r);
-  free(stringLength);
-
-  return update;
+  
+  message_send(address, update);
 }
 
 /**************** getDisplay ****************/
@@ -295,16 +283,12 @@ spectatorGoldUpdate() {
  * We return:
  *   char* update of display
  */
-static char*
-getDisplay(player_t* player) {
-  char* display = gridDisplay(player);
-  int outputLength = strlen("DISPLAY\n") + strlen(display) + 1;
-  char* updateDisplay = malloc(sizeof(char) * outputLength);
+static void
+getDisplay(addr_t address, player_t* player) {
+  char display[100];
+  sprintf(display, "DISPLAY\n%s", gridDisplay(player));
   
-  sprintf(updateDisplay, "DISPLAY\n%s", display);
-  free(display);
-
-  return updateDisplay;
+  message_send(address, display);
 }
 
 /**************** getSpectatorDisplay ****************/
@@ -316,16 +300,10 @@ getDisplay(player_t* player) {
  * We return:
  *   char* update of display
  */
-static char*
-getDisplaySpectator() {
-  char* display = gridDisplaySpectator();
-
-  int outputLength = strlen("DISPLAY\n") + strlen(display) + 1;
-  char* updateDisplay = malloc(sizeof(char) * outputLength);
-
-  strcpy(updateDisplay, "DISPLAY\n");
-  strcat(updateDisplay, display);
-  free(display);
-
-  return updateDisplay;
+static void
+getDisplaySpectator(addr_t address) {
+  char display[100];
+  sprintf(display, "DISPLAY\n%s", gridDisplaySpectator());
+  
+  message_send(address, display);
 }
