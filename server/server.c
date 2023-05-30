@@ -61,6 +61,7 @@ main(int argc, char *argv[])
   }
 
   grid_t* grid = gridInit(argv[1], randomSeed);
+
   initialize_game(grid);
 
   // initialize the message module (without logging)
@@ -96,7 +97,8 @@ handleMessage(void* arg, const addr_t from, const char* message)
   //client has input play
   if (strncmp(message, "PLAY ", strlen("PLAY ")) == 0) {
     char name[strlen(message) - 5];
-    strncpy(name, message + 5, strlen(message) - 5);
+    
+    strcpy(name, message + 5);
     
     printf("This is the new name %s\n", name);
 
@@ -105,26 +107,37 @@ handleMessage(void* arg, const addr_t from, const char* message)
       message_send(from, "QUIT Sorry - you must provide player's name.");
     
     } else {
-      printf("name len was greater than 0");
-
-      printf("inside else");
       
-      char* letter = "";
-      player_t* player = player_new(from, name, 0, 0, *letter);
+      printf("name len was greater than 0\n");
+
+      printf("inside else\n");
+      
+      char letter = ' ';
+      player_t* player = player_new(from, name, 0, 0, letter);
+
       placePlayer(player);
 
       printf("after place player");
       
       if (add_player(player) != 0){
-        message_send(from, "QUIT Game is full: no more players can join.");
+
+        message_send(from, "QUIT Game is full: no more players can join.\n");
       
       } else {
-        printf("added player and getting ready to send message");
+        printf("added player and getting ready to send message\n");
         char letter = get_letter(player);
+        
         char* line = mem_malloc(sizeof(char)*5);
-        strcat(line, strcat("OK ", &letter));
+        strcpy(line, "OK ");
+        int temp = strlen(line);
+        line[temp] = letter;
+        line[temp+1] = '\0';
+        // strcat(line, "OK ");
+        // strcat(line, letter);
         message_send(from, line); //sending ok and letter of player
         mem_free(line);
+
+        // exit(2);
 
         //sending grid dimensions, gold update, and display
         message_send(from, get_grid_dimensions());
@@ -144,6 +157,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
       message_send(*oldSpectator, "QUIT You have been replaced by a new spectator.");
       mem_free(oldSpectator);
     
+
     } else {
     //sending grid dimensions, gold update, and display
     message_send(from, get_grid_dimensions());
