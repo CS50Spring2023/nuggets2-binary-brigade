@@ -213,7 +213,7 @@ gridpointNew(int row, int column, char terrain)
   gridpoint->column = column;
   gridpoint->terrain = terrain;
   gridpoint->nGold = 0;
-  gridpoint->player = 0;
+  gridpoint->player = '0';
 
   // Returning the created gridpoint
   return gridpoint;

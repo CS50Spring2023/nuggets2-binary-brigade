@@ -88,7 +88,7 @@ player_t* find_player(addr_t address);
  *   NULL if no previous spectator;
  *   old spectator's address if previous spectator.
  */
-addr_t* add_spectator(addr_t* spectator);
+addr_t add_spectator(addr_t spectator);
 
 /**************** FUNCTION ****************/
 /* Get spectator's address from the game
@@ -97,7 +97,7 @@ addr_t* add_spectator(addr_t* spectator);
  *   NULL if no previous spectator;
  *   spectator's address if exists
  */
-addr_t* get_spectator();
+addr_t get_spectator();
 
 /**************** FUNCTION ****************/
 /* Gets the grid dimensions of the game

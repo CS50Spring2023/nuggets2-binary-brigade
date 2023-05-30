@@ -23,12 +23,11 @@ static bool** initializeBooleanArray(const int numRows, const int numCols);
 /**************** global constants ****************/
 const int maxNameLength = 50;
 
-
 /**************** global types ****************/
 typedef struct player {
   char* port;
   addr_t address;
-  char* name;
+  char name[50];
   char letter;
   int x_coord;
   int y_coord;
@@ -80,7 +79,7 @@ player_new(addr_t address, char* name, int x, int y, char letter)
       }
     }
 
-    player->name = name;
+    strcpy(player->name, name);
     return player;
   }
 }
@@ -319,111 +318,67 @@ lineCheck(const int pr, const int pc, const int row, const int col)
   
   if (row >= pr) {
     down = true;
-  
-  } else {
+  } 
+  else {
     down = false;
   }
-  
   if (col >= pc) {
-    right = true;
-  
-  } else {
+    right = true; 
+  } 
+  else {
     right = false;
   }
 
   // check each row between player and point
   if (pr != row) {
-    rowSlope = (col - pc)/(row - pr);
-    
+    rowSlope = (col - pc)/(row - pr); 
     if (down) {
-      
       for (int r = pr + 1; r < row; r++) {
         currRow = r;
         currCol = pc + ((currRow - pr)*rowSlope);
-        
-        // col is an integer; check the intersect point
-        if (floorf(currCol) == currCol) {
-          
-          if (blocksVisibility(currRow, currCol)) {
-            return false;
-        
-          } else {
-            
-            // col not an integer; check points left and right
-            if (blocksVisibility(currRow, floorf(currCol)) && blocksVisibility(currRow, floorf(currCol))) {
-              return false;
-            }
-          }
-        }
+        // if col is an integer, check the intersect point
+        // if col not an integer, check left and right
+        if (blocksVisibility(currRow, floorf(currCol)) && blocksVisibility(currRow, floorf(currCol))) {
+          return false;
+        }     
       }
-    
-    } else {
-      
+    }
+    else {
       for (int r = pr - 1; r > row; r--) {
         currRow = r;
-        currCol = pc + ((currRow - pr)*rowSlope);
-        
-        // col is an integer; check the intersect point
-        if (floorf(currCol) == currCol) {
-          
-          if (blocksVisibility(currRow, currCol)) {
-            return false;
-          }
-        
-        } else {
-          
-          // col not an integer; check points left and right
-          if (blocksVisibility(currRow, floorf(currCol)) && blocksVisibility(currRow, floorf(currCol))) {
-            return false;
-          }
+        currCol = pc + ((currRow - pr)*rowSlope);    
+        // if col is an integer, check the intersect point
+        // if col not an integer, check left and right
+        if (blocksVisibility(currRow, floorf(currCol)) && blocksVisibility(currRow, floorf(currCol))) {
+          return false;
         }
       }
     }
   }
+
   // check each column between player and point
   if (pc != col) {
     colSlope = (row - pr)/(col - pc);
-    
     if (right) {
-      
       for (int c = pc + 1; c < col; c++) {
         currCol = c;
-        currRow = pr + ((currCol - pc)*colSlope);
-        
-        // row is an integer; check the intersect point
-        if (floorf(currRow) == currRow) {
-          if (blocksVisibility(currRow, currCol)) {
-            return false;
-          }
-        
-        } else {
-          
-          // row is not an integer; check points above and below
-          if (blocksVisibility(floorf(currRow), currCol) && blocksVisibility(floorf(currRow), currCol)) {
-            return false;
-          }
-        }
+        currRow = pr + ((currCol - pc)*colSlope);          
+        // if row is an integer, check the intersect point
+        // if row not an integer, check points above and below
+        if (blocksVisibility(floorf(currRow), currCol) && blocksVisibility(floorf(currRow), currCol)) {
+          return false;
+        } 
       }
     }
-    else {
-      
+    else { 
       for (int c = pc - 1; c > col; c--) {
         currCol = c;
         currRow = pr + ((currCol - pc)*colSlope);
-        
-        // row is an integer; check the intersect point
-        if (floorf(currRow) == currRow) {
-          if (blocksVisibility(currRow, currCol)) {
-            return false;
-          }
-        
-        } else {
-          
-          // row is not an integer; check points above and below
-          if (blocksVisibility(floorf(currRow), currCol) && blocksVisibility(floorf(currRow), currCol)) {
-            return false;
-          }
-        }
+        // if row is an integer; check the intersect point
+        // if row is not an integer; check points above and below
+        if (blocksVisibility(floorf(currRow), currCol) && blocksVisibility(floorf(currRow), currCol)) {
+          return false;
+        }  
       }
     }
   }
