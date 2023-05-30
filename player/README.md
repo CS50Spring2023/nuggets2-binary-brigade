@@ -1,0 +1,2 @@
+# Player
+The player directory provides representation for each player in the game, including the port it uses to connect to the server, its name and letter, and its location and amount of gold in the game. It also includes the functions to determine visibility. 

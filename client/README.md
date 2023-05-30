@@ -1,0 +1,2 @@
+# Client
+The client directory supports all the functionality related to the client side of the program. This includes receiving input from the user, communicating with the server, and displaying output back to the user.

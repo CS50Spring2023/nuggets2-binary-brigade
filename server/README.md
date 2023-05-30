@@ -1,0 +1,2 @@
+## Server
+The server directory supports all the functionality related to the server side of the program. This includes handling the overall state of the game, communicating with the client(s), and calling functions across the other modules to execute the commands requested by the client(s).
