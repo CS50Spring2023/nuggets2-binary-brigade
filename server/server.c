@@ -197,6 +197,23 @@ handleMessage(void* arg, const addr_t from, const char* message)
 
         //comparing to see if messages needs to be sent
         if (newGold != prevGold || prevAvailable != newAvailable){
+          if (newAvailable == 0) {    //game is over
+            player_t** players = get_players();
+            for (int i = 0; i < maxPlayers; i++) {
+              if ((players[i] != NULL) && (isActive(players[i]))) {
+                //sends game summary to all active players
+                gridDisplay(get_address(players[i]), players[i]);
+                game_summary(get_address(players[i])); 
+              }
+            }
+
+            addr_t address = get_spectator();
+            if (message_isAddr(address)){
+              game_summary(address); //sends game summary to a spectator if it exists
+            }
+            return true;
+          }
+
           goldUpdate(from, player, newGold-prevGold);
 
           player_t** players = get_players();
@@ -220,22 +237,6 @@ handleMessage(void* arg, const addr_t from, const char* message)
         }
       }
     }
-  }
-  
-  if (get_available_gold() == 0){    //game is over
-    player_t** players = get_players();
-    for (int i = 0; i < maxPlayers; i++) {
-      if ((players[i] != NULL) && (isActive(players[i]))) {
-        //sends game summary to all active players
-        game_summary(get_address(players[i])); 
-      }
-    }
-
-    addr_t address = get_spectator();
-    if (message_isAddr(address)){
-      game_summary(address); //sends game summary to a spectator if it exists
-    }
-    return true;
   }
   // normal case: keep looping
   return false;
