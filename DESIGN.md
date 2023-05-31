@@ -2,7 +2,7 @@
 ## Design Spec
 ### Binary Brigade, Spring, 2023
 
-According to the [Requirements Spec](REQUIREMENTS.md), the Nuggets game requires two standalone programs: a client and a server. Our design also includes game, grid, and player modules. We describe each program and module separately. We do not describe the `support` library nor the modules that enable features that go beyond the spec. We avoid repeating information that is provided in the requirements spec.
+According to the Requirements Spec, the Nuggets game requires two standalone programs: a client and a server. Our design also includes game, grid, and player modules. We describe each program and module separately. We do not describe the `support` library nor the modules that enable features that go beyond the spec. We avoid repeating information that is provided in the requirements spec.
 
 ## Client
 

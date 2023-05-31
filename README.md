@@ -15,4 +15,4 @@ This repository includes the following subdirectories:
 - Player: Incldues the `player` module, which represents each player.
 - Lib: Incldues given helper modules `mem` and `file`.
 - Support: Includes the given modules `log` and `support`.
-- Maps: Includes the given maps and `dungeons.txt`, created by the team.
+- Maps: Includes the given maps and `dungeon.txt`, created by the team.

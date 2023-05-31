@@ -2,7 +2,7 @@
 ## Implementation Spec
 ### Binary Brigade, Spring, 2023
 
-In this document we reference the [Requirements Specification](REQUIREMENTS.md) and [Design Specification](DESIGN.md) and focus on the implementation-specific decisions.
+In this document we reference the Requirements Specification and [Design Specification](DESIGN.md) and focus on the implementation-specific decisions.
 
 For each, client and server, we focus on the core subset:
 
