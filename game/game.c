@@ -421,8 +421,8 @@ gridDisplay(addr_t address, player_t* player)
 void
 gridDisplaySpectator(addr_t address) 
 {
-  // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
-  char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)) + 1), sizeof(char));
+  // Size of grid string: rows*columns, plus one newline per row, plus one for null pointerc
+  char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid) + 1) + 1), sizeof(char));
   int index = 0;
 
   // Checking if the grid is NULL
