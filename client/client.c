@@ -230,7 +230,7 @@ handle_quit(const char* message)
         sleep(5);
     
     } else {
-
+        clear();
         const char* spacePos = strchr(message, ' ');
         if (spacePos != NULL) {
             // extract the remaining part of the message after the space
@@ -259,7 +259,7 @@ bool
 handleTimeout(void* arg)
 {   
     // if we the time out is on
-    if (client_info->timeout_on){
+    if (client_info->timeout_on && client_info->playername != NULL){
         
         // print error message to stderr
         fprintf(stderr, "Sever took too long to respong. Good bye!\n");
@@ -292,8 +292,13 @@ handle_display(const char* message)
     clear();
     move(1, 0);
         
-    printw("%.*s", client_info->display_nc, gridString);  // Print one line
+    // printw("%.*s", client_info->display_nc, gridString);  // Print one line
 
+    while (*gridString != '\0')
+    {
+        printw("%.*s", client_info->display_nc, gridString);  // Print one line
+        gridString += client_info->display_nc;  // Move to the next line
+    }
 
     // update status line
     char statusLine[256];
