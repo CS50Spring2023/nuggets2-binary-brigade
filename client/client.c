@@ -20,8 +20,8 @@
 #include "../support/log.h"
 
 bool parseArgs(const int argc, char* argv[], char** hostname, char** port, char** playername);
-static bool handleInput(void* arg);
-static bool handleMessage(void* arg, const addr_t from, const char* message);
+bool handleInput(void* arg);
+bool handleMessage(void* arg, const addr_t from, const char* message);
 addr_t server_setup(char* hostname, char* port, char* playername);
 void handle_display(const char* message);
 void handle_quit(const char* message);
@@ -43,6 +43,7 @@ typedef struct client_info{
     char playerletter;
     char* last_display;
     bool gold_update;
+    bool timeout_on;
 } client_info_t;
 
 client_info_t* client_info;
@@ -71,6 +72,8 @@ main(int argc, char* argv[])
     // initialize display
     initDisplay();
 
+    client_info->timeout_on = true;
+
     // initalize network + join the game
     addr_t server = server_setup(hostname, port, playername);
 
@@ -96,7 +99,7 @@ main(int argc, char* argv[])
  * We return:
  *   false to keep game going; true otherwise
  */
-static bool
+bool
 handleMessage(void* arg, const addr_t from, const char* message)
 {   
     // extract the message type from the message
@@ -107,6 +110,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
         
         // if message OK, store the player's letter
         sscanf(message, "%*s %c", &client_info->playerletter);
+        client_info->timeout_on = false;
     
     } else if (strcmp(messageType, "GRID") == 0){
         
@@ -241,12 +245,31 @@ handle_quit(const char* message)
     }
 }
 
+/**************** handleTimeout ****************/
+/* 
+ * contains the mechanism for handleling time out
+ * 
+ * Caller provides:
+ *   arg
+ * We return:
+ *   false to keep game going; true when we want it to actually time out and end the program
+ */
+
 bool 
 handleTimeout(void* arg)
 {   
-    fprintf(stderr, "Sever took too long to respong. Good bye!\n");
-    
-    return true;
+    // if we the time out is on
+    if (client_info->timeout_on){
+        
+        // print error message to stderr
+        fprintf(stderr, "Sever took too long to respong. Good bye!\n");
+        
+        // return true
+        return true;
+    }
+
+    // return false otherwise to keep going
+    return false;
 }
 
 /**************** handle_display ****************/
@@ -339,7 +362,7 @@ handle_error(const char* message)
  * We return:
  *   false to keep looping; true otherwise
  */
-static bool 
+bool 
 handleInput(void* arg) {
 
     // We use 'arg' to receive an addr_t referring to the 'server' correspondent.
