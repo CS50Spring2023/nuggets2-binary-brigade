@@ -43,6 +43,7 @@ typedef struct client_info{
     char playerletter;
     char* last_display;
     bool gold_update;
+    bool timeout_on;
 } client_info_t;
 
 client_info_t* client_info;
@@ -70,6 +71,8 @@ main(int argc, char* argv[])
 
     // initialize display
     initDisplay();
+
+    client_info->timeout_on = true;
 
     // initalize network + join the game
     addr_t server = server_setup(hostname, port, playername);
@@ -107,6 +110,7 @@ handleMessage(void* arg, const addr_t from, const char* message)
         
         // if message OK, store the player's letter
         sscanf(message, "%*s %c", &client_info->playerletter);
+        client_info->timeout_on = false;
     
     } else if (strcmp(messageType, "GRID") == 0){
         
@@ -244,9 +248,12 @@ handle_quit(const char* message)
 bool 
 handleTimeout(void* arg)
 {   
-    fprintf(stderr, "Sever took too long to respong. Good bye!\n");
-    
-    return true;
+    if (client_info->timeout_on){
+        
+        fprintf(stderr, "Sever took too long to respong. Good bye!\n");
+        return true;
+    }
+    return false;
 }
 
 /**************** handle_display ****************/
