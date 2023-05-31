@@ -685,6 +685,10 @@ bool isKnown(player_t* player, const int row, const int col);
 void updateVisibility(player_t* player);
 ```
 
+#### Extra credit
+
+We will limit the range of visibility to a radius of 5 around the player. In `updateVisibility`, we will only call `lineCheck` on points that are within 5, which we will determine by calculating the distance from the point at (row, col) to the point (pr, pc) using the Pythagorean theorem.
+
 #### Testing plan
 
 Because most of the functions in player are relatively simple getters/setters, we can test them as we run the game to integrate client and server, and as we test grid and game. To test visibility, check if the equations work mathematically outside of the context of the game to see if they calculate the lines correctly.

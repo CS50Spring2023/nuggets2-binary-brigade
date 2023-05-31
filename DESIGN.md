@@ -228,6 +228,10 @@ The player data structure will hold the information pertaining to a player. This
     if vision is blocked, it is not visible
 ```
 
+### Extra credit
+
+To implement the visibility range limitation, we will restrict `updateVisibility` to only check points within a radius of 5 from the player.
+
 ### Major data structures
 
 - `player` Stores the information of how the client connects to the server, its name, letter, coordinates, amount of gold, and what parts of the map are known and visible to it.

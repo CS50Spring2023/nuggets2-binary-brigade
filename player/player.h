@@ -149,5 +149,9 @@ bool isKnown(player_t* player, const int row, const int col);
  *
  * We return:
  *   nothing
+ *
+ * Extra credit functionality: only update visibility
+ * in a range of 5 spots, thus putting a range
+ * limit on vision.
  */
 void updateVisibility(player_t* player);
