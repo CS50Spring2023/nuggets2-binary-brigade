@@ -77,7 +77,7 @@ add_player(player_t* player)
 }
 
 /**************** placePlayer ****************/
-/* See detailed description in grid.h. */
+/* See detailed description in game.h. */
 void 
 placePlayer(player_t* player)
 {
@@ -106,7 +106,7 @@ placePlayer(player_t* player)
 }
 
 /**************** movePlayer ****************/
-/* See detailed description in grid.h. */
+/* see game.h for description */
 void 
 movePlayer(player_t* player, char letter) 
 {
@@ -331,7 +331,7 @@ foundPlayer(player_t* player, gridpoint_t* current, gridpoint_t* updated)
 }
 
 /**************** gridDisplay ****************/
-/* See grid.h for description. */
+/* See game.h for description. */
 char* 
 gridDisplay(player_t* player) 
 {
@@ -410,7 +410,7 @@ gridDisplay(player_t* player)
 }
 
 /**************** gridDisplaySpectator ****************/
-/* See grid.h for description. */
+/* See game.h for description. */
 char* 
 gridDisplaySpectator() 
 {
@@ -445,7 +445,7 @@ gridDisplaySpectator()
   return gridString;
 }
 
-/**************** FUNCTION ****************/
+/**************** find_player ****************/
 /* see game.h for description */
 player_t*
 find_player(addr_t address)
@@ -465,7 +465,7 @@ find_player(addr_t address)
   return NULL;
 }
 
-/**************** FUNCTION ****************/
+/**************** add_spectator ****************/
 /* see game.h for description */
 addr_t
 add_spectator(addr_t spectator)
@@ -475,7 +475,7 @@ add_spectator(addr_t spectator)
   return pastSpectator;
 }
 
-/**************** FUNCTION ****************/
+/**************** get_spectator ****************/
 /* see game.h for description */
 addr_t
 get_spectator()
@@ -484,7 +484,7 @@ get_spectator()
   return pastSpectator;
 }
 
-/**************** FUNCTION ****************/
+/**************** get_grid_dimensions ****************/
 /* see game.h for description */
 void
 get_grid_dimensions(addr_t address)
@@ -497,7 +497,7 @@ get_grid_dimensions(addr_t address)
   message_send(address, dimensions);
 }
 
-/**************** FUNCTION ****************/
+/**************** game_inactive_player ****************/
 /* see game.h for description */
 int
 game_inactive_player(game_t* game, player_t* player)
@@ -513,7 +513,7 @@ game_inactive_player(game_t* game, player_t* player)
   return 1;
 }
 
-/**************** FUNCTION ****************/
+/**************** update_gold ****************/
 /* see game.h for description */
 int
 update_gold(game_t* game, int updateGoldCount)
@@ -525,7 +525,7 @@ update_gold(game_t* game, int updateGoldCount)
   return 0;
 }
 
-/**************** FUNCTION ****************/
+/**************** get_total_gold ****************/
 /* see game.h for description */
 int
 get_total_gold(game_t* game)
@@ -533,7 +533,7 @@ get_total_gold(game_t* game)
   return game->totalGold;
 }
 
-/**************** FUNCTION ****************/
+/**************** get_available_gold ****************/
 /* see game.h for description */
 int 
 get_available_gold()
@@ -542,7 +542,7 @@ get_available_gold()
 }
 
 
-/**************** FUNCTION ****************/
+/**************** game_summary ****************/
 /* see game.h for description */
 void
 game_summary(addr_t address)
@@ -578,6 +578,7 @@ game_summary(addr_t address)
   message_send(address, summary);
 }
 
+/**************** delete_game ****************/
 /* see game.h for description */
 void 
 delete_game()
@@ -594,7 +595,7 @@ delete_game()
   }
 }
 
-/**************** FUNCTION ****************/
+/**************** get_player ****************/
 /* see game.h for description */
 player_t**
 get_players()
