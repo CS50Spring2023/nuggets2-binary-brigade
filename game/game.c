@@ -596,7 +596,6 @@ delete_game()
     for (int i = 0; i < game->playerCount; i++) {
       player_delete(game->players[i]);
     }
-    // player_delete(game->spectator);
 
     free(game->players);
     free(game);
