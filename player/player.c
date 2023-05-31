@@ -27,7 +27,7 @@ const int maxNameLength = 50;
 typedef struct player {
   char* port;
   addr_t address;
-  char name[maxNameLength];
+  char name[50];
   char letter;
   int x_coord;
   int y_coord;
