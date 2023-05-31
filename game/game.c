@@ -407,8 +407,10 @@ gridDisplay(addr_t address, player_t* player)
     }
   }
   
-  char* formattedDisplay = mem_malloc((strlen("DISPLAY \n") + strlen(gridString)) * sizeof(char));
-  sprintf(formattedDisplay, "DISPLAY \n%s", gridString);
+  char* formattedDisplay = mem_malloc((strlen("DISPLAY \n") + strlen(gridString)) * sizeof(char) + 1);
+  strcpy(formattedDisplay, "DISPLAY \n");
+  strcat(formattedDisplay, gridString);
+  //sprintf(formattedDisplay, "DISPLAY \n%s", gridString);
   message_send(address, formattedDisplay);
   mem_free(formattedDisplay);
   mem_free(gridString);
@@ -447,7 +449,7 @@ gridDisplaySpectator(addr_t address)
       index++;
     }
   }
-  char* formattedDisplay = mem_malloc((strlen("DISPLAY \n") + strlen(gridString)) * sizeof(char));
+  char* formattedDisplay = mem_malloc((strlen("DISPLAY \n") + strlen(gridString)) * sizeof(char) + 1);
   sprintf(formattedDisplay, "DISPLAY \n%s", gridString);
   message_send(address, gridString);
   mem_free(formattedDisplay);
@@ -559,9 +561,7 @@ game_summary(addr_t address)
   char summary[65507];
 
   // Inserting GAME OVER as opening line for the summary
-  char quitMessage[100];
-  strcpy(quitMessage, "QUIT GAME OVER\n");
-  strcat(summary, quitMessage);
+  strcpy(summary, "QUIT GAME OVER\n");
 
   // Looping over the players in the game, adding their information to summary
   for (int i = 0; i < game->playerCount; i++) {
