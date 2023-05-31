@@ -102,7 +102,17 @@ void
 player_delete(player_t* player)
 {
   if (player != NULL) {
-    free(player);
+    for (int i = 0; i < player->numRows; i++) {
+      if (player->known[i] != NULL){
+        mem_free(player->known[i]);
+      }
+      if (player->known[i] != NULL){
+        mem_free(player->visible[i]);
+      }
+  }
+  free(player->known);
+  free(player->visible);
+  free(player);
   }
 }
 
