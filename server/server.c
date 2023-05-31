@@ -214,7 +214,9 @@ handleMessage(void* arg, const addr_t from, const char* message)
               gridDisplay(get_address(players[i]), players[i]); //sends game gold update to all players
             }
           }
-          gridDisplaySpectator(get_spectator());
+          if (message_isAddr(get_spectator())){
+            gridDisplaySpectator(get_spectator());
+          }
         }
       }
     }
