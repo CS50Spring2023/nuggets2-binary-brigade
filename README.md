@@ -16,3 +16,6 @@ This repository includes the following subdirectories:
 - Lib: Incldues given helper modules `mem` and `file`.
 - Support: Includes the given modules `log` and `support`.
 - Maps: Includes the given maps and `dungeons.txt`, created by the team.
+
+## Extra Credit
+We implemented a few extra credit features. These can be found in the *extraCredit* branch in our GitHub repository. In the Design and Implementation specs in that branch, there are descriptions of the features implemented. 
