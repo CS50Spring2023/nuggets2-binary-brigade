@@ -20,8 +20,8 @@
 #include "../support/log.h"
 
 bool parseArgs(const int argc, char* argv[], char** hostname, char** port, char** playername);
-bool handleInput(void* arg);
-bool handleMessage(void* arg, const addr_t from, const char* message);
+static bool handleInput(void* arg);
+static bool handleMessage(void* arg, const addr_t from, const char* message);
 addr_t server_setup(char* hostname, char* port, char* playername);
 void handle_display(const char* message);
 void handle_quit(const char* message);
@@ -96,7 +96,7 @@ main(int argc, char* argv[])
  * We return:
  *   false to keep game going; true otherwise
  */
-bool
+static bool
 handleMessage(void* arg, const addr_t from, const char* message)
 {   
     // extract the message type from the message
@@ -336,7 +336,7 @@ handle_error(const char* message)
  * We return:
  *   false to keep looping; true otherwise
  */
-bool 
+static bool 
 handleInput(void* arg) {
 
     // We use 'arg' to receive an addr_t referring to the 'server' correspondent.
