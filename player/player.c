@@ -287,22 +287,28 @@ isKnown(player_t* player, const int row, const int col)
 void
 updateVisibility(player_t* player)
 {
+  const int visibilityRange = 5;
+  const int pr = player->y_coord;
+  const int pc = player->x_coord;
+
   for (int row = 0; row < player->numRows; row++) {
     for (int col = 0; col < player->numCols; col++) {
+      // if point is within visibility range
+      if (sqrt((row - pr)*(row - pr) + (col - pc)*(col - pc)) <= visibilityRange) {
+        // point visible, make it known
+        if (lineCheck(player->y_coord, player->x_coord, row, col)) {
+          player->visible[row][col] = true;
+          player->known[row][col] = true;
       
-      // point visible, make it known
-      if (lineCheck(player->y_coord, player->x_coord, row, col)) {
-        player->visible[row][col] = true;
-        player->known[row][col] = true;
-      
-      } else {
-        // point not visible, but can remain known
-        player->visible[row][col] = false;
+        } 
+        else {
+          // point not visible, but can remain known
+          player->visible[row][col] = false;
+        }
       }
     }
   }
 }
-
 
 /**************** initializeBooleanArray ****************/
 /* Allocate a 2D array of booleans, initialized to false. */
