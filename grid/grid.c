@@ -328,7 +328,7 @@ getPoint(int row, int column)
 
 /**************** getTerrain ****************/
 /* See grid.h for description. */
-int 
+char 
 getTerrain(gridpoint_t* gridpoint)
 {
   return gridpoint->terrain;
