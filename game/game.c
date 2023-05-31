@@ -77,7 +77,7 @@ add_player(player_t* player)
 }
 
 /**************** placePlayer ****************/
-/* See detailed description in grid.h. */
+/* See detailed description in game.h. */
 void 
 placePlayer(player_t* player)
 {
@@ -106,7 +106,7 @@ placePlayer(player_t* player)
 }
 
 /**************** movePlayer ****************/
-/* See detailed description in grid.h. */
+/* See detailed description in game.h. */
 void 
 movePlayer(player_t* player, char letter) 
 {
@@ -331,7 +331,7 @@ foundPlayer(player_t* player, gridpoint_t* current, gridpoint_t* updated)
 }
 
 /**************** gridDisplay ****************/
-/* See grid.h for description. */
+/* See game.h for description. */
 void 
 gridDisplay(addr_t address, player_t* player) 
 {
@@ -415,7 +415,7 @@ gridDisplay(addr_t address, player_t* player)
 }
 
 /**************** gridDisplaySpectator ****************/
-/* See grid.h for description. */
+/* See game.h for description. */
 void
 gridDisplaySpectator(addr_t address) 
 {
