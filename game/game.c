@@ -300,6 +300,10 @@ foundGold(player_t* player)
  * causes the player to collide with another
  * player. If that is the case, the players
  * switch places.
+ *
+ * Extra credit functionality: when one player
+ * collides with another, the first player
+ * steals the other player's gold.
  */
 static void 
 foundPlayer(player_t* player, gridpoint_t* current, gridpoint_t* updated)
@@ -320,6 +324,11 @@ foundPlayer(player_t* player, gridpoint_t* current, gridpoint_t* updated)
 
                 // Updating the contents of the gridpoints
                 setPlayer(current, get_letter(players[i]));
+
+                // The player steals the gold of the one it bumped into
+                set_gold(player, get_gold(player) + get_gold(players[i]));
+                set_gold(players[i], 0);
+
             }
         }
     }

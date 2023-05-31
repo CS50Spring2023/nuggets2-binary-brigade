@@ -488,6 +488,10 @@ player_t** get_players();
 
 Once grid and player are done, we run the three modules together to see if games can successfully be made and updated. As we test server and client together, we will make sure that game works the way we want it to.
 
+#### Extra credit
+
+Player's can steal the gold of other players by stepping on them. To do this, we add to move_player to make it so that when two players collide, in addition to swapping places, the first player's gold will be set to its current gold plus the current gold of the other player, and the other player's gold will be set to zero.
+
 ### Grid
 
 #### Data structures 
@@ -685,10 +689,10 @@ bool isKnown(player_t* player, const int row, const int col);
 void updateVisibility(player_t* player);
 ```
 
-#### Extra credit
-
-We will limit the range of visibility to a radius of 5 around the player. In `updateVisibility`, we will only call `lineCheck` on points that are within 5, which we will determine by calculating the distance from the point at (row, col) to the point (pr, pc) using the Pythagorean theorem.
-
 #### Testing plan
 
 Because most of the functions in player are relatively simple getters/setters, we can test them as we run the game to integrate client and server, and as we test grid and game. To test visibility, check if the equations work mathematically outside of the context of the game to see if they calculate the lines correctly.
+
+#### Extra credit
+
+We will limit the range of visibility to a radius of 5 around the player. In `updateVisibility`, we will only call `lineCheck` on points that are within 5, which we will determine by calculating the distance from the point at (row, col) to the point (pr, pc) using the Pythagorean theorem.

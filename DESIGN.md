@@ -169,6 +169,10 @@ The game data structure will hold the information pertaining to the current game
 
 - `game` Stores a universal grid, an array of pointers to all of the players, the total amount of gold, and the amount of available gold
 
+### Extra credit
+
+When one player collides with another, it will steal the other player's gold.
+
 ## Grid
 
 The grid struct will be initialized with a map txt file. It holds types of spaces with an internal struct gridpoint. Spaces can be gold, empty in a room, occupied by a player, in a tunnel, empty outside of a room, or a wall. Our gridpoint struct will hold these and be updated as players move around the grid. These gridpoints will be held in a 2-dimensional array that we can iterate through and call methods on. 
@@ -228,10 +232,10 @@ The player data structure will hold the information pertaining to a player. This
     if vision is blocked, it is not visible
 ```
 
-### Extra credit
-
-To implement the visibility range limitation, we will restrict `updateVisibility` to only check points within a radius of 5 from the player.
-
 ### Major data structures
 
 - `player` Stores the information of how the client connects to the server, its name, letter, coordinates, amount of gold, and what parts of the map are known and visible to it.
+
+### Extra credit
+
+To implement the visibility range limitation, we will restrict `updateVisibility` to only check points within a radius of 5 from the player.
