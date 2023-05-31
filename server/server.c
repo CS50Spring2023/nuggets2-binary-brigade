@@ -225,8 +225,9 @@ handleMessage(void* arg, const addr_t from, const char* message)
   if (get_available_gold() == 0){    //game is over
     player_t** players = get_players();
     for (int i = 0; i < maxPlayers; i++) {
-      if (players[i] != NULL){
-        game_summary(get_address(players[i])); //sends game summary to all players
+      if ((players[i] != NULL) && (isActive(players[i]))) {
+        //sends game summary to all active players
+        game_summary(get_address(players[i])); 
       }
     }
 
