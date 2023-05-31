@@ -91,6 +91,10 @@ void
 player_inactive(player_t* player)
 {
   if(player != NULL){
+    //setting position on map back to terrain
+    gridpoint_t* point = getPoint(get_y(player), get_x(player));
+    setPlayer(point, '0');
+
     player->active = false;
   }
 }
