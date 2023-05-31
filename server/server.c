@@ -1,7 +1,12 @@
 /* 
- * server.c - CS50 'server' module
- *
- * see server.h for more information.
+ * Nuggets server.c file
+ * 
+ * Creates a server for the Nuggets game
+ * and allows clients to connect and send
+ * inputs, and returns the display and 
+ * messages to them. Server handles all of
+ * the game logic, including everything in
+ * the game, grid, and player modules.
  *
  * Binary Brigade, Spring, 2023
  */
