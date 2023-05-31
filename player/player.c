@@ -17,6 +17,7 @@
 #include "../support/message.h"
 #include "../lib/mem.h"
 
+/**************** local functions ****************/
 static bool lineCheck(const int pr, const int pc, const int row, const int col);
 static bool** initializeBooleanArray(const int numRows, const int numCols);
 
