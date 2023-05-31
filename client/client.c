@@ -28,6 +28,7 @@ void handle_quit(const char* message);
 void handle_error(const char* message);
 void initDisplay();
 void duplicate_str(const char*);
+bool handleTimeout(void* arg);
 
 // helper struct to hold all the client info we need throughout the program
 typedef struct client_info{
@@ -74,8 +75,8 @@ main(int argc, char* argv[])
     addr_t server = server_setup(hostname, port, playername);
 
     // message loop to run program
-    bool ok = message_loop(&server, 0, NULL, handleInput, handleMessage);
-
+    bool ok = message_loop(&server, 3, handleTimeout, handleInput, handleMessage);
+   
     // clean up message modual
     message_done();
     endwin();
@@ -84,7 +85,6 @@ main(int argc, char* argv[])
    
     return ok? 0 : 2;
 }
-
 
 /**************** handleMessage ****************/
 /* 
@@ -241,6 +241,13 @@ handle_quit(const char* message)
     }
 }
 
+bool 
+handleTimeout(void* arg)
+{   
+    fprintf(stderr, "Sever took too long to respong. Good bye!\n");
+    
+    return true;
+}
 
 /**************** handle_display ****************/
 /* 
@@ -262,12 +269,8 @@ handle_display(const char* message)
     clear();
     move(1, 0);
         
-    // print each line of the grid string
-    while (*gridString != '\0')
-    {
-        printw("%.*s", client_info->display_nc, gridString);  // Print one line
-        gridString += client_info->display_nc;  // Move to the next line
-    }
+    printw("%.*s", client_info->display_nc, gridString);  // Print one line
+
 
     // update status line
     char statusLine[256];
@@ -416,6 +419,7 @@ server_setup(char* hostname, char* port, char* playername)
         message_send(server, "SPECTATE");
 
     }
+
     return server;
 }
 
