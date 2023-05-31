@@ -26,7 +26,7 @@ void initialize_game(grid_t* grid);
 *  players/gold/terrain/empty spaces based on
 *  what is known and visible to the player.
 */
-char* gridDisplay(player_t* player);
+void gridDisplay(addr_t address, player_t* player);
 
 /**************** gridDisplaySpectator ****************/
 /* The function creates a string to display the
@@ -34,7 +34,7 @@ char* gridDisplay(player_t* player);
  * that the function has full visibility of the grid
  * as well as the gold and players in it.  
  */
-char* gridDisplaySpectator(); 
+void gridDisplaySpectator(addr_t address); 
 
 /**************** movePlayer ****************/
 /* The function handles the overall

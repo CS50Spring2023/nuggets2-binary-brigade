@@ -332,8 +332,8 @@ foundPlayer(player_t* player, gridpoint_t* current, gridpoint_t* updated)
 
 /**************** gridDisplay ****************/
 /* See grid.h for description. */
-char* 
-gridDisplay(player_t* player) 
+void 
+gridDisplay(addr_t address, player_t* player) 
 {
   // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
   char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)+ 1) + 1), sizeof(char));
@@ -406,16 +406,21 @@ gridDisplay(player_t* player)
       index++;
     }
   }
-  return gridString;
+  
+  char* formattedDisplay = mem_malloc((strlen("DISPLAY \n") + strlen(gridString)) * sizeof(char));
+  sprintf(formattedDisplay, "DISPLAY \n%s", gridString);
+  message_send(address, formattedDisplay);
+  mem_free(formattedDisplay);
+  mem_free(gridString);
 }
 
 /**************** gridDisplaySpectator ****************/
 /* See grid.h for description. */
-char* 
-gridDisplaySpectator() 
+void
+gridDisplaySpectator(addr_t address) 
 {
   // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
-  char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)+ 1) + 1), sizeof(char));
+  char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)) + 1), sizeof(char));
   int index = 0;
 
   // Checking if the grid is NULL
@@ -442,7 +447,11 @@ gridDisplaySpectator()
       index++;
     }
   }
-  return gridString;
+  char* formattedDisplay = mem_malloc((strlen("DISPLAY \n") + strlen(gridString)) * sizeof(char));
+  sprintf(formattedDisplay, "DISPLAY \n%s", gridString);
+  message_send(address, gridString);
+  mem_free(formattedDisplay);
+  mem_free(gridString);
 }
 
 /**************** FUNCTION ****************/
