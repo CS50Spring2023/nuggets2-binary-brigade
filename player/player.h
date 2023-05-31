@@ -119,6 +119,12 @@ void set_y(player_t* player, int y);
  */
 void set_gold(player_t* player, int gold);
 
+/* Take in a pointer to a player
+ *
+ * We return:
+ *   player's active status (true/false)
+ */
+bool isActive(player_t* player);    
 
 /* Given a row and col, tell if the player currently sees
  * that point.

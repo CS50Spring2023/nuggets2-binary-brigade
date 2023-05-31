@@ -227,6 +227,17 @@ set_gold(player_t* player, int gold)
   }
 }
 
+/**************** isActive ****************/
+/* see player.h for description */
+bool
+isActive(player_t* player)
+{
+  if (player != NULL) {
+    return player->active;
+  }
+  
+  return false;
+}
 
 /**************** isVisible ****************/
 /* see player.h for description */
