@@ -106,7 +106,7 @@ placePlayer(player_t* player)
 }
 
 /**************** movePlayer ****************/
-/* see game.h for description */
+/* See detailed description in game.h. */
 void 
 movePlayer(player_t* player, char letter) 
 {
@@ -332,8 +332,8 @@ foundPlayer(player_t* player, gridpoint_t* current, gridpoint_t* updated)
 
 /**************** gridDisplay ****************/
 /* See game.h for description. */
-char* 
-gridDisplay(player_t* player) 
+void 
+gridDisplay(addr_t address, player_t* player) 
 {
   // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
   char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)+ 1) + 1), sizeof(char));
@@ -406,16 +406,21 @@ gridDisplay(player_t* player)
       index++;
     }
   }
-  return gridString;
+  
+  char* formattedDisplay = mem_malloc((strlen("DISPLAY \n") + strlen(gridString)) * sizeof(char));
+  sprintf(formattedDisplay, "DISPLAY \n%s", gridString);
+  message_send(address, formattedDisplay);
+  mem_free(formattedDisplay);
+  mem_free(gridString);
 }
 
 /**************** gridDisplaySpectator ****************/
 /* See game.h for description. */
-char* 
-gridDisplaySpectator() 
+void
+gridDisplaySpectator(addr_t address) 
 {
   // Size of grid string: rows*columns, plus one newline per row, plus one for null pointer
-  char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)+ 1) + 1), sizeof(char));
+  char* gridString = mem_calloc(((getnRows(game->grid))*(getnColumns(game->grid)) + 1), sizeof(char));
   int index = 0;
 
   // Checking if the grid is NULL
@@ -442,10 +447,14 @@ gridDisplaySpectator()
       index++;
     }
   }
-  return gridString;
+  char* formattedDisplay = mem_malloc((strlen("DISPLAY \n") + strlen(gridString)) * sizeof(char));
+  sprintf(formattedDisplay, "DISPLAY \n%s", gridString);
+  message_send(address, gridString);
+  mem_free(formattedDisplay);
+  mem_free(gridString);
 }
 
-/**************** find_player ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 player_t*
 find_player(addr_t address)
@@ -465,7 +474,7 @@ find_player(addr_t address)
   return NULL;
 }
 
-/**************** add_spectator ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 addr_t
 add_spectator(addr_t spectator)
@@ -475,7 +484,7 @@ add_spectator(addr_t spectator)
   return pastSpectator;
 }
 
-/**************** get_spectator ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 addr_t
 get_spectator()
@@ -484,7 +493,7 @@ get_spectator()
   return pastSpectator;
 }
 
-/**************** get_grid_dimensions ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 void
 get_grid_dimensions(addr_t address)
@@ -497,7 +506,7 @@ get_grid_dimensions(addr_t address)
   message_send(address, dimensions);
 }
 
-/**************** game_inactive_player ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 int
 game_inactive_player(game_t* game, player_t* player)
@@ -513,7 +522,7 @@ game_inactive_player(game_t* game, player_t* player)
   return 1;
 }
 
-/**************** update_gold ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 int
 update_gold(game_t* game, int updateGoldCount)
@@ -525,7 +534,7 @@ update_gold(game_t* game, int updateGoldCount)
   return 0;
 }
 
-/**************** get_total_gold ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 int
 get_total_gold(game_t* game)
@@ -533,7 +542,7 @@ get_total_gold(game_t* game)
   return game->totalGold;
 }
 
-/**************** get_available_gold ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 int 
 get_available_gold()
@@ -542,7 +551,7 @@ get_available_gold()
 }
 
 
-/**************** game_summary ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 void
 game_summary(addr_t address)
@@ -578,7 +587,6 @@ game_summary(addr_t address)
   message_send(address, summary);
 }
 
-/**************** delete_game ****************/
 /* see game.h for description */
 void 
 delete_game()
@@ -595,7 +603,7 @@ delete_game()
   }
 }
 
-/**************** get_player ****************/
+/**************** FUNCTION ****************/
 /* see game.h for description */
 player_t**
 get_players()
